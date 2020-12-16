@@ -1,0 +1,36 @@
+.login-register-box {
+    background-color: #fff;
+    color: #000;
+    margin: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 24em;
+    min-width: 20em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.login-box-inner {
+    padding: 0px 20px;
+    margin: auto;
+    width: 75%;
+}
+.login-register-box > .tabs {
+    display: flex;
+    justify-content: center;
+}
+.login-register-box > .tabs p {
+    margin: 0px;
+    padding: 10px;
+    flex: 50%;
+}
+.login-register-box > .tabs p.active {
+    background-color: red;
+    color: #fff;
+}
+.login-register-box-main {
+    padding: 5px;
+}
+.login-box input {
+    display: flex;
+    margin: 5px auto;
+
+}
