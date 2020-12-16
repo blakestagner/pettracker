@@ -7,29 +7,33 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
-import Timeline from '../TimeLine/Timeline'
 
 const useStyles = makeStyles({
     root: {
-        width: '100vw',
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        overflow: 'hidden',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);'
+    width: '100vw',
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    overflow: 'hidden',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);'
     },
   });
 
 function BottomNav(props) {
-    const pathname = window.location.pathname;
     const classes = useStyles();
+    const { pathname } = useLocation();
     const [value, setValue] = useState(pathname);
+
+    useEffect(() => {
+        setValue(pathname)
+      }, [pathname])
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+
     }
 
     return (
@@ -42,7 +46,7 @@ function BottomNav(props) {
                 >
                 <BottomNavigationAction value="/home" label="Home" icon={<HomeIcon />} component={Link} to="/home"/>
                 <BottomNavigationAction value="/timeline" label="Timeline" icon={<TimelineIcon />} component={Link} to="/timeline" />
-                {/*<BottomNavigationAction value="/chat" label="Chat" icon={<MessageIcon />} component={Link} to="/chat" /> */}
+                {/*<BottomNavigationAction value="/chat" label="Chat" icon={<MessageIcon />} component={Link} to="/chat" /> */ }
                 <BottomNavigationAction value="/settings" label="Settings" icon={<SettingsIcon />} component={Link} to="/settings" />
             </BottomNavigation>
         </div>

@@ -15,6 +15,9 @@ import Unauthorized from './Autho/Unauthorized';
 import Logout from './Autho/login_register/Logout';
 
 import BottomNav from './Navigation/BottomNav';
+import ScrollToTop from './HelperComponents/ScrollToTop';
+
+
 
 import {
   BrowserView,
@@ -59,10 +62,10 @@ function App() {
     <div className="App">
       <div className="body-container" style={ isLoggedIn ? {margin: '70px 10px'} : {margin: '0px'} }>
         <Router >
+        <ScrollToTop />
           {isLoggedIn ? (<TopNav userDetails={userDetails} />) : ("")}
           <Logout logout={() => setLoggedIn(false)}/>
           <p>Pet Tracker</p>
-          {isLoggedIn ? 'YES' : 'NO'}
           <Switch>
             <Fragment>
               <Route 

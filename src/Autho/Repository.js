@@ -1,6 +1,6 @@
 import axios from 'axios';
-//const BASE_URL = 'https://api.blakestagner.com';
-const BASE_URL = 'http://localhost:3050';
+const BASE_URL = 'https://pet-api.blakestagner.com';
+//const BASE_URL = 'http://localhost:3330';
 
 
 export function login (data) {
