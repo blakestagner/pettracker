@@ -5,6 +5,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import MessageIcon from '@material-ui/icons/Message';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import SettingsIcon from '@material-ui/icons/Settings';
+import PetsIcon from '@material-ui/icons/Pets';
 
 
 import { Link, useLocation } from 'react-router-dom';
@@ -46,7 +47,7 @@ function BottomNav(props) {
                 >
                 <BottomNavigationAction value="/home" label="Home" icon={<HomeIcon />} component={Link} to="/home"/>
                 <BottomNavigationAction value="/timeline" label="Timeline" icon={<TimelineIcon />} component={Link} to="/timeline" />
-                {/*<BottomNavigationAction value="/chat" label="Chat" icon={<MessageIcon />} component={Link} to="/chat" /> */ }
+                <BottomNavigationAction value="/pet-profile" label="Pet" icon={<PetsIcon />} component={Link} to="/pet-profile" />
                 <BottomNavigationAction value="/settings" label="Settings" icon={<SettingsIcon />} component={Link} to="/settings" />
             </BottomNavigation>
         </div>

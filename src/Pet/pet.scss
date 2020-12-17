@@ -1,0 +1,38 @@
+.register-pet-box {
+    background-color: #fff;
+    color: #000;
+    margin: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 24em;
+    min-width: 20em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.register-pet-box h2 {
+    background-color: red;
+    color: #fff;
+    margin: 0;
+    padding: 10px;
+}
+.register-pet-box-inner {
+    padding: 20px 25px 10px;
+    margin: auto;
+    width: 75%;
+    display: grid;
+}
+.login-box input {
+    display: flex;
+    margin: 5px auto;
+
+}
+.input-label {
+    text-align: left;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    margin: 25px 0px 0px;
+    font-size: .7rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.00938em;
+}

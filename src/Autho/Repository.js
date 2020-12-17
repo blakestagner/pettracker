@@ -1,6 +1,6 @@
 import axios from 'axios';
-const BASE_URL = 'https://pet-api.blakestagner.com';
-//const BASE_URL = 'http://localhost:3330';
+//const BASE_URL = 'https://pet-api.blakestagner.com';
+const BASE_URL = 'http://localhost:3330';
 
 
 export function login (data) {
@@ -41,6 +41,30 @@ export function isAuthenticated() {
 
 export function getUserInfo() {
     return axios.get(`${BASE_URL}/user/data`, { 
+        params: { 'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+    }
+
+export function registerPet(data) {
+    return axios.post(`${BASE_URL}/api/register-pet`, {
+        name: data.name,
+        type: data.type,
+        birthday: data.birthday,
+        feed_perday: data.feed_perday,
+        owner_id: `${data.owner_id}`
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        return err.response.data
+    })
+}
+
+export function getPetInfo(data) {
+    return axios.get(`${BASE_URL}/api/pet-data`, { 
         params: { 'x-access-token': localStorage.getItem('x-access-token')} 
        })
        .then(res => res.data)

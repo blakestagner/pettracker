@@ -4,9 +4,20 @@ button {
     background: red;
     border-radius: 25px;
     border: none;
-    padding: 5px 10px;
-    font-size: 20px;
+    padding: 5px 15px;
     font-weight: bold;
-    margin: 10px 5px 20px;
+    margin: 20px auto 20px;
     color: $myColor;
+    display: flex;
+    align-items: center;
+}
+.button-icon {
+    height: 25px;
+    width: 25px;
+    padding: 0 10px 0 0;
+}
+button p {
+    margin: 0px;
+    font-size: 20px;
+
 }

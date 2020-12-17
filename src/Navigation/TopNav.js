@@ -1,15 +1,19 @@
 import './navigation.scss';
 import Avatar from '../User/Avatar';
 import { Link } from 'react-router-dom';
-import {
-    BrowserView,
-    MobileView,
-    isBrowser,
-    isMobile
-  } from "react-device-detect";
+import SlideOutNavRight from './SlideOutNavRight';
+import React, {useRef, useEffect} from "react";
 
 function TopNav(props) {
 
+    const toggleNavRef = useRef();
+
+    const logout = () => {
+        props.logout();
+    }
+    if(props.isLoggedIn === false) {
+        return ''
+    }
     return (
         <div className="top-nav">
             <div className="nav-left">
@@ -39,8 +43,11 @@ function TopNav(props) {
                         props.userDetails.id+
                         props.userDetails.fname+
                         props.userDetails.lname}
-                    hasProfileImg={props.userDetails.profile_pic}/>
+                    hasProfileImg={props.userDetails.profile_pic}
+                    handleToggle={() => toggleNavRef.current.toggle()}
+                    />
             </div>
+            <SlideOutNavRight ref={toggleNavRef} logout={() => logout()}/>
         </div>
     )
 }

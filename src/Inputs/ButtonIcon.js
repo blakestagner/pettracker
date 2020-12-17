@@ -1,15 +1,16 @@
-import './Button.scss'
+import './Button.scss';
 
-function Button(props) {
+function ButtonIcon(props) {
 
     return (
         <button
             onClick={props.onClick}
             className="button"
         >
+            <img className="button-icon" src={props.icon} />
             <p>{props.name}</p>
         </button>
     )
 }
 
-export default Button;
+export default ButtonIcon;
