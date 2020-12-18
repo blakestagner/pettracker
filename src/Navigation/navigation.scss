@@ -4,9 +4,11 @@ $primary-color: #5465FF;
     width: 100%;
     height: 50px;
     padding: 10px 10px;
-    background-color: $primary-color;
+    background-color: #fff;
     position: fixed;
     top: 0px;
+    border-bottom-right-radius: 40px;
+    border-bottom-left-radius: 40px;
     
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 
@@ -34,7 +36,7 @@ $primary-color: #5465FF;
     padding: 0 5px;
 }
 .nav-center li a{
-    color: #fff;
+    color: #000;
     text-decoration: none;
   }
 .nav-right {
