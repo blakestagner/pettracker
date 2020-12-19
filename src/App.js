@@ -162,7 +162,9 @@ function App() {
           { isLoggedIn ? 
             (
               <MobileView>
-                <BottomNav />
+                <BottomNav 
+                  userDetails={userDetails}
+                  petDetails={petDetails}/>
               </MobileView>
             ) : ('') 
           }

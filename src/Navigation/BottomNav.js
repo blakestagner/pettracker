@@ -4,7 +4,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import HomeIcon from '@material-ui/icons/Home';
 import MessageIcon from '@material-ui/icons/Message';
 import TimelineIcon from '@material-ui/icons/Timeline';
-import SettingsIcon from '@material-ui/icons/Settings';
+import AddIcon from '@material-ui/icons/Add';
 import PetsIcon from '@material-ui/icons/Pets';
 
 
@@ -33,8 +33,13 @@ function BottomNav(props) {
 
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
-
+        if(newValue === 3) {
+            return test()
+        } else setValue(newValue);
+    }
+    const test = () => {
+        console.log('test Success', props.userDetails.pet_id)
+        
     }
 
     return (
@@ -48,7 +53,7 @@ function BottomNav(props) {
                 <BottomNavigationAction value="/home" label="Home" icon={<HomeIcon />} component={Link} to="/home"/>
                 <BottomNavigationAction value="/timeline" label="Timeline" icon={<TimelineIcon />} component={Link} to="/timeline" />
                 <BottomNavigationAction value="/pet-profile" label="Pet" icon={<PetsIcon />} component={Link} to="/pet-profile" />
-                <BottomNavigationAction value="/settings" label="Settings" icon={<SettingsIcon />} component={Link} to="/settings" />
+                {props.userDetails.pet_id !== 0 ? <BottomNavigationAction label="Log" icon={<AddIcon />} /> : ''}
             </BottomNavigation>
         </div>
     )

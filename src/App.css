@@ -53,12 +53,17 @@
 .icon-text-row {
   display: flex;
   align-items: center;
-  margin: 20px 0px
+  margin: 30px 0px 50px;
+}
+.row-of-rows {
+  display: flex;
+  align-items: center;
+  margin: 5px 0px
 }
 .img-icon {
   border-radius: 50%;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   padding: 5px;
   background-color: red;
   margin: 0 10px 0 0 ;

@@ -6,6 +6,7 @@ import Loading from '../HelperComponents/Loading';
 import { useEffect, useState } from 'react';
 import ButtonIcon from '../Inputs/ButtonIcon'
 import petsIcon from '../Inputs/icons/pets.svg';
+import foodIcon from '../img/icons/food.svg';
 import { useHistory } from 'react-router-dom';
 
 function PetProfile(props) {
@@ -72,25 +73,41 @@ function PetProfileDetails({petDetails, userDetails}) {
                         />
                 </div>
                 <div style={{margin: '0 auto'}}>
-                    <div className="icon-text-row">
+                    <div className="row-of-rows">
                         <img
                             className="img-icon" 
                             src={petIcon} 
                             alt="Name"/>
                         <p>{petDetails.name}</p>
                     </div>
-                    <div className="icon-text-row">
+                    <div className="row-of-rows">
                         <img
                             className="img-icon" 
                             src={bdayIcon} 
                             alt="Bday"/>
                         <p>{birthdayConvert(petDetails.birthday)}</p>               
                     </div>
+                    <div className="row-of-rows">
+                        <img
+                            className="img-icon" 
+                            src={foodIcon} 
+                            alt="Bday"/>
+                        <p>I eat {petDetails.feed_perday} times a day</p>               
+                    </div>
                 </div>
             </div>
             <div>
                 <h3 style={{textAlign: 'left'}}>Feed Schedule</h3>
                 <p>{petDetails.feed_perday} Mealsper Day</p>
+                <p>Add section to show when they eat and for users to edit when they eat, add another meal or delete another meal</p>
+                
+
+                <h3 style={{textAlign: 'left'}}>{petDetails.name}'s uranations</h3>
+                <p>Section for avg Pee per day, avg poop per day, just avg everything from past 3 days, past week, past month</p>
+
+                <h3 style={{textAlign: 'left'}}>{petDetails.name}'s poops</h3>
+                <p>Section for avg Pee per day, avg poop per day, just avg everything from past 3 days, past week, past month</p>
+                <p>show percentage of normal and wet poops</p>
             </div>
         </div>
     )
