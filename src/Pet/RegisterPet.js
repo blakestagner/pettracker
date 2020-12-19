@@ -1,4 +1,4 @@
-import { registerPet } from '../Autho/Repository';
+import { registerPet} from '../Autho/Repository';
 import './pet.scss';
 import {TextField } from '@material-ui/core';
 import Radio from '@material-ui/core/Radio';
@@ -7,15 +7,17 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '../Inputs/Button';
+import { useHistory } from 'react-router-dom';
 
 function RegisterPet(props) {
     const [petRegister, setPetRegister] = useState({
         name: '',
         type: '',
         feed_perday: '',
-        owner_id: props.userId,
         birthday: ''
     })
+
+    let history = useHistory();
 
     const handleChange = (e) => {
         const {id, value} = e.target;
@@ -27,10 +29,18 @@ function RegisterPet(props) {
     }
     const submitPetRegistration = () => {
         const regMsg = document.querySelector('#regMsg');
+
+        const registrationSuccess = () => {
+            regMsg.innerHTML = '';
+            props.updateUserData()
+            history.push('/home');
+        }
+
         registerPet(petRegister)
         .then(res => {
             regMsg.innerHTML = res
-            setTimeout(() => regMsg.innerHTML = '', 3000)
+            props.updateUserData()
+            setTimeout(() => registrationSuccess(), 3000)
         })
         .catch(err => console.log(err))
     }
@@ -50,6 +60,8 @@ function RegisterPet(props) {
     return (
         <div className='register-pet-box'>
             <h2>Register a Pet</h2>
+            {props.userDetails.id}
+            {petRegister.owner_id}
             <div className="register-pet-box-inner">
                 <TextField 
                     fullWidth={true}
@@ -124,16 +136,6 @@ function RegisterPet(props) {
                                 color='primary'
                                 onClick={ handleChange } />}
                         label="4"
-                        labelPlacement="start"
-                    />
-                    <FormControlLabel
-                        value="5"
-                        control={
-                            <Radio 
-                                id="feed_perday"
-                                color='primary'
-                                onClick={ handleChange } />}
-                        label="5"
                         labelPlacement="start"
                     />
                 </RadioGroup>

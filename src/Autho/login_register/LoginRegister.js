@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { getUserInfo, login, register } from '../Repository';
+import { useState, useEffect } from 'react';
+import { login } from '../Repository';
 import {TextField } from '@material-ui/core';
 import Button from '../../Inputs/Button'
 
@@ -15,6 +15,12 @@ function LoginLogout(props) {
         props.handleLogin(data);
         props.history.push("/home");
       }
+
+    useEffect(() => {
+        if(props.isLoggedIn) {
+            props.history.push("/home")
+        }
+    }, [props.isLoggedIn])
 
     return (
         <div className="login-register-box"> 

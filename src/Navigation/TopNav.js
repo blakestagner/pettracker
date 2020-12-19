@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SlideOutNavRight from './SlideOutNavRight';
 import React, {useRef, useEffect} from "react";
 
+
 function TopNav(props) {
 
     const toggleNavRef = useRef();
@@ -23,7 +24,8 @@ function TopNav(props) {
                     props.userDetails.id+
                     props.userDetails.fname+
                     props.userDetails.lname}
-                hasProfileImg={props.userDetails.profile_pic}/>
+                hasProfileImg={props.userDetails.profile_pic}
+                type="human"/>
             </div>
             <ul className="nav-center"> 
                 <li className="menuList">
@@ -38,12 +40,12 @@ function TopNav(props) {
             </ul>
             <div className="nav-right">
                 <Avatar 
+                    petDetails={props.petDetails}
                     userDetails={props.userDetails}
-                    profileImgUrl = { 
-                        props.userDetails.id+
-                        props.userDetails.fname+
-                        props.userDetails.lname}
-                    hasProfileImg={props.userDetails.profile_pic}
+                    petProfileImgUrl = { 
+                        props.petDetails.id+
+                        props.petDetails.name}
+                    type="pet"
                     handleToggle={() => toggleNavRef.current.toggle()}
                     />
             </div>

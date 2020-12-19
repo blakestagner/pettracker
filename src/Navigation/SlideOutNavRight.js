@@ -7,15 +7,26 @@ import Logout from '../Autho/login_register/Logout';
 const SlideOutNavRight = forwardRef((props, ref) => {
 
     const [sideNav, toggleSideNav] = useState(0);
-
+    const root = document.querySelector('#root')
+    
     const toggleNav = () => {
         const sideNavToggle = document.querySelector('#side-nav-right');
         if (sideNav === 0 ) {
             toggleSideNav(1)
+            handleInputBeyond();
         } else if (sideNav === 1) {
             toggleSideNav(0)
         } else console.log('error')
         
+    }
+
+    const handleInputBeyondEventListener = () => {
+        toggleSideNav(0)
+        root.removeEventListener('click', handleInputBeyondEventListener)
+    }
+
+    const handleInputBeyond = () => {
+        root.addEventListener('click', handleInputBeyondEventListener)
     }
     
     useImperativeHandle(ref, () => ({
@@ -30,13 +41,10 @@ const SlideOutNavRight = forwardRef((props, ref) => {
                 src={arrow}
                 className="back-arrow" 
                 alt="close menu"
-                onClick={() => toggleNav() }/>
+                />
                 <ul className="mobileNavBarList" id="mobileNavBarList" >
                     <li>
-                        <Link to="/photos">Photos</Link>
-                    </li>
-                    <li>
-                        <Link to="/login">Log Out</Link>
+                        <Link to="/home">home</Link>
                     </li>
                 </ul>
                 <Logout logout={() => props.logout()}/>

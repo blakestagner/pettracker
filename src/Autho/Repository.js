@@ -47,13 +47,25 @@ export function getUserInfo() {
        .catch(err => Promise.reject('Request Not Authenticated!'));
     }
 
+export function updateUser () {
+    return axios.get(`${BASE_URL}/user/updated-data`, { 
+        params: { 'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(response => {
+        localStorage.setItem('x-access-token', response.data.token);
+        localStorage.setItem('x-access-token-expiration', Date.now() + 1000 * 60 * 60 * 24 * 30 );
+        return response.data
+    })
+    .catch((err) => Promise.reject(err.response.data));
+}
+
 export function registerPet(data) {
     return axios.post(`${BASE_URL}/api/register-pet`, {
         name: data.name,
         type: data.type,
         birthday: data.birthday,
         feed_perday: data.feed_perday,
-        owner_id: `${data.owner_id}`
+        'x-access-token': localStorage.getItem('x-access-token')
     })
     .then((res) => {
         return res.data

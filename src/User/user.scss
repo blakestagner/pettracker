@@ -1,11 +1,22 @@
 .default-profile-img {
     height: 50px;
     width: 50px;
-    padding: 0 10px 0 0;
+    padding: 0 10px 0 10px;
+}
+.default-profile-img-large {
+    height: 100px;
+    width: 100px;
+    padding: 0 10px 0 10px;
 }
 .profile-img {
     height: 50px;
     width: 50px;
+    padding: 0 10px 0 10px;
+    border-radius: 50%;
+}
+.profile-img-large {
+    height: 100px;
+    width: 100px;
     padding: 0 10px 0 10px;
     border-radius: 50%;
 }

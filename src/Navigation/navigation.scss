@@ -11,7 +11,7 @@ $primary-color: #5465FF;
     border-bottom-left-radius: 40px;
     
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-
+    z-index: 100;
     display: flex;
     align-content: space-between;
     flex-wrap: wrap;
@@ -71,4 +71,7 @@ $primary-color: #5465FF;
     left: -100;
     transition: left ease .25s;
     top: 0;
+}
+.MuiBottomNavigation-root a:nth-child(3) {
+    color: red;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import { BrowserRouter as  Router, Switch, Route } from 'react-router-dom';
-import { isAuthenticated, getUserInfo, getPetInfo } from './Autho/Repository';
+import { isAuthenticated, getUserInfo, getPetInfo, updateUser } from './Autho/Repository';
 import './App.css';
 
 import LoginLogout from './Autho/login_register/LoginRegister';
@@ -11,6 +11,7 @@ import Chat from './Chat/Chat';
 import Settings from './Settings/Settings';
 import TopNav from './Navigation/TopNav';
 import PetProfile from './Pet/PetProfile';
+import RegisterPet from './Pet/RegisterPet';
 
 import Unauthorized from './Autho/Unauthorized';
 import Logout from './Autho/login_register/Logout';
@@ -55,7 +56,7 @@ function App() {
             })
     getPetInfo()
         .then(res => {
-            res.length === 0 ? setPetDetails(0) : setPetDetails(res);
+            res.length === 0 ? setPetDetails(0) : setPetDetails(res[0]);
         })
         .catch(err => {
             console.log(err, "catch")
@@ -67,12 +68,45 @@ function App() {
     } else {}
   }
 
+  const updateUserData = () => {
+    updateUser()
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+    getUserInfo()
+      .then((res) => {
+          setLoggedIn(true)
+          setUserDetails(res)
+          console.log(res, 'updateUserDta')
+      })
+      .catch(err => {
+        localStorage.removeItem('x-access-token');
+        setLoggedIn(false)
+      })
+      getPetInfo()
+      .then(res => {
+          res.length === 0 ? setPetDetails(0) : setPetDetails(res[0]);
+      })
+      .catch(err => {
+          console.log(err, "catch")
+      })
+  }
+
+   
+
   return (
     <div className="App">
       <div className="body-container" style={ isLoggedIn ? {margin: '70px 10px'} : {margin: '0px'} }>
         <Router >
         <ScrollToTop />
-          {isLoggedIn ? (<TopNav userDetails={userDetails} petDetails={petDetails} isLoggedIn={isLoggedIn} logout={() => setLoggedIn(false)}/>) : ("")}
+          {isLoggedIn ? (
+                <TopNav 
+                  userDetails={userDetails} 
+                  petDetails={petDetails}
+                  isLoggedIn={isLoggedIn} 
+                  logout={() => setLoggedIn(false)}/>
+              ) : (
+                ""
+              )}
           <Switch>
             <Fragment>
               <Route 
@@ -97,6 +131,14 @@ function App() {
                   userDetails={userDetails}
                   petDetails={petDetails}
                   exact path='/pet-profile' 
+                  updateUserData={() => updateUserData()}
+                  component={PetProfile} />
+              <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
+                  userDetails={userDetails}
+                  petDetails={petDetails}
+                  exact path='/register-pet' 
+                  updateUserData={() => updateUserData()}
                   component={PetProfile} />
               <ProtectedRoute
                   isLoggedIn={isLoggedIn}
