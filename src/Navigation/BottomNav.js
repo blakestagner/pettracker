@@ -6,7 +6,8 @@ import MessageIcon from '@material-ui/icons/Message';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import AddIcon from '@material-ui/icons/Add';
 import PetsIcon from '@material-ui/icons/Pets';
-
+import ActivityLog from '../Pet/ActivityLog';
+import { useRef } from "react";
 
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -26,6 +27,10 @@ function BottomNav(props) {
     const classes = useStyles();
     const { pathname } = useLocation();
     const [value, setValue] = useState(pathname);
+    const [logStatus, setLog ] = useState(0);
+
+    const toggleActivityLogRef = useRef();
+    
 
     useEffect(() => {
         setValue(pathname)
@@ -34,16 +39,16 @@ function BottomNav(props) {
 
     const handleChange = (event, newValue) => {
         if(newValue === 3) {
-            return test()
+            return toggleActivityLogRef.current.toggle()
         } else setValue(newValue);
-    }
-    const test = () => {
-        console.log('test Success', props.userDetails.pet_id)
-        
     }
 
     return (
         <div>
+            <ActivityLog 
+                ref={toggleActivityLogRef}
+                userDetails={props.userDetails}
+                petDetails={props.petDetails}/>
             <BottomNavigation
                 value={value}
                 onChange={(event, newValue) => handleChange(event, newValue)}
@@ -53,7 +58,10 @@ function BottomNav(props) {
                 <BottomNavigationAction value="/home" label="Home" icon={<HomeIcon />} component={Link} to="/home"/>
                 <BottomNavigationAction value="/timeline" label="Timeline" icon={<TimelineIcon />} component={Link} to="/timeline" />
                 <BottomNavigationAction value="/pet-profile" label="Pet" icon={<PetsIcon />} component={Link} to="/pet-profile" />
-                {props.userDetails.pet_id !== 0 ? <BottomNavigationAction label="Log" icon={<AddIcon />} /> : ''}
+                {props.userDetails.pet_id !== 0 ? 
+                    <BottomNavigationAction label="Log" icon={<AddIcon />} /> 
+                    : 
+                    ''}
             </BottomNavigation>
         </div>
     )

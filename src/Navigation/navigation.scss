@@ -38,6 +38,7 @@ $primary-color: #5465FF;
 .nav-center li a{
     color: #000;
     text-decoration: none;
+    font-weight: bold;
   }
 .nav-right {
     align-self: end;
@@ -72,6 +73,27 @@ $primary-color: #5465FF;
     transition: left ease .25s;
     top: 0;
 }
-.MuiBottomNavigation-root a:nth-child(3) {
-    
+.MuiBottomNavigation-root button {
+    color: green;
+}
+
+/*Nav bar right*/
+.mobile-navbar-list {
+
+}
+.mobile-navbar-list {
+    list-style-type: none;
+    padding: 0;
+
+}
+.mobile-navbar-list li {
+    list-style-type: none;
+    text-align: left;
+    padding: 10px 25px;
+}
+.mobile-navbar-list li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 2em;
+    font-weight: bold;
 }

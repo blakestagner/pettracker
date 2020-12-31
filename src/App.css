@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App-logo {
@@ -45,6 +46,16 @@
   font-size: calc(10px + 2vmin);
   color: #000;
   padding: 20px 10px;
+}
+.body-container-login {
+  background-color: blue;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: #000;
+  justify-content: center;
 }
 .space-below {
   margin-bottom: 50px;
@@ -107,4 +118,14 @@
 .done-loading {
   height: fit-content;
   width: fit-content;
+}
+/*Back Button*/
+.back-button {
+  background-color: #3f51b5;
+  border-radius: 50%;
+  outline: none;
+  width: 60px;
+  height: 60px;
+  margin: 20px auto; 
+  border: none;
 }

@@ -81,4 +81,51 @@ export function getPetInfo(data) {
        })
        .then(res => res.data)
        .catch(err => Promise.reject('Request Not Authenticated!'));
-    }
+}
+/*log food info*/
+export function logFoodActivity(data) {
+    return axios.post(`${BASE_URL}/api/log-food-activity`, {
+        id: data.id,
+        amount_ate: data.amount_ate,
+        feed_amount: data.feed_amount,
+        feed_time: data.feed_time,
+        'x-access-token': localStorage.getItem('x-access-token')
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        return err.response.data
+    })
+}
+/*log pee info*/
+export function logPeeActivity(data) {
+    return axios.post(`${BASE_URL}/api/log-pee-activity`, {
+        id: data.id,
+        pee_time: data.pee_time,
+        missed: data.missed,
+        'x-access-token': localStorage.getItem('x-access-token')
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        return err.response.data
+    })
+}
+/*log poo info*/
+export function logPooActivity(data) {
+    return axios.post(`${BASE_URL}/api/log-poo-activity`, {
+        id: data.id,
+        poo_time: data.poo_time,
+        missed: data.missed,
+        consistency: data.consistency,
+        'x-access-token': localStorage.getItem('x-access-token')
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        return err.response.data
+    })
+}

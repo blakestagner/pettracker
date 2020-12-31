@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './navigation.scss';
 import arrow from '../img/icons/arrow_back.svg'
-import React, {useEffect, useState, useImperativeHandle, forwardRef} from "react";
+import React, { useState, useImperativeHandle, forwardRef} from "react";
 import Logout from '../Autho/login_register/Logout';
 
 const SlideOutNavRight = forwardRef((props, ref) => {
@@ -10,7 +10,6 @@ const SlideOutNavRight = forwardRef((props, ref) => {
     const root = document.querySelector('#root')
     
     const toggleNav = () => {
-        const sideNavToggle = document.querySelector('#side-nav-right');
         if (sideNav === 0 ) {
             toggleSideNav(1)
             handleInputBeyond();
@@ -42,7 +41,7 @@ const SlideOutNavRight = forwardRef((props, ref) => {
                 className="back-arrow" 
                 alt="close menu"
                 />
-                <ul className="mobileNavBarList" id="mobileNavBarList" >
+                <ul className="mobile-navbar-list" id="mobileNavBarList" >
                     <li>
                         <Link to="/home">home</Link>
                     </li>

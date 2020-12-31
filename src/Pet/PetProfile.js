@@ -1,4 +1,3 @@
-import RegisterPet from './RegisterPet';
 import Avatar from '../User/Avatar';
 import bdayIcon from '../img/icons/bday.svg';
 import petIcon from '../img/icons/pets.svg';
@@ -25,7 +24,7 @@ function PetProfile(props) {
                     userDetails={props.userDetails}
                     /> 
                 : 
-                props.userDetails.pet_id != 0 ? 
+                props.userDetails.pet_id !== 0 ? 
                 'Yes pets' : 
                 <ButtonIcon 
                     name="Register a Pet" 
@@ -39,7 +38,6 @@ export default PetProfile;
 
 function PetProfileDetails({petDetails, userDetails}) {
     const [isLoading, doneLoading] = useState(true)
-    const [pet, setPet] = useState()
 
     useEffect(() => {
         doneLoading(false)

@@ -1,7 +1,8 @@
 $myColor: #fff;
+$colorMain: #0277BD;
 
-button {
-    background: red;
+.button {
+    background: $colorMain;
     border-radius: 25px;
     border: none;
     padding: 5px 15px;
@@ -16,8 +17,30 @@ button {
     width: 25px;
     padding: 0 10px 0 0;
 }
-button p {
+.button p {
     margin: 0px;
     font-size: 20px;
 
+}
+.button-row {
+    background: $colorMain;
+    border-radius: 25px;
+    border: none;
+    padding: 5px 15px;
+    font-weight: bold;
+    margin: 20px 5px 20px;
+    color: $myColor;
+    width: 120px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.button-row p {
+    margin: 0px;
+    font-size: 20px;
+    text-align: center;
+}
+.button-row:focus {
+    outline: none;
+    border: 3px green solid;
 }

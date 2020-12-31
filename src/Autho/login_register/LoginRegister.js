@@ -23,20 +23,23 @@ function LoginLogout(props) {
     }, [props.isLoggedIn])
 
     return (
-        <div className="login-register-box"> 
-            <div className="tabs">
-                <p 
-                    className={loginBox === 'Login' ? 'active' : ''}
-                    onClick={() => setLoginBox('Login')} >Login</p>
-                <p 
-                    className={loginBox === 'Register' ? 'active' : ''}
-                    onClick={() => setLoginBox('Register')}>Register</p>
-            </div>
-            <div className="login-register-box-main">
-                {loginBox === 'Login' ? 
-                    <Login handleSuccessfulAuth={handleSuccessfulAuth} /> 
-                    : 
-                    <Register />}
+        <div>
+            <h1 className='login-title'>Pets</h1>
+            <div className="login-register-box">
+                <div className="tabs">
+                    <p 
+                        className={loginBox === 'Login' ? 'active' : 'inactive'}
+                        onClick={() => setLoginBox('Login')} >Login</p>
+                    <p 
+                        className={loginBox === 'Register' ? 'active' : 'inactive'}
+                        onClick={() => setLoginBox('Register')}>Register</p>
+                </div>
+                <div className="login-register-box-main">
+                    {loginBox === 'Login' ? 
+                        <Login handleSuccessfulAuth={handleSuccessfulAuth} /> 
+                        : 
+                        <Register />}
+                </div>
             </div>
         </div>
     )

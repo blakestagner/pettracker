@@ -72,7 +72,6 @@ function RegisterPet(props) {
                     value={petRegister.name}
                     onChange={ handleChange }
                 />
-
                 <p className="input-label">Pet Type *</p>
                 <RadioGroup row aria-label="Pet Type" name="type" defaultValue="top">
                     <FormControlLabel

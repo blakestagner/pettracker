@@ -11,10 +11,8 @@ import Chat from './Chat/Chat';
 import Settings from './Settings/Settings';
 import TopNav from './Navigation/TopNav';
 import PetProfile from './Pet/PetProfile';
-import RegisterPet from './Pet/RegisterPet';
 
 import Unauthorized from './Autho/Unauthorized';
-import Logout from './Autho/login_register/Logout';
 
 import BottomNav from './Navigation/BottomNav';
 import ScrollToTop from './HelperComponents/ScrollToTop';
@@ -95,7 +93,9 @@ function App() {
 
   return (
     <div className="App">
-      <div className="body-container" style={ isLoggedIn ? {margin: '70px 10px'} : {margin: '0px'} }>
+      <div 
+          className={isLoggedIn ? 'body-container' : 'body-container-login'}
+          style={ isLoggedIn ? {margin: '70px 10px'} : {margin: '0px', backgroundColor: '#b3E5FC'} }>
         <Router >
         <ScrollToTop />
           {isLoggedIn ? (

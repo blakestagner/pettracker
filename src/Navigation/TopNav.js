@@ -2,8 +2,13 @@ import './navigation.scss';
 import Avatar from '../User/Avatar';
 import { Link } from 'react-router-dom';
 import SlideOutNavRight from './SlideOutNavRight';
-import React, {useRef, useEffect} from "react";
-
+import React, { useRef } from "react";
+import {
+    BrowserView,
+    MobileView,
+    isBrowser
+    //isMobile
+  } from "react-device-detect";
 
 function TopNav(props) {
 
@@ -27,17 +32,24 @@ function TopNav(props) {
                 hasProfileImg={props.userDetails.profile_pic}
                 type="human"/>
             </div>
-            <ul className="nav-center"> 
-                <li className="menuList">
-                    <Link to="/home">home</Link>
-                </li> 
-                <li className="menuList">
-                    <Link to="/timeline">timeline</Link>
-                </li>
-                <li className="menuList">
-                    <Link to="/settings">settings</Link>
-                </li>
-            </ul>
+            <BrowserView>
+                <ul className="nav-center"> 
+                    <li className="menuList">
+                        <Link to="/home">home</Link>
+                    </li> 
+                    <li className="menuList">
+                        <Link to="/timeline">timeline</Link>
+                    </li>
+                    <li className="menuList">
+                        <Link to="/settings">settings</Link>
+                    </li>
+                </ul>
+            </BrowserView>
+            <MobileView>
+                <div>
+                    <p>Mobile View</p>
+                </div>
+            </MobileView>
             <div className="nav-right">
                 <Avatar 
                     petDetails={props.petDetails}

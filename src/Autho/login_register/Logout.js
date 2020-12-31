@@ -12,7 +12,9 @@ function Logout(props) {
     }
     return (
         <div className="logout">
-            <button onClick={() => logout()}><p>logout</p></button>
+            <button 
+                className="button"
+                onClick={() => logout()}><p>logout</p></button>
         </div>
     )
 }

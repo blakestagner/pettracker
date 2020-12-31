@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import ButtonIcon from '../Inputs/ButtonIcon';
 import petsIcon from '../Inputs/icons/pets.svg';
 import { useHistory } from 'react-router-dom';
