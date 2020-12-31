@@ -97,3 +97,20 @@ $primary-color: #5465FF;
     font-size: 2em;
     font-weight: bold;
 }
+
+/*mobile top nav title*/
+.mobile-topnav-title {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mobile-topnav-title p {
+    margin: 0px;
+    font-family: 'Paytone One', sans-serif;
+    color: #3f51b5;
+    font-size: 30px;
+}
+.mobile-topnav-title span {
+    color: #0277BD;
+}

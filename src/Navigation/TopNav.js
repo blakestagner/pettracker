@@ -46,8 +46,8 @@ function TopNav(props) {
                 </ul>
             </BrowserView>
             <MobileView>
-                <div>
-                    <p>Mobile View</p>
+                <div className="mobile-topnav-title">
+                    <p>f<span>u</span>rb<span>u</span>d</p>
                 </div>
             </MobileView>
             <div className="nav-right">

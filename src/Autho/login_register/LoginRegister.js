@@ -24,7 +24,9 @@ function LoginLogout(props) {
 
     return (
         <div>
-            <h1 className='login-title'>Pets</h1>
+            <div className="mobile-login-title">
+                <p>f<span>u</span>rb<span>u</span>d</p>
+            </div>
             <div className="login-register-box">
                 <div className="tabs">
                     <p 
@@ -112,6 +114,7 @@ function Login(props) {
                     id="password" 
                     label="password"
                     name="password"
+                    type="password"
                     value={loginData.password}
                     onChange={ handleChange }
                     />
@@ -134,7 +137,7 @@ function Register(props) {
     return (
         <div>
             <h3 >Resgister</h3>
-            <Button name="Register"/>
+            <p>Registration coming soon</p>
         </div>
     )
 }

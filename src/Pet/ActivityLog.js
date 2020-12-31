@@ -2,10 +2,15 @@ import {useEffect, useState, useImperativeHandle, forwardRef} from "react";
 import './pet.scss';
 import petsIcon from '../Inputs/icons/pets.svg';
 import foodIcon from '../img/icons/food.svg';
+import foodBlackIcon from '../img/icons/food_black.svg';
 import peeIcon from '../img/icons/pee.svg';
+import peeBlackIcon from '../img/icons/pee_black.svg';
 import poopIcon from '../img/icons/poop.svg';
+import poopBlackIcon from '../img/icons/poop_black.svg';
 import walkIcon from '../img/icons/walk.svg';
+import walkBlackIcon from '../img/icons/walk_black.svg';
 import backIcon from '../img/icons/arrow_back_white.svg';
+import closeIcon from '../img/icons/close.svg';
 import Avatar from '../User/Avatar';
 
 import ActivityForm from './ActivityForm';
@@ -44,21 +49,16 @@ const ActivityLog = forwardRef((props, ref) => {
         <div 
             className={toggleActivity ? 'activity-log-open' : 'activity-log-closed'} 
             id="activity-log">
-            <button
-              className="back-button">
-              <img
-                onClick={() => closeAll() }
-                src={backIcon}/>
-            </button>
-            <h1>What did {props.petDetails.name} do?</h1>
-            <Avatar
-                petDetails={props.petDetails}
-                userDetails={props.userDetails}
-                petProfileImgUrl = { 
-                    props.petDetails.id+
-                    props.petDetails.name}
-                type="pet-large"
-                />
+            {!selectedActivity ? 
+              (
+              <button
+                className="back-button">
+                <img
+                  onClick={() => closeAll() }
+                  src={closeIcon}/>
+              </button>
+              )
+            : ''}
             <div>
               {selectedActivity ? 
                 (
@@ -71,6 +71,17 @@ const ActivityLog = forwardRef((props, ref) => {
                 ) 
                   :
                 ''}
+            </div>
+            <div className="activitylog-profile-card">
+              <h1>What did {props.petDetails.name} do?</h1>
+              <Avatar
+                  petDetails={props.petDetails}
+                  userDetails={props.userDetails}
+                  petProfileImgUrl = { 
+                      props.petDetails.id+
+                      props.petDetails.name}
+                  type="pet-large"
+                  />
             </div>
               {selectedActivity ? 
                 (
@@ -136,39 +147,39 @@ function ActivitySelectedBar(props) {
   return (
     <div 
       className='activity-icon-bar'>
-      <button
+      <div className='activity-log-items'>
+        <img 
+          className={activitySelectedClass('Eat')}
+          src={props.activitySelected === 'Eat' ? foodIcon : foodBlackIcon}
+          name='Eat'
+          alt='food icon'
+          onClick={props.handleClick()}/>
+        <img 
+          className={activitySelectedClass('Pee')}
+          src={props.activitySelected === 'Pee' ? peeIcon : peeBlackIcon}
+          name='Pee'
+          alt='pee icon'
+          onClick={props.handleClick()}/>
+        <img 
+          className={activitySelectedClass('Poop')}
+          src={props.activitySelected === 'Poop' ? poopIcon : poopBlackIcon}
+          name='Poop'
+          alt='poop icon'
+          onClick={props.handleClick()}/>
+        <img 
+          className={activitySelectedClass('Walk')}
+          src={props.activitySelected === 'Walk' ? walkIcon : walkBlackIcon}
+          name='Walk'
+          alt='walk icon'
+          onClick={props.handleClick()}/>
+        </div>
+        <button
         className="back-button-bar">
         <img
           name='back'
           onClick={props.handleClick()}
           src={backIcon}/>
       </button>
-      <div className='activity-log-items'>
-        <img 
-          className={activitySelectedClass('Eat')}
-          src={foodIcon}
-          name='Eat'
-          alt='food icon'
-          onClick={props.handleClick()}/>
-        <img 
-          className={activitySelectedClass('Pee')}
-          src={peeIcon}
-          name='Pee'
-          alt='pee icon'
-          onClick={props.handleClick()}/>
-        <img 
-          className={activitySelectedClass('Poop')}
-          src={poopIcon}
-          name='Poop'
-          alt='poop icon'
-          onClick={props.handleClick()}/>
-        <img 
-          className={activitySelectedClass('Walk')}
-          src={walkIcon}
-          name='Walk'
-          alt='walk icon'
-          onClick={props.handleClick()}/>
-        </div>
     </div>
   )
 }
