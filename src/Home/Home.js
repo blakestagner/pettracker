@@ -2,7 +2,8 @@ import ButtonIcon from '../Inputs/ButtonIcon';
 import petsIcon from '../Inputs/icons/pets.svg';
 import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getPetPeeInfo } from '../Autho/Repository';
+import { getPetEatInfo, getPetPeeInfo, getPetPooInfo } from '../Autho/Repository';
+import FeedActivity from '../Pet/Feed/FeedActivity'
 
 function Home(props) {
     let history = useHistory();
@@ -13,11 +14,15 @@ function Home(props) {
 
     return (
         <div>
-            <h1>HOME</h1>
-            {props.petDetails.name}
             {props.userDetails.pet_id != 0 ? 
             <div>
+                <FeedActivity 
+                    petDetails={props.petDetails}/>
+                <br />
+                <br />
                 <PetPeePosts 
+                    petDetails={props.petDetails}/>
+                <PetPooPosts 
                     petDetails={props.petDetails}/>
             </div> 
             : 
@@ -30,6 +35,7 @@ function Home(props) {
     )
 }
 export default Home;
+
 
 function PetPeePosts( {petDetails} ) {
     const [peeData, setPeeData] = useState(null)
@@ -58,6 +64,39 @@ function PetPeePosts( {petDetails} ) {
         <div>
             <h2>Pee Data</h2>
             {peeData ? displayPeeData() : ''}
+        </div>
+    )
+}
+
+
+function PetPooPosts( {petDetails} ) {
+    const [pooData, setPooData] = useState(null)
+
+    useEffect(() => {
+        const helperFunction = () => {
+            getPetPooInfo(petDetails.id)
+                .then(res => setPooData(res))
+                .catch(err => console.log(err))
+        }
+        helperFunction()
+    }, [petDetails])
+
+    const displayPooData = () => {
+        return <div>
+                    {pooData.map(obj => (
+                    <div key={obj.id}>
+                        <p>{obj.time_select}</p>
+                        <p>{obj.missed}</p>
+                        <p>{obj.consistency}</p>
+                    </div>
+                    ))}
+                </div>
+    }
+
+    return (
+        <div>
+            <h2>Poo Data</h2>
+            {pooData ? displayPooData() : ''}
         </div>
     )
 }
