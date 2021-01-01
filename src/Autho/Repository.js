@@ -129,10 +129,26 @@ export function logPooActivity(data) {
         return err.response.data
     })
 }
+//Pet eat
+export function getPetEatInfo(data) {
+    return axios.get(`${BASE_URL}/api/pet-eat-data`, { 
+        params: { 'pet_id': data, 'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+    }
 //Pet pee
-
 export function getPetPeeInfo(data) {
     return axios.get(`${BASE_URL}/api/pet-pee-data`, { 
+        params: { 'pet_id': data, 'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+    }
+
+/*pet poo*/
+export function getPetPooInfo(data) {
+    return axios.get(`${BASE_URL}/api/pet-poo-data`, { 
         params: { 'pet_id': data, 'x-access-token': localStorage.getItem('x-access-token')} 
        })
        .then(res => res.data)
