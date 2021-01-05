@@ -14,7 +14,7 @@ export function TodaysDate() {
 
 export function TwoDaysAgo() {
         var twoDaysAgo = new Date();
-        twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+        twoDaysAgo.setDate(twoDaysAgo.getDate() - 1);
         var year = twoDaysAgo.getFullYear();
         var month = twoDaysAgo.getMonth() + 1;
         var day = twoDaysAgo.getDate();
@@ -28,6 +28,19 @@ export function TwoDaysAgo() {
 export function SevenDaysAgo() {
     var sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    var year = sevenDaysAgo.getFullYear();
+    var month = sevenDaysAgo.getMonth() + 1;
+    var day = sevenDaysAgo.getDate();
+    return (
+        `${year}-${
+            month < 10 ? `0${month}`: month}-${
+            day < 10 ? `0${day}` : day}`
+    )
+    
+}
+export function FourteenDaysAgo() {
+    var sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 14);
     var year = sevenDaysAgo.getFullYear();
     var month = sevenDaysAgo.getMonth() + 1;
     var day = sevenDaysAgo.getDate();

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { getPetEatInfo  } from '../../Autho/Repository';
 import FormatTime from '../../HelperComponents/FormatTime';
 
-import FeedDays from './FeedDays';
-
+import TimeSelectMenu from '../TimeSelectMenu'
+import FeedDays from './FeedDays'
 
 function FeedActivity( {petDetails} ) {
     const [eatData, setEatData] = useState(null)
@@ -28,6 +28,7 @@ function FeedActivity( {petDetails} ) {
         <div>
             <h2>Eat Data</h2>
             {eatData ? displayEatData() : ''}
+
         </div>
     )
 }

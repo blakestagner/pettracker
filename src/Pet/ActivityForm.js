@@ -113,10 +113,11 @@ function EatActivity(props) {
     const [petEat, setPetEat ] = useState({
         id: props.petDetails.id,
         feed_time: props.time,
-        feed_amount: '1/4 cup',
+        feed_amount: '3 tbsp',
         amount_ate: ''
     })
     const [eatNow, setEatNow] = useState(1);
+    const [updated, setUpdate ] = useState(0);
 
     const handleChange = (e) => {
         const {id, value} = e.target;
@@ -124,12 +125,18 @@ function EatActivity(props) {
             ...prevState,
             [id] : value
         }))
-        console.log(petEat)
     }
 
     const submitEat = () => {
+        const updateMsg = document.querySelector('#eat-submit-msg')
+        updateMsg.innerHTML = 'Submitting'
+        setUpdate(1)
         logFoodActivity(petEat)
-            .then(res => console.log(res))
+            .then(res => {
+                updateMsg.innerHTML = 'Success'
+                setUpdate(0)
+                setTimeout(() => updateMsg.innerHTML = 'Log Now', 1000)
+            })
             .catch(err => console.log(err))
     }
     const amountAte = () => {
@@ -137,7 +144,7 @@ function EatActivity(props) {
                     <p className="form-input-label">Amount Ate *</p>
                     <RadioGroup row aria-label="Amount Ate" name="amount_ate" defaultValue="top">
                         <FormControlLabel
-                            value="none"
+                            value="0"
                             control={
                                 <Radio 
                                     id="amount_ate"
@@ -147,7 +154,7 @@ function EatActivity(props) {
                             labelPlacement="top"
                         />
                         <FormControlLabel
-                            value="1/4"
+                            value="0.25"
                             control={
                                 <Radio 
                                     id="amount_ate"
@@ -157,7 +164,7 @@ function EatActivity(props) {
                             labelPlacement="top"
                         />
                         <FormControlLabel
-                            value="1/2"
+                            value="0.5"
                             control={
                                 <Radio 
                                     id="amount_ate"
@@ -167,7 +174,7 @@ function EatActivity(props) {
                             labelPlacement="top"
                         />
                         <FormControlLabel
-                            value="3/4"
+                            value="0.75"
                             control={
                                 <Radio 
                                     id="amount_ate"
@@ -177,7 +184,7 @@ function EatActivity(props) {
                             labelPlacement="top"
                         />
                         <FormControlLabel
-                            value="All"
+                            value="1"
                             control={
                                 <Radio 
                                     id="amount_ate"
@@ -237,9 +244,14 @@ function EatActivity(props) {
                 </div>
             )}
             {amountAte()}
-            <Button
+            <button
+                className="submit-activity-button"
+                id="eat-submit"
                 name="Log Now"
-                onClick={() => submitEat()}/>
+                onClick={() => submitEat()}>
+                <p id="eat-submit-msg">Log Now</p>
+                {updated ? (<LoadingAnimation />) : ''}
+            </button>
         </div>
     )
 }

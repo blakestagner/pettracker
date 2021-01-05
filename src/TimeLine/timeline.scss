@@ -1,0 +1,21 @@
+.timeline-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    width: 100vw;
+}
+.timeline-select button {
+    color: #fff;
+    width: 25%;
+    background-color: #3f51b5;
+    border: none;
+    margin: 5px;
+    border-radius: 25px;
+    padding: 5px 15px;
+}
+.timeline-select button p {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0px;
+}

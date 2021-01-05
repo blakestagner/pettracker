@@ -2,6 +2,7 @@ import './navigation.scss';
 import Avatar from '../User/Avatar';
 import { Link } from 'react-router-dom';
 import SlideOutNavRight from './SlideOutNavRight';
+import SlideOutNavLeft from './SlideOutNavLeft';
 import React, { useRef } from "react";
 import {
     BrowserView,
@@ -13,6 +14,7 @@ import {
 function TopNav(props) {
 
     const toggleNavRef = useRef();
+    const toggleNavLeftRef = useRef();
 
     const logout = () => {
         props.logout();
@@ -30,7 +32,8 @@ function TopNav(props) {
                     props.userDetails.fname+
                     props.userDetails.lname}
                 hasProfileImg={props.userDetails.profile_pic}
-                type="human"/>
+                type="human"
+                handleToggle={() => toggleNavLeftRef.current.toggle()}/>
             </div>
             <BrowserView>
                 <ul className="nav-center"> 
@@ -61,6 +64,7 @@ function TopNav(props) {
                     handleToggle={() => toggleNavRef.current.toggle()}
                     />
             </div>
+            <SlideOutNavLeft ref={toggleNavLeftRef} logout={() => logout()}/>
             <SlideOutNavRight ref={toggleNavRef} logout={() => logout()}/>
         </div>
     )

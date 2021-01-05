@@ -16,14 +16,8 @@ function Home(props) {
         <div>
             {props.userDetails.pet_id != 0 ? 
             <div>
-                <FeedActivity 
-                    petDetails={props.petDetails}/>
-                <br />
-                <br />
-                <PetPeePosts 
-                    petDetails={props.petDetails}/>
-                <PetPooPosts 
-                    petDetails={props.petDetails}/>
+                <h1>Home</h1>
+
             </div> 
             : 
             <ButtonIcon 
@@ -35,68 +29,3 @@ function Home(props) {
     )
 }
 export default Home;
-
-
-function PetPeePosts( {petDetails} ) {
-    const [peeData, setPeeData] = useState(null)
-
-    useEffect(() => {
-        const helperFunction = () => {
-            getPetPeeInfo(petDetails.id)
-                .then(res => setPeeData(res))
-                .catch(err => console.log(err))
-        }
-        helperFunction()
-    }, [petDetails])
-
-    const displayPeeData = () => {
-        return <div>
-                    {peeData.map(obj => (
-                    <div key={obj.id}>
-                        <p>{obj.time_select}</p>
-                        <p>{obj.missed}</p>
-                    </div>
-                    ))}
-                </div>
-    }
-
-    return (
-        <div>
-            <h2>Pee Data</h2>
-            {peeData ? displayPeeData() : ''}
-        </div>
-    )
-}
-
-
-function PetPooPosts( {petDetails} ) {
-    const [pooData, setPooData] = useState(null)
-
-    useEffect(() => {
-        const helperFunction = () => {
-            getPetPooInfo(petDetails.id)
-                .then(res => setPooData(res))
-                .catch(err => console.log(err))
-        }
-        helperFunction()
-    }, [petDetails])
-
-    const displayPooData = () => {
-        return <div>
-                    {pooData.map(obj => (
-                    <div key={obj.id}>
-                        <p>{obj.time_select}</p>
-                        <p>{obj.missed}</p>
-                        <p>{obj.consistency}</p>
-                    </div>
-                    ))}
-                </div>
-    }
-
-    return (
-        <div>
-            <h2>Poo Data</h2>
-            {pooData ? displayPooData() : ''}
-        </div>
-    )
-}

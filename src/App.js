@@ -143,6 +143,7 @@ function App() {
               <ProtectedRoute
                   isLoggedIn={isLoggedIn}
                   userDetails={userDetails}
+                  petDetails={petDetails}
                   exact path='/timeline' 
                   component={Timeline} />
               <ProtectedRoute

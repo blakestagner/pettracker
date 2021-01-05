@@ -65,6 +65,7 @@ export function registerPet(data) {
         type: data.type,
         birthday: data.birthday,
         feed_perday: data.feed_perday,
+        feed_amount: data.feed_amount,
         'x-access-token': localStorage.getItem('x-access-token')
     })
     .then((res) => {

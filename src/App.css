@@ -129,4 +129,7 @@
   height: 60px;
   margin: 20px auto; 
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

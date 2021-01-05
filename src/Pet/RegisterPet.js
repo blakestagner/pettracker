@@ -14,6 +14,7 @@ function RegisterPet(props) {
         name: '',
         type: '',
         feed_perday: '',
+        feed_amount: '3 tbsp', 
         birthday: ''
     })
 
