@@ -5,7 +5,7 @@ import '../pet.scss';
 import TimeSelectMenu from '../TimeSelectMenu';
 
 
-function FeedDays(props) {
+function PeeDays(props) {
     const [day, setDay] = useState(0)
 
     const filterTime = (data) => {
@@ -32,61 +32,38 @@ function FeedDays(props) {
 
         return filterDate()
     }
-    const yesterdayEatAverage = (dataSet) => {
-        let dataCount = filterTime(props.eatData);
-        let totalAte = 0;
-        let totalFed = 0;
-        let eatData = 0;
+
+    const yesterdayMissedAverage = () => {
+        let dataCount = filterTime(props.peeData);
+        let peeData = 0
         for(let i = 0; i < dataCount.length; i++) {
-            totalFed += parseFloat(dataCount[i].feed_amount.split(' ')[0]);
-            eatData += parseFloat(dataCount[i].amount_ate);
-            totalAte += parseFloat(dataCount[i].amount_ate) * parseFloat(dataCount[i].feed_amount.split(' ')[0]);
+            peeData += parseInt(dataCount[i].missed)
+
         }   
-        console.log(`total ate = ${totalAte}`)
-        console.log(`total fed = ${totalFed}`)
-        console.log(`Amount ate total = ${totalAte / totalFed}`)
-
-        const roundNumber = (num) => {
-            return Math.round((num * 100) * 10) / 10; 
-        }
-
-        
-
-        
-
-        if(dataSet === 'totalAte') {
-            return (
-                <p>Ate {roundNumber(totalAte / totalFed)}%</p>
-            )
-        } else if(dataSet === 'totalFed') {
-            return (
-                <p>Ate {totalFed} Tbsp</p>
-                )
-        } 
+        let peeDataAvg = Math.round((peeData / dataCount.length) * 10000) / 100;
+        return (
+            <p>Hit the spot {peeDataAvg}% of the time!</p>
+        )
     }
 
     const handleChange = (e) => {
         setDay(e)
     }
 
-
     return (
         <div>
             <TimeSelectMenu timeline={(day) => handleChange(day)}/>
             <div className="today-avg"> 
-               {yesterdayEatAverage('totalAte')}
-               {yesterdayEatAverage('totalFed')}
-               {}
+            {yesterdayMissedAverage()}
             </div>
-             {filterTime(props.eatData).map(obj => (
+             {filterTime(props.peeData).map(obj => (
                 <div key={obj.id}>
                     <FormatTime
                         time={obj.time_select}/>
-                    <p>{obj.feed_amount}</p>
-                    <p>{obj.amount_ate}</p>
+                    <p>{obj.missed}</p>
                 </div>
             ))}
         </div>
     )
 }
-export default FeedDays;
+export default PeeDays;

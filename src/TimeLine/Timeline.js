@@ -1,10 +1,10 @@
 import ButtonIcon from '../Inputs/ButtonIcon';
-import Button from '../Inputs/Button';
 import petsIcon from '../Inputs/icons/pets.svg';
 import { useHistory } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getPetEatInfo, getPetPeeInfo, getPetPooInfo } from '../Autho/Repository';
-import FeedActivity from '../Pet/Feed/FeedActivity'
+import { useState } from 'react';
+import FeedActivity from '../Pet/Feed/FeedActivity';
+import PeeActivity from '../Pet/Pee/PeeActivity';
+import PooActivity from '../Pet/Poo/PooActivity';
 
 import './timeline.scss'
 
@@ -18,7 +18,7 @@ function Timeline(props) {
 
     return (
         <div>
-            {props.userDetails.pet_id != 0 ? 
+            {props.userDetails.pet_id !== 0 ? 
             
             <div>
                 <div className="timeline-select">
@@ -39,13 +39,14 @@ function Timeline(props) {
                     :
                 ''}
                  { dataSet === 1 ? (
-                    <PetPeePosts 
+                    <PeeActivity 
                         petDetails={props.petDetails}/>
+
                 ) 
                     :
                 ''}
                  { dataSet === 2 ? (
-                    <PetPooPosts 
+                    <PooActivity
                         petDetails={props.petDetails}/>
                 ) 
                     :
@@ -61,67 +62,3 @@ function Timeline(props) {
     )
 }
 export default Timeline;
-
-function PetPeePosts( {petDetails} ) {
-    const [peeData, setPeeData] = useState(null)
-
-    useEffect(() => {
-        const helperFunction = () => {
-            getPetPeeInfo(petDetails.id)
-                .then(res => setPeeData(res))
-                .catch(err => console.log(err))
-        }
-        helperFunction()
-    }, [petDetails])
-
-    const displayPeeData = () => {
-        return <div>
-                    {peeData.map(obj => (
-                    <div key={obj.id}>
-                        <p>{obj.time_select}</p>
-                        <p>{obj.missed}</p>
-                    </div>
-                    ))}
-                </div>
-    }
-
-    return (
-        <div>
-            <h2>Pee Data</h2>
-            {peeData ? displayPeeData() : ''}
-        </div>
-    )
-}
-
-
-function PetPooPosts( {petDetails} ) {
-    const [pooData, setPooData] = useState(null)
-
-    useEffect(() => {
-        const helperFunction = () => {
-            getPetPooInfo(petDetails.id)
-                .then(res => setPooData(res))
-                .catch(err => console.log(err))
-        }
-        helperFunction()
-    }, [petDetails])
-
-    const displayPooData = () => {
-        return <div>
-                    {pooData.map(obj => (
-                    <div key={obj.id}>
-                        <p>{obj.time_select}</p>
-                        <p>{obj.missed}</p>
-                        <p>{obj.consistency}</p>
-                    </div>
-                    ))}
-                </div>
-    }
-
-    return (
-        <div>
-            <h2>Poo Data</h2>
-            {pooData ? displayPooData() : ''}
-        </div>
-    )
-}

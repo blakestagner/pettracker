@@ -5,9 +5,15 @@ function ButtonRow(props) {
     return (
         <button
             onClick={props.onClick}
-            className="button-row"
-        >
-            <p>{props.name}</p>
+            value={props.value}
+            id={props.id}
+            className="button-row">
+            <p 
+                onClick={props.onClick}
+                value={props.value}
+                id={props.id}>
+                {props.name}
+            </p>
         </button>
     )
 }

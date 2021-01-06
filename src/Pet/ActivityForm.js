@@ -5,7 +5,6 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import ButtonRow from '../Inputs/ButtonRow';
-import Button from '../Inputs/Button';
 import {logFoodActivity, logPeeActivity, logPooActivity} from '../Autho/Repository';
 import ButtonIconOnly from '../Inputs/ButtonIconOnly';
 import unchecked from '../img/icons/unchecked.svg';
@@ -20,11 +19,10 @@ function ActivityForm(props) {
         var day = currentTime.getDate();
         var hours = currentTime.getHours();
         var mins = currentTime.getMinutes();
-        let time = day
         return `${year}-${
                 month < 10 ? `0${month}`: month}-${
                 day < 10 ? `0${day}` : day}T${
-                hours}:${
+                hours < 10 ? `0${hours}` : hours}:${
                 mins < 10 ? `0${mins}` : mins}:00`;
     }
     const displayTime = (time) => {
@@ -260,13 +258,13 @@ function PeeActivity(props) {
     const [petPee, setPetPee ] = useState({
         id: props.petDetails.id,
         pee_time: props.time,
-        missed: 1,
+        missed: '1',
     })
     const [peeNow, setPeeNow] = useState(1);
     const [updated, setUpdate ] = useState(0);
 
     const handleChange = (e) => {
-        const {id, value} = e.target;
+        const {id, value} = e.currentTarget;
         setPetPee(prevState => ({
             ...prevState,
             [id] : value
@@ -301,7 +299,7 @@ function PeeActivity(props) {
       }));
 
     const classes = useStyles();
-
+    
     return (
         <div className='activity-log-form-inner'>
             <div className="current-select">
@@ -337,20 +335,16 @@ function PeeActivity(props) {
             <div className="pee-spot">
                 <p>Did {props.petDetails.name} Potty in the right spot?</p>
                 <ButtonIconOnly 
-                    onClick={ () => setPetPee(prevState => ({
-                        ...prevState,
-                        missed: 1
-                    }))}
-                    icon={petPee.missed ? checked : unchecked}
+                    id='missed'
+                    onClick={ handleChange }
+                    icon={petPee.missed === '1' ? checked : unchecked}
                     value='1'
                     name='Yes' />
                 <ButtonIconOnly 
-                    onClick={ () => setPetPee(prevState => ({
-                        ...prevState,
-                        missed: 0
-                    }))}
+                    id="missed"
+                    onClick={ handleChange }
                     value='0'
-                    icon={petPee.missed ? unchecked : checked}
+                    icon={petPee.missed === '0' ? checked : unchecked}
                     name='Miss' 
                     />
             </div>
@@ -371,14 +365,14 @@ function PoopActivity(props) {
     const [petPoo, setPetPoo ] = useState({
         id: props.petDetails.id,
         poo_time: props.time,
-        missed: '0',
+        missed: '1',
         consistency: '1'
     })
     const [pooNow, setPooNow] = useState(1);
     const [updated, setUpdate ] = useState(0);
 
     const handleChange = (e) => {
-        const {id, value} = e.target;
+        const {id, value} = e.currentTarget;
         setPetPoo(prevState => ({
             ...prevState,
             [id] : value
@@ -448,40 +442,32 @@ function PoopActivity(props) {
         <div className="pee-spot">
             <p>Did {props.petDetails.name} Poop in the right spot?</p>
             <ButtonIconOnly 
-                onClick={ () => setPetPoo(prevState => ({
-                    ...prevState,
-                    missed: 1
-                }))}
-                icon={petPoo.missed ? checked : unchecked}
+                id="missed"
+                onClick={ handleChange }
+                icon={petPoo.missed === '1' ? checked : unchecked}
                 value='1'
                 name='Yes' />
             <ButtonIconOnly 
-                onClick={ () => setPetPoo(prevState => ({
-                    ...prevState,
-                    missed: 0
-                }))}
+                id="missed"
+                onClick={ handleChange }
                 value='0'
-                icon={petPoo.missed ? unchecked : checked}
+                icon={petPoo.missed === '0' ? checked : unchecked}
                 name='Miss' 
                 />
         </div>
         <div className="pee-spot">
             <p>Consistency</p>
             <ButtonIconOnly 
-                onClick={ () => setPetPoo(prevState => ({
-                    ...prevState,
-                    consistency: 1
-                }))}
-                icon={petPoo.consistency ? checked : unchecked}
+                id="consistency"
+                onClick={ handleChange }
+                icon={petPoo.consistency === '1' ? checked : unchecked}
                 value='1'
                 name='Normal' />
             <ButtonIconOnly 
-                onClick={ () => setPetPoo(prevState => ({
-                    ...prevState,
-                    consistency: 0
-                }))}
+                id="consistency"
+                onClick={ handleChange }
                 value='0'
-                icon={petPoo.consistency ? unchecked : checked}
+                icon={petPoo.consistency === '0' ? checked : unchecked}
                 name='Runny' 
                 />
         </div>

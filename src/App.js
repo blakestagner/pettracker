@@ -13,7 +13,7 @@ import TopNav from './Navigation/TopNav';
 import PetProfile from './Pet/PetProfile';
 
 import Unauthorized from './Autho/Unauthorized';
-
+import RegisterPet from './Pet/RegisterPet';
 import BottomNav from './Navigation/BottomNav';
 import ScrollToTop from './HelperComponents/ScrollToTop';
 
@@ -139,7 +139,7 @@ function App() {
                   petDetails={petDetails}
                   exact path='/register-pet' 
                   updateUserData={() => updateUserData()}
-                  component={PetProfile} />
+                  component={RegisterPet} />
               <ProtectedRoute
                   isLoggedIn={isLoggedIn}
                   userDetails={userDetails}

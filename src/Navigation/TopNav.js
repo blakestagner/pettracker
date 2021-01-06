@@ -65,7 +65,15 @@ function TopNav(props) {
                     />
             </div>
             <SlideOutNavLeft ref={toggleNavLeftRef} logout={() => logout()}/>
-            <SlideOutNavRight ref={toggleNavRef} logout={() => logout()}/>
+            <SlideOutNavRight
+                petDetails={props.petDetails}
+                userDetails={props.userDetails}
+                petProfileImgUrl = { 
+                    props.petDetails.id+
+                    props.petDetails.name}
+                type="pet" 
+                ref={toggleNavRef} 
+                logout={() => logout()}/>
         </div>
     )
 }

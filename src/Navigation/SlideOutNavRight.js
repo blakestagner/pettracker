@@ -3,6 +3,8 @@ import './navigation.scss';
 import arrow from '../img/icons/arrow_back.svg'
 import React, { useState, useImperativeHandle, forwardRef} from "react";
 import Logout from '../Autho/login_register/Logout';
+import Avatar from '../User/Avatar';
+
 
 const SlideOutNavRight = forwardRef((props, ref) => {
 
@@ -33,7 +35,7 @@ const SlideOutNavRight = forwardRef((props, ref) => {
           toggleNav()
         }
       }));
-
+    
     return (
         <div id="side-nav-right" className={sideNav ? 'side-nav-open' : 'side-nav-closed'}>
             <img 
@@ -41,9 +43,20 @@ const SlideOutNavRight = forwardRef((props, ref) => {
                 className="back-arrow" 
                 alt="close menu"
                 />
+                <Avatar 
+                    petDetails={props.petDetails}
+                    userDetails={props.userDetails}
+                    petProfileImgUrl = { 
+                        props.petDetails.id+
+                        props.petDetails.name}
+                    type="pet-large"
+                    />
                 <ul className="mobile-navbar-list" id="mobileNavBarList" >
                     <li>
-                        <Link to="/home">home</Link>
+                        <Link to="/home">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/register-pet">Add a Pet</Link>
                     </li>
                 </ul>
                 <Logout logout={() => props.logout()}/>

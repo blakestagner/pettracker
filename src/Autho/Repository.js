@@ -60,12 +60,12 @@ export function updateUser () {
 }
 
 export function registerPet(data) {
-    return axios.post(`${BASE_URL}/api/register-pet`, {
+    return axios.post(`${BASE_URL}/api/register-pet2`, {
         name: data.name,
         type: data.type,
         birthday: data.birthday,
         feed_perday: data.feed_perday,
-        feed_amount: data.feed_amount,
+        feed_amount: `${data.feed_amount} ${data.feed_unit}`,
         'x-access-token': localStorage.getItem('x-access-token')
     })
     .then((res) => {
