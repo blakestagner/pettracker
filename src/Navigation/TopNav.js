@@ -64,8 +64,18 @@ function TopNav(props) {
                     handleToggle={() => toggleNavRef.current.toggle()}
                     />
             </div>
-            <SlideOutNavLeft ref={toggleNavLeftRef} logout={() => logout()}/>
+            <SlideOutNavLeft
+                userDetails={props.userDetails}
+                profileImgUrl = { 
+                    props.userDetails.id+
+                    props.userDetails.fname+
+                    props.userDetails.lname}
+                hasProfileImg={props.userDetails.profile_pic}
+                type="human"
+                ref={toggleNavLeftRef} 
+                logout={() => logout()}/>
             <SlideOutNavRight
+                petList={props.petList}
                 petDetails={props.petDetails}
                 userDetails={props.userDetails}
                 petProfileImgUrl = { 

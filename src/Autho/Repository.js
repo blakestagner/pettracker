@@ -17,20 +17,14 @@ export function login (data) {
 }
 
 export function register (data) {
-    const regMsg = document.getElementById('registrationMessage')
     return axios.post(`${BASE_URL}/api/register`, {
         fname: data.fname, 
         lname: data.lname, 
         email: data.email, 
-        password: data.password,
-        wparty: data.wparty
+        password: data.password_reg,
     })
-    .then((res) => {
-        regMsg.innerHTML = res.data
-    })
-    .catch((err) => {
-        regMsg.innerHTML = err.response.data
-    })
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
 }
 
 
@@ -60,7 +54,7 @@ export function updateUser () {
 }
 
 export function registerPet(data) {
-    return axios.post(`${BASE_URL}/api/register-pet2`, {
+    return axios.post(`${BASE_URL}/api/register-pet`, {
         name: data.name,
         type: data.type,
         birthday: data.birthday,
@@ -76,9 +70,28 @@ export function registerPet(data) {
     })
 }
 
+export function getPetListInfo(data) {
+    return axios.get(`${BASE_URL}/api/pet-list-data`, { 
+        params: { 'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
 export function getPetInfo(data) {
     return axios.get(`${BASE_URL}/api/pet-data`, { 
-        params: { 'x-access-token': localStorage.getItem('x-access-token')} 
+        params: { 
+            pet_id: data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+export function getAllPetInfo(data) {
+    return axios.get(`${BASE_URL}/api/pet-all-data`, { 
+        params: { 
+            pet_id: data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
        })
        .then(res => res.data)
        .catch(err => Promise.reject('Request Not Authenticated!'));
@@ -155,3 +168,16 @@ export function getPetPooInfo(data) {
        .then(res => res.data)
        .catch(err => Promise.reject('Request Not Authenticated!'));
     }
+
+/*img uplaod*/
+export function uploadUserImage(data) {
+    console.log(data)
+    return axios.post(`${BASE_URL}/api/upload-user-img`, data, {
+    })
+    .then((res) => {
+        console.log(res)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}

@@ -11,6 +11,7 @@ import walkIcon from '../img/icons/walk.svg';
 import walkBlackIcon from '../img/icons/walk_black.svg';
 import backIcon from '../img/icons/arrow_back_white.svg';
 import closeIcon from '../img/icons/close.svg';
+import arrowDownIcon from '../img/icons/arrow_down.svg';
 import Avatar from '../User/Avatar';
 
 import ActivityForm from './ActivityForm';
@@ -49,16 +50,41 @@ const ActivityLog = forwardRef((props, ref) => {
         <div 
             className={toggleActivity ? 'activity-log-open' : 'activity-log-closed'} 
             id="activity-log">
-            {!selectedActivity ? 
-              (
-              <button
-                className="back-button">
+            <div
+              className="activity-log-top">
+              <div className="main">
+                <div>
+                  <p>Activity Log</p>
+                  <h2>What did {props.petDetails.name} do?</h2> 
+                </div>   
                 <img
-                  onClick={() => closeAll() }
-                  src={closeIcon}/>
-              </button>
-              )
-            : ''}
+                    onClick={() => closeAll() }
+                    src={arrowDownIcon}/>
+                </div>
+                {/*<div>
+                  {selectedActivity ? 
+                  (
+                    <ActivitySelectedBar
+                      petDetails={props.petDetails}
+                      userDetails={props.userDetails}
+                      activitySelected={selectedActivity}
+                      handleClick={() => handleClick}
+                      />
+                  ) 
+                    :
+                  ''}
+                  </div>*/}
+                  <div className='avatar'>
+                    <Avatar
+                      petDetails={props.petDetails}
+                      userDetails={props.userDetails}
+                      petProfileImgUrl = { 
+                          props.petDetails.id+
+                          props.petDetails.name}
+                      type="pet-select"/>
+                  </div>
+            </div>
+
             <div>
               {selectedActivity ? 
                 (
@@ -71,17 +97,6 @@ const ActivityLog = forwardRef((props, ref) => {
                 ) 
                   :
                 ''}
-            </div>
-            <div className="activitylog-profile-card">
-              <h1>What did {props.petDetails.name} do?</h1>
-              <Avatar
-                  petDetails={props.petDetails}
-                  userDetails={props.userDetails}
-                  petProfileImgUrl = { 
-                      props.petDetails.id+
-                      props.petDetails.name}
-                  type="pet-large"
-                  />
             </div>
               {selectedActivity ? 
                 (

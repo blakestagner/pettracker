@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import { BrowserRouter as  Router, Switch, Route } from 'react-router-dom';
-import { isAuthenticated, getUserInfo, getPetInfo, updateUser } from './Autho/Repository';
+import { isAuthenticated, getUserInfo, getPetListInfo, getPetInfo, updateUser } from './Autho/Repository';
 import './App.css';
 
 import LoginLogout from './Autho/login_register/LoginRegister';
@@ -11,6 +11,7 @@ import Chat from './Chat/Chat';
 import Settings from './Settings/Settings';
 import TopNav from './Navigation/TopNav';
 import PetProfile from './Pet/PetProfile';
+import ImageUplaod from './img/ImageUpload';
 
 import Unauthorized from './Autho/Unauthorized';
 import RegisterPet from './Pet/RegisterPet';
@@ -31,10 +32,13 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
   const [petDetails, setPetDetails] = useState([]); 
+  const [petList, setPetList] = useState([]);
+  const [currentPet, setCurrentPet] = useState(0);
 
   useEffect(() => {
-    checkLoggedinStatus();
-  }, [])
+    checkLoggedinStatus() 
+  }, [currentPet])
+
 
   const handleLogin = (data) => {
     setLoggedIn(true) 
@@ -47,25 +51,49 @@ function App() {
         .then((res) => {
             setLoggedIn(true)
             setUserDetails(res)
+            setCurrentPet(res.pet_id)
+
+            getPetListInfo()
+            .then(res => {
+                res.length === 0 ? setPetDetails(0) : setPetList(res);
+                changeCurrentPet(res)
+            })
+            .catch(err => {
+                console.log(err, "catch")
+            })
+
         })
         .catch(err => {
           localStorage.removeItem('x-access-token');
           setLoggedIn(false)
             })
-    getPetInfo()
-        .then(res => {
-            res.length === 0 ? setPetDetails(0) : setPetDetails(res[0]);
-        })
-        .catch(err => {
-            console.log(err, "catch")
-        })
     } else if ( localStorage.getItem('x-access-token-expiration') < Date.now()) {
         localStorage.removeItem('x-access-token-expiration');
         localStorage.removeItem('x-access-token');
         setLoggedIn(false)
-    } else {}
+        console.log('logged out')
+        
+    } else {
+      setLoggedIn(false)
+    }
+    
   }
 
+  const changeCurrentPet = (data) => {
+    if(currentPet !== 0) {
+      
+      for(let i = 0; i < data.length; i++) {
+        if(data[i].user_id === userDetails.id && userDetails.pet_id === data[i].pet_id) {
+          getPetInfo(userDetails.pet_id)
+          .then(res => {
+            setPetDetails(res[0])
+          })
+          .catch(err => console.log(err))
+        }
+      }
+    }
+  }
+  
   const updateUserData = () => {
     updateUser()
     .then(res => console.log(res))
@@ -102,12 +130,15 @@ function App() {
                 <TopNav 
                   userDetails={userDetails} 
                   petDetails={petDetails}
+                  petList={petList}
                   isLoggedIn={isLoggedIn} 
                   logout={() => setLoggedIn(false)}/>
               ) : (
                 ""
               )}
+             
           <Switch>
+                
             <Fragment>
               <Route 
                 exact path="/" 
@@ -149,14 +180,8 @@ function App() {
               <ProtectedRoute
                   isLoggedIn={isLoggedIn}
                   userDetails={userDetails}
-                  exact path='/Chat' 
-                  component={Chat} />
-              <ProtectedRoute
-                  isLoggedIn={isLoggedIn}
-                  userDetails={userDetails}
-                  exact path='/settings' 
-                  component={Settings} />
-                  
+                  exact path='/image-upload'
+                  component={ImageUplaod} />
               <Route exact path='/unauthorized' component={Unauthorized} />
             </Fragment>
           </Switch>

@@ -22,13 +22,19 @@ function Timeline(props) {
             
             <div>
                 <div className="timeline-select">
-                    <button onClick={() => setDataSet(0)}>
+                    <button 
+                        className={dataSet === 0 ? 'active' : ''} 
+                        onClick={() => setDataSet(0)}>
                         <p>Eat</p>
                     </button>
-                    <button onClick={() => setDataSet(1)}>
+                    <button 
+                        className={dataSet === 1 ? 'active' : ''} 
+                        onClick={() => setDataSet(1)}>
                         <p>Pee</p>
                     </button>
-                    <button onClick={() => setDataSet(2)}>
+                    <button
+                        className={dataSet === 2 ? 'active' : ''} 
+                        onClick={() => setDataSet(2)}>
                         <p>Poop</p>
                     </button>
                 </div>

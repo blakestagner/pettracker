@@ -1,3 +1,6 @@
+.profile-avatar {
+    position: relative;
+}
 .default-profile-img {
     height: 50px;
     width: 50px;
@@ -6,7 +9,9 @@
 .default-profile-img-large {
     height: 120px;
     width: 120px;
-    padding: 0 10px 0 10px;
+    border: solid #fff 5px;
+    border-radius: 50%;
+    position: relative;
 }
 .profile-img {
     height: 50px;
@@ -19,6 +24,7 @@
     width: 120px;
     border: solid #fff 5px;
     border-radius: 50%;
+    position: relative;
 }
 .profileName {
     flex: 1 0 auto;

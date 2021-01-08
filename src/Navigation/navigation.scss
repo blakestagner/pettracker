@@ -76,6 +76,13 @@ $primary-color: #5465FF;
 .MuiBottomNavigation-root button {
     color: green;
 }
+#other-pet-avatar {
+    display: flex;
+    justify-content: center;
+}
+#other-pet-avatar div a div img {
+    padding: 0;
+}
 /*left side nav*/
 #side-nav-left {
     background-color: #fff;

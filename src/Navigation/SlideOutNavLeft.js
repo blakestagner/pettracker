@@ -3,6 +3,7 @@ import './navigation.scss';
 import arrow from '../img/icons/arrow_back.svg'
 import React, { useState, useImperativeHandle, forwardRef} from "react";
 import Logout from '../Autho/login_register/Logout';
+import Avatar from '../User/Avatar';
 
 const SlideOutNavLeft = forwardRef((props, ref) => {
 
@@ -14,7 +15,7 @@ const SlideOutNavLeft = forwardRef((props, ref) => {
             toggleSideNav(1)
             handleInputBeyond();
         } else if (sideNav === 1) {
-            toggleSideNav(0)
+            
         } else console.log('error')
         
     }
@@ -41,6 +42,14 @@ const SlideOutNavLeft = forwardRef((props, ref) => {
                 className="back-arrow" 
                 alt="close menu"
                 />
+                <Avatar 
+                    userDetails={props.userDetails}
+                    profileImgUrl = { 
+                        props.userDetails.id+
+                        props.userDetails.fname+
+                        props.userDetails.lname}
+                    hasProfileImg={props.userDetails.profile_pic}
+                    type="human-large"/>
                 <ul className="mobile-navbar-list" id="mobileNavBarList" >
                     <li>
                         <Link to="/home">home</Link>

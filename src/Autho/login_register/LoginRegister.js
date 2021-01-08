@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { login } from '../Repository';
+import { login, register } from '../Repository';
 import {TextField } from '@material-ui/core';
-import Button from '../../Inputs/Button'
+import Button from '../../Inputs/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
 import './loginRegister.css'
 
@@ -130,14 +131,141 @@ function Login(props) {
 
 function Register(props) {
 
-    const register = () => {
-        console.log('register')
+    const [registerData, setRegisterData] = useState({
+        fname: '',
+        lname: '',
+        email: '',
+        password_reg: '',
+        password_match: ''
+    })
+    const [registering, setRegister] = useState('Register')
+
+    const submitLogin = () => {
+        const regMsg = document.getElementById('registration-message');
+        registerMessage()
+        if (registerData.email === '') {
+            removeRegisterMessage()
+            regMsg.innerHTML = 'You forgot to type in an email'
+        } else if (registerData.password_reg === '') {
+            removeRegisterMessage()
+            regMsg.innerHTML = 'You forgot to type in your password'
+        } else if (registerData.password_reg !== registerData.password_match) {
+            removeRegisterMessage()
+            regMsg.innerHTML = 'You passwords do not match'
+        } else if (!registerData.email.match( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+            removeRegisterMessage()
+            regMsg.innerHTML = 'You didnt enter a valid email'
+        } else {
+            register(registerData)
+            .then(res => {
+                regMsg.innerHTML = 'You are now Registered!'
+                setTimeout(() => window.location.reload(), 2000)
+            })
+            .catch(err => { 
+                removeRegisterMessage() 
+                regMsg.innerHTML = err
+            })
+          }
     }
 
+    const handleChange = (e) => {
+        const {id, value} = e.target;
+        setRegisterData(prevState => ({
+            ...prevState,
+            [id] : value
+        }))
+        console.log(registerData)
+    }
+
+    const registerMessage = () => {
+        setRegister('Registering')
+      }
+    const removeRegisterMessage = () => {
+        setRegister('Register')
+      }
+
+
+    const useStyles = makeStyles((theme) => ({
+        notmatch: {
+            '& .MuiInputBase-input': {
+                background: 'rgba(255, 0, 0, 0.4)'
+            },
+          },
+        match: {
+            '& .MuiInputBase-input': {
+                background: 'rgba(76, 175, 80, 0.4)'
+            },
+          },
+        }));
+    const classes = useStyles();
+
     return (
-        <div>
-            <h3 >Resgister</h3>
-            <p>Registration coming soon</p>
+        <div className="login-box">
+            <h3>Register</h3>
+            <div className="login-box-inner">
+                <div style={{display: 'flex'}}>
+                    <TextField 
+                    style={{ width: '48%', marginRight: '4%' }}
+                        fullWidth={true}
+                        required={true}
+                        id="fname" 
+                        label="first name"
+                        name="first name"
+                        value={registerData.fname}
+                        onChange={ handleChange }
+                        />
+                    <TextField 
+                        style={{ width: '48%' }}
+                        fullWidth={true}
+                        required={true}
+                        id="lname" 
+                        label="last name"
+                        name="last name"
+                        value={registerData.lname}
+                        onChange={ handleChange }
+                        />
+                </div>
+                <TextField 
+                    fullWidth={true}
+                    required={true}
+                    id="email" 
+                    label="email"
+                    name="email"
+                    value={registerData.email}
+                    onChange={ handleChange }
+                    />
+                <TextField 
+                    fullWidth={true}
+                    required={true}
+                    id="password_reg" 
+                    label="password"
+                    name="password_reg"
+                    type="password"
+                    value={registerData.password}
+                    onChange={ handleChange }
+                    />
+                <TextField 
+                    className={
+                        registerData.password_match === '' ? 
+                        '' : 
+                        (registerData.password_match === registerData.password_reg) ?
+                            classes.match : classes.notmatch 
+
+                    }
+                    fullWidth={true}
+                    required={true}
+                    id="password_match" 
+                    label="confirm password"
+                    name="confirm password"
+                    type="password"
+                    value={registerData.password_match}
+                    onChange={ handleChange }
+                    />
+                </div>
+            <Button
+                onClick={() => submitLogin()} 
+                name={registering}/>
+            <p id="registration-message"></p>
         </div>
     )
 }
