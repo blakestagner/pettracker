@@ -13,8 +13,8 @@ const Avatar = ({
                 profileImgUrl,
                 petProfileImgUrl, 
                 handleToggle}) => {
-        const userImgServer = 'http://images.blakestagner.com/users/profileImg/';
-        const petsImgServer = 'http://images.blakestagner.com/pets/profileImg/'
+        const userImgServer = 'https://pet-api.blakestagner.com/users/profileImg/';
+        const petsImgServer = 'https://pet-api.blakestagner.com/pets/profileImg/'
         const avatarHumanImg = 
             `${userImgServer}${String(profileImgUrl)}.jpg`
         const avatarPetImg =  
