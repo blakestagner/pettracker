@@ -13,8 +13,16 @@ const Avatar = ({
                 profileImgUrl,
                 petProfileImgUrl, 
                 handleToggle}) => {
-        const userImgServer = 'https://pet-api.blakestagner.com/users/profileImg/';
-        const petsImgServer = 'https://pet-api.blakestagner.com/pets/profileImg/'
+       //const userImgServer = 'http://images.blakestagner.com/users/profileImg/';
+        //const petsImgServer = 'http://images.blakestagner.com/pets/profileImg/';
+
+        //const avatarHumanImg = window.location.origin + `/img/profileImg/${String(profileImgUrl)}.jpg`
+        //const avatarPetImg = window.location.origin + `/img/petImg/${String(petProfileImgUrl)}.jpg`        
+        
+        
+        const userImgServer = window.location.origin + `/img/profileImg/`;
+        const petsImgServer = window.location.origin + `/img/petImg/`;
+        
         const avatarHumanImg = 
             `${userImgServer}${String(profileImgUrl)}.jpg`
         const avatarPetImg =  
