@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import FormatTime from '../../HelperComponents/FormatTime';
 import { TodaysDate, TwoDaysAgo,  SevenDaysAgo, ThirtyDaysAgo } from '../../HelperComponents/TodaysDate';
 import '../pet.scss';
@@ -27,6 +27,7 @@ function PeeDays(props) {
                     return (
                         data.filter(obj => obj.time_select.split('T')[0] > ThirtyDaysAgo())
                     )
+                default:
             }
         }
 
@@ -41,7 +42,7 @@ function PeeDays(props) {
 
         }   
         let peeDataAvg = Math.round((peeData / dataCount.length) * 10000) / 100;
-        return (
+        return ( 
             <p>Hit the spot {peeDataAvg}% of the time!</p>
         )
     }

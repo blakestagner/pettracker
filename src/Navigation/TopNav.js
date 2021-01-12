@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import SlideOutNavRight from './SlideOutNavRight';
 import SlideOutNavLeft from './SlideOutNavLeft';
 import React, { useRef } from "react";
+import Search from './Search'
+import Notifications from './Notifications'
 import {
     BrowserView,
     MobileView,
-    isBrowser
+    //isBrowser
     //isMobile
   } from "react-device-detect";
+
 
 function TopNav(props) {
 
@@ -27,11 +30,7 @@ function TopNav(props) {
             <div className="nav-left">
             <Avatar 
                 userDetails={props.userDetails}
-                profileImgUrl = { 
-                    props.userDetails.id+
-                    props.userDetails.fname+
-                    props.userDetails.lname}
-                hasProfileImg={props.userDetails.profile_pic}
+                profileImgUrl = {props.userDetails.profile_pic}
                 type="human"
                 handleToggle={() => toggleNavLeftRef.current.toggle()}/>
             </div>
@@ -53,13 +52,13 @@ function TopNav(props) {
                     <p>f<span>u</span>rb<span>u</span>d</p>
                 </div>
             </MobileView>
+            <Search />
+            <Notifications />
             <div className="nav-right">
                 <Avatar 
                     petDetails={props.petDetails}
                     userDetails={props.userDetails}
-                    petProfileImgUrl = { 
-                        props.petDetails.id+
-                        props.petDetails.name}
+                    petProfileImgUrl = {props.petDetails.profile_pic}
                     type="pet"
                     handleToggle={() => toggleNavRef.current.toggle()}
                     />
@@ -78,9 +77,7 @@ function TopNav(props) {
                 petList={props.petList}
                 petDetails={props.petDetails}
                 userDetails={props.userDetails}
-                petProfileImgUrl = { 
-                    props.petDetails.id+
-                    props.petDetails.name}
+                petProfileImgUrl = {props.petDetails.profile_pic}
                 type="pet" 
                 ref={toggleNavRef} 
                 logout={() => logout()}/>

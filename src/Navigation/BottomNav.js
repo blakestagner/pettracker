@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import HomeIcon from '@material-ui/icons/Home';
-import MessageIcon from '@material-ui/icons/Message';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import AddIcon from '@material-ui/icons/Add';
 import PetsIcon from '@material-ui/icons/Pets';
@@ -27,7 +26,6 @@ function BottomNav(props) {
     const classes = useStyles();
     const { pathname } = useLocation();
     const [value, setValue] = useState(pathname);
-    const [logStatus, setLog ] = useState(0);
 
     const toggleActivityLogRef = useRef();
     

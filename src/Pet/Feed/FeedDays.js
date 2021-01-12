@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import FormatTime from '../../HelperComponents/FormatTime';
 import { TodaysDate, TwoDaysAgo,  SevenDaysAgo, ThirtyDaysAgo } from '../../HelperComponents/TodaysDate';
 import '../pet.scss';
@@ -27,7 +27,8 @@ function FeedDays(props) {
                     return (
                         data.filter(obj => obj.time_select.split('T')[0] > ThirtyDaysAgo())
                     )
-            }
+                default: 
+            } 
         }
 
         return filterDate()
@@ -36,10 +37,8 @@ function FeedDays(props) {
         let dataCount = filterTime(props.eatData);
         let totalAte = 0;
         let totalFed = 0;
-        let eatData = 0;
         for(let i = 0; i < dataCount.length; i++) {
             totalFed += parseFloat(dataCount[i].feed_amount.split(' ')[0]);
-            eatData += parseFloat(dataCount[i].amount_ate);
             totalAte += parseFloat(dataCount[i].amount_ate) * parseFloat(dataCount[i].feed_amount.split(' ')[0]);
         }   
         console.log(`total ate = ${totalAte}`)
@@ -49,11 +48,6 @@ function FeedDays(props) {
         const roundNumber = (num) => {
             return Math.round((num * 100) * 10) / 10; 
         }
-
-        
-
-        
-
         if(dataSet === 'totalAte') {
             return (
                 <p>Ate {roundNumber(totalAte / totalFed)}%</p>

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getPetEatInfo  } from '../../Autho/Repository';
-import FormatTime from '../../HelperComponents/FormatTime';
 
-import TimeSelectMenu from '../TimeSelectMenu'
 import FeedDays from './FeedDays'
 
 function FeedActivity( {petDetails} ) {

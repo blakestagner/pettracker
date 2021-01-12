@@ -1,73 +1,119 @@
 import React from 'react';
 import profileImg from '../img/icons/profile.svg'
 import './user.scss';
-import ImageUpload from '../img/ImageUpload';
 import addPhotoWhiteIcon from '../img/icons/add_photo_white.svg';
-import addPhotoBlackIcon from '../img/icons/add_photo_black.svg';
-import { useHistory } from "react-router-dom";
+
+import addIcon from '../img/icons/add.svg';
 
 const Avatar = ({
+                uploadImg,
                 type,
                 petDetails, 
                 userDetails, 
                 profileImgUrl,
                 petProfileImgUrl, 
                 handleToggle}) => {
-       //const userImgServer = 'http://images.blakestagner.com/users/profileImg/';
-        //const petsImgServer = 'http://images.blakestagner.com/pets/profileImg/';
+        //const userImgServer = 'http://localhost:3330/users/profile_img/';
+        //const petsImgServer = 'http://localhost:3330/pets/profile_img/';
+        const userImgServer = 'https://pet_api.blakestagenr.com/users/profileImg/';
+        const petsImgServer = 'https://pet_api.blakestagner.com/pets/profileImg/';
 
         //const avatarHumanImg = window.location.origin + `/img/profileImg/${String(profileImgUrl)}.jpg`
         //const avatarPetImg = window.location.origin + `/img/petImg/${String(petProfileImgUrl)}.jpg`        
         
         
-        const userImgServer = window.location.origin + `/img/profileImg/`;
-        const petsImgServer = window.location.origin + `/img/petImg/`;
+        //const userImgServer = window.location.origin + `/img/profileImg/`;
+        //const petsImgServer = window.location.origin + `/img/petImg/`;
         
         const avatarHumanImg = 
-            `${userImgServer}${String(profileImgUrl)}.jpg`
+            `${userImgServer}${String(profileImgUrl)}`
         const avatarPetImg =  
-            `${petsImgServer}${String(petProfileImgUrl)}.jpg`
+            `${petsImgServer}${String(petProfileImgUrl)}`
         
-        const displayImage = () => {
+
+            const uploadImage = () => {
+                uploadImg()
+            }
+
+
+
+        const displayImage = (props) => {
             if(type === 'pet') {
                 if(userDetails.pet_id === 0) {
-                    return <DefaultAvatar />
-                } else if(petDetails.profile_pic === 0){
+                    return <AddPetAvatar />
+                } else if(petDetails.profile_pic === '0'){
                     return <DefaultAvatar />
                 } else {
                     return <PetAvatar profileImg={avatarPetImg}/>
                 }
+
+
+
+
             } else if(type === 'human') {
-                if(userDetails.profile_pic) {
+                if(userDetails.profile_pic === '0') {
+                    return <DefaultAvatar />
+                } else {
                     return <HumanAvatar 
                                 userDetails={userDetails}
-                                profileImg={
-                                    avatarHumanImg}/>
-                } else {
-                    return <DefaultAvatar />
+                                profileImg={avatarHumanImg}/>
                 }
+
+
+
+
             } else if(type === 'human-large') {
-                if(userDetails.profile_pic) {
-                    return <HumanAvatarLarge 
-                                profileImg={
-                                    avatarHumanImg}/>
-                } else {
+                if(userDetails.profile_pic === '0') {
                     return <DefaultAvatarLarge 
                                 userDetails={userDetails}/>
+                } else {
+                    return  <HumanAvatarLarge 
+                                profileImg={
+                                    avatarHumanImg}/>
                 }
+
+            } else if(type === 'human-profile') {
+                if(userDetails.profile_pic === '0') {
+                    return <DefaultAvatarProfileLarge 
+                                uploadImg={uploadImage}
+                                userDetails={userDetails}/>
+                } else {
+                    return  <HumanAvatarProfileLarge
+                                uploadImg={uploadImage}
+                                profileImg={
+                                    avatarHumanImg}/>
+                    }
+
             } else if (type === 'pet-large') {
                 if(userDetails.pet_id === 0) {
-                    return <DefaultAvatarPetLarge />
-                } else if(petDetails.profile_pic === 0) {
+                    return;
+                } else if(petDetails.profile_pic === '0') {
                     return <DefaultAvatarPetLarge 
                                 />
                 } else {
                     return <PetAvatarLarge profileImg={avatarPetImg}/>
                 }
-            } else if (type === 'pet-select') {
+
+
+
+            } else if (type === 'pet-profile') {
                 if(userDetails.pet_id === 0) {
-                    return <DefaultAvatarPetLarge />
-                } else if(petDetails.profile_pic === 0) {
+                    return;
+                } else if(petDetails.profile_pic === '0') {
+                    return <DefaultAvatarPetProfileLarge 
+                                uploadImg={uploadImage}
+                                />
+                } else {
+                    return <PetAvatarProfileLarge 
+                                uploadImg={uploadImage}
+                                profileImg={avatarPetImg}/>
+                }
+                
+
+
+
+            } else if (type === 'pet-select') {
+                if(petDetails.profile_pic === '0') {
                     return <DefaultAvatarPetSelectLarge />
                 } else {
                     return <PetAvatarSelectLarge profileImg={avatarPetImg}/>
@@ -88,7 +134,31 @@ const Avatar = ({
 }
 export default Avatar
 
+
+export function AddPetAvatar() {
+
+    return (
+        <div>
+             <img 
+                className='add-pet-avatar'
+                src={addIcon} 
+                alt='default profile pic'/>
+        </div>
+    )
+}
+
 export function DefaultAvatar() {
+
+    return (
+        <div className="profile-avatar">
+             <img 
+                className='default-profile-img'
+                src={profileImg} 
+                alt='default profile pic'/>
+        </div>
+    )
+}
+export function DefaultAvatarAdd() {
 
     return (
         <div>
@@ -99,6 +169,7 @@ export function DefaultAvatar() {
         </div>
     )
 }
+
 export function DefaultAvatarLarge(props) {
 
     return (
@@ -108,6 +179,36 @@ export function DefaultAvatarLarge(props) {
                 src={profileImg} 
                 alt='default profile pic'/>
             <ImageUploadIcon 
+                type='human'
+                userDetails={props.userDetails}/>
+        </div>
+    )
+}
+export function DefaultAvatarProfileLarge(props) {
+
+    return (
+        <div className="profile-avatar">
+             <img 
+                className='default-profile-img-large'
+                src={profileImg} 
+                alt='default profile pic'/>
+            <ImageUploadIcon 
+                type='human'
+                userDetails={props.userDetails}/>
+        </div>
+    )
+}
+export function HumanAvatarProfileLarge(props) {
+
+
+    return (
+        <div className="profile-avatar">
+             <img 
+                className='default-profile-img-large'
+                src={props.profileImg} 
+                alt='default profile pic'/>
+            <ImageUploadIcon 
+                uploadImg={props.uploadImg}
                 type='human'
                 userDetails={props.userDetails}/>
         </div>
@@ -124,6 +225,18 @@ export function DefaultAvatarPetLarge(props) {
             <ImageUploadIcon 
                 type='pet'
                 userDetails={props.userDetails}/>
+        </div>
+    )
+}
+export function DefaultAvatarPetAddLarge(props) {
+
+    return (
+        <div className="profile-avatar">
+             <img 
+                className='default-profile-img-large'
+                src={profileImg} 
+                alt='default profile pic'/>
+
         </div>
     )
 }
@@ -147,9 +260,6 @@ export function HumanAvatarLarge(props) {
                 className='profile-img-large'
                 src={props.profileImg} 
                 alt={props.avatarHumanImg}/>
-            <ImageUploadIcon 
-                type='human'
-                userDetails={props.userDetails}/>
         </div>
     )
 }
@@ -172,7 +282,35 @@ export function PetAvatarLarge(props) {
                 className='profile-img-large'
                 src={props.profileImg} 
                 alt='default profile pic'/>
+        </div>
+    )
+}
+
+export function DefaultAvatarPetProfileLarge(props) {
+
+    return (
+        <div className="profile-avatar">
+            <img 
+                className='profile-img-large'
+                src={profileImg} 
+                alt='default profile pic'/>
             <ImageUploadIcon 
+                uploadImg={props.uploadImg}
+                type='pet'
+                userDetails={props.userDetails}/>
+        </div>
+    )
+}
+export function PetAvatarProfileLarge(props) {
+
+    return (
+        <div className="profile-avatar">
+            <img 
+                className='profile-img-large'
+                src={props.profileImg} 
+                alt='default profile pic'/>
+            <ImageUploadIcon 
+                uploadImg={props.uploadImg}
                 type='pet'
                 userDetails={props.userDetails}/>
         </div>
@@ -200,30 +338,8 @@ export function DefaultAvatarPetSelectLarge(props) {
         </div>
     )
 }
-export function DefaultSelectAvatar() {
-
-    return (
-        <div>
-             <img 
-                className='default-profile-img'
-                src={profileImg} 
-                alt='default profile pic'/>
-        </div>
-    )
-}
 
 function ImageUploadIcon(props) {
-
-
-
-
-    const history = useHistory();
-
-    const handleClick = () => {
-        history.push("/image-upload", {type: props.type, prevLocation: 'diff'});
-
-    }
-
 
     const imageUpload = {
         boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
@@ -247,9 +363,10 @@ function ImageUploadIcon(props) {
 
     return (
         <div
-            onClick={() => handleClick()} 
+            onClick={props.uploadImg} 
             style={imageUpload}>
             <img
+                alt=""
                 style={imageUploadIcon}
                 src={addPhotoWhiteIcon}/>
         </div>

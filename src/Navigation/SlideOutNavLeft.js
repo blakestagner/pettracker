@@ -44,15 +44,12 @@ const SlideOutNavLeft = forwardRef((props, ref) => {
                 />
                 <Avatar 
                     userDetails={props.userDetails}
-                    profileImgUrl = { 
-                        props.userDetails.id+
-                        props.userDetails.fname+
-                        props.userDetails.lname}
+                    profileImgUrl = {props.userDetails.profile_pic}
                     hasProfileImg={props.userDetails.profile_pic}
                     type="human-large"/>
                 <ul className="mobile-navbar-list" id="mobileNavBarList" >
                     <li>
-                        <Link to="/home">home</Link>
+                        <Link to="/user-profile">profile</Link>
                     </li>
                 </ul>
                 <Logout logout={() => props.logout()}/>

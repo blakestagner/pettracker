@@ -1,6 +1,5 @@
-import {useEffect, useState, useImperativeHandle, forwardRef} from "react";
+import {useState, useImperativeHandle, forwardRef} from "react";
 import './pet.scss';
-import petsIcon from '../Inputs/icons/pets.svg';
 import foodIcon from '../img/icons/food.svg';
 import foodBlackIcon from '../img/icons/food_black.svg';
 import peeIcon from '../img/icons/pee.svg';
@@ -10,7 +9,6 @@ import poopBlackIcon from '../img/icons/poop_black.svg';
 import walkIcon from '../img/icons/walk.svg';
 import walkBlackIcon from '../img/icons/walk_black.svg';
 import backIcon from '../img/icons/arrow_back_white.svg';
-import closeIcon from '../img/icons/close.svg';
 import arrowDownIcon from '../img/icons/arrow_down.svg';
 import Avatar from '../User/Avatar';
 
@@ -58,6 +56,7 @@ const ActivityLog = forwardRef((props, ref) => {
                   <h2>What did {props.petDetails.name} do?</h2> 
                 </div>   
                 <img
+                    alt="close all"
                     onClick={() => closeAll() }
                     src={arrowDownIcon}/>
                 </div>
@@ -78,9 +77,7 @@ const ActivityLog = forwardRef((props, ref) => {
                     <Avatar
                       petDetails={props.petDetails}
                       userDetails={props.userDetails}
-                      petProfileImgUrl = { 
-                          props.petDetails.id+
-                          props.petDetails.name}
+                      petProfileImgUrl = {props.petDetails.profile_pic}
                       type="pet-select"/>
                   </div>
             </div>
@@ -191,6 +188,7 @@ function ActivitySelectedBar(props) {
         <button
         className="back-button-bar">
         <img
+          alt="back"
           name='back'
           onClick={props.handleClick()}
           src={backIcon}/>

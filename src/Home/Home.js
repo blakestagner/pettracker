@@ -11,7 +11,7 @@ function Home(props) {
 
     return (
         <div>
-            {props.userDetails.pet_id != 0 ? 
+            {props.userDetails.pet_id !== 0 ? 
             <div>
                 <h1>Home</h1>
 

@@ -486,10 +486,7 @@ function PoopActivity(props) {
 /*Walk Activity*/
 function WalkActivity(props) {
 
-    const [petWalk, setPetWalk ] = useState({
-        id: props.petDetails.id,
-        walk_time: props.time,
-    })
+    const [petWalk, setPetWalk ] = useState()
 
     const [walkNow, setWalkNow] = useState(1);
 

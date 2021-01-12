@@ -78,9 +78,7 @@ const SlideOutNavRight = forwardRef((props, ref) => {
                 <Avatar 
                     petDetails={props.petDetails}
                     userDetails={props.userDetails}
-                    petProfileImgUrl = { 
-                        props.petDetails.id+
-                        props.petDetails.name}
+                    petProfileImgUrl = {props.petProfileImgUrl}
                     type="pet-large"
                     />
                 <div id="other-pet-avatar">
@@ -105,9 +103,6 @@ const SlideOutNavRight = forwardRef((props, ref) => {
                 </div>
                 
                 <ul className="mobile-navbar-list" id="mobileNavBarList" >
-                    <li>
-                        <Link to="/home">Home</Link>
-                    </li>
                     <li>
                         <Link to="/register-pet">Add a Pet</Link>
                     </li>

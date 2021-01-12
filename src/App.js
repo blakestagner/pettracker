@@ -7,16 +7,18 @@ import LoginLogout from './Autho/login_register/LoginRegister';
 import ProtectedRoute from './Autho/ProtectedRoute';
 import Home from './Home/Home';
 import Timeline from './TimeLine/Timeline';
-import Chat from './Chat/Chat';
-import Settings from './Settings/Settings';
+//import Chat from './Chat/Chat';
+//import Settings from './Settings/Settings';
 import TopNav from './Navigation/TopNav';
 import PetProfile from './Pet/PetProfile';
-import ImageUplaod from './img/ImageUpload';
+
 
 import Unauthorized from './Autho/Unauthorized';
 import RegisterPet from './Pet/RegisterPet';
 import BottomNav from './Navigation/BottomNav';
 import ScrollToTop from './HelperComponents/ScrollToTop';
+
+import UserProfile from './User/UserProfile';
 
 
 
@@ -180,8 +182,10 @@ function App() {
               <ProtectedRoute
                   isLoggedIn={isLoggedIn}
                   userDetails={userDetails}
-                  exact path='/image-upload'
-                  component={ImageUplaod} />
+                  petDetails={petDetails}
+                  exact path='/user-profile' 
+                  component={UserProfile} />
+
               <Route exact path='/unauthorized' component={Unauthorized} />
             </Fragment>
           </Switch>

@@ -171,13 +171,60 @@ export function getPetPooInfo(data) {
 
 /*img uplaod*/
 export function uploadUserImage(data) {
-    console.log(data)
     return axios.post(`${BASE_URL}/api/upload-user-img`, data, {
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')
+            
+        } 
+    })
+    .then(res => res)
+    .catch(err => err.data)
+}
+export function uploadPetImage(data) {
+    return axios.post(`${BASE_URL}/api/upload-pet-img`, data, {
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')
+        } 
+    })
+    .then(res => res)
+    .catch(err => err.data)
+}
+
+
+//friends
+export function getFriends() {
+    return axios.get(`${BASE_URL}/api/get-friends`, { 
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+//search    
+export function searchUsers(data) {
+    return axios.get(`${BASE_URL}/api/search-users`, {
+        params: {
+            search_query: data,
+            'x-access-token': localStorage.getItem('x-access-token')
+        }
     })
     .then((res) => {
-        console.log(res)
+        return res.data
     })
     .catch((err) => {
-        console.log(err)
+        return err.response.data
     })
+}
+/*send friend request*/
+export function sendFriendReuest(data) {
+    return axios.post(`${BASE_URL}/api/send-friend-request`, data, {
+        params: { 
+            id: data,
+            'x-access-token': localStorage.getItem('x-access-token')
+            
+        } 
+    })
+    .then(res => res)
+    .catch(err => err.data)
 }

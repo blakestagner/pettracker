@@ -4,7 +4,6 @@ function FormatTime(props) {
     const displayTime = (time) => {
         
         var timeHelper = time.split('T')[1].split(':');
-        var date = time.split('-');
         const timeNow = () => {
             var amPM = timeHelper[0] > 11 ? 'PM' : 'AM';
             var twelveHourClock = timeHelper[0] > 12 ? timeHelper[0] - 12 : timeHelper[0]
@@ -16,7 +15,6 @@ function FormatTime(props) {
     }
 
     const displayDate = (time) => {
-        var timeHelper = time.split('T')[1].split(':');
         var date = time.split('-');
         const getMonthName = (e) => {
             switch(e) {
