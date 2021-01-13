@@ -1,3 +1,11 @@
+$color-primary: #3f51b5;
+$color-secondary: #0277BD;
+
+$color-gradiant-main: linear-gradient(225deg, #784ba0, #3f51b5 50%, #2b86c5);
+
+$shadow-lg: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$shadow-md: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
 .register-pet-box {
     background-color: #fff;
     color: #000;
@@ -74,7 +82,7 @@
 }
 .activity-log-top{
     background: rgb(63,81,181);
-    background: linear-gradient(90deg, rgba(63,81,181,1) 0%, rgba(2,119,189,1) 100%);
+    background: $color-gradiant-main
 }
 .activity-log-top .main{
     margin: 0 0 10px;
@@ -301,4 +309,23 @@
     border-radius: 25px;
     background: rgb(63,81,181);
     background: linear-gradient(225deg,#784ba0,#3f51b5 50%,#2b86c5);
+}
+//post to feed
+.post-to-feed {
+    margin: 20px auto 0;
+    width: 50%;
+    justify-content: center;
+    padding: 0;
+}
+.post-to-feed img {
+    background-color: red;
+    padding: 10px;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 5px rgba(0, 0, 0, 0.24);
+}
+.post-to-feed p {
+    font-weight: bold;
+    margin: 10px 0 0;
 }

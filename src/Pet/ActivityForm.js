@@ -69,6 +69,12 @@ function ActivityForm(props) {
 
     const selectedForm = () => {
         switch(props.activitySelected) {
+            case 'Post':
+                return <PostActivity 
+                            petDetails={props.petDetails}
+                            userDetails={props.userDetails}
+                            time={currentTime()}
+                            displayTime={displayTime(currentTime())}/>;
             case 'Eat':
                 return <EatActivity 
                             petDetails={props.petDetails}
@@ -106,6 +112,17 @@ function ActivityForm(props) {
     
 }
 export default ActivityForm
+
+/*Walk Activity*/
+function PostActivity(props) {
+
+    return (
+        <div>
+            <h1>post</h1>
+        </div>
+    )
+}
+
 
 function EatActivity(props) {
     const [petEat, setPetEat ] = useState({

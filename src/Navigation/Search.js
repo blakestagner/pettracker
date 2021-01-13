@@ -4,12 +4,16 @@ import CloseWhiteIcon from '../img/icons/close_white.svg';
 import Input from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '../img/icons/search_white.svg';
-import { searchUsers, sendFriendReuest } from '../Autho/Repository';
+import { searchUsers, sendFriendReuest, getFriendsList, getUserRelationship } from '../Autho/Repository';
 import Avatar from '../User/Avatar';
-import AddIcon from '../img/icons/add_white.svg';
+import AddFriendIcon from '../img/icons/add_friend.svg';
+import IconButton from '../Inputs/IconButton';
+import profileIcon from '../img/icons/person.svg';
+import cancelRequestIcon from '../img/icons/remove_friend.svg';
 
-function Search() {
-    const [expanded, setExpanded] = useState(0)
+function Search(props) {
+    const [expanded, setExpanded] = useState(0);
+    const [userRequests, setUserRequests] = useState()
 
     const Toggle = () => {
         if(expanded === 0) {
@@ -17,6 +21,18 @@ function Search() {
         } else setExpanded(0)
     }
 
+    const GetUserRelationship = () => {
+        getUserRelationship()
+            .then(res => {
+                setUserRequests(res)
+            })
+            .catch(err => console.log(err))
+            .finally(() => console.log(userRequests))
+    }
+
+    useEffect(() => {
+        GetUserRelationship()
+    }, [])
     
 
     return (
@@ -25,10 +41,11 @@ function Search() {
                     onClick={() => Toggle()}
                     alt='search'
                     src={SearchBlack} />
-            {expanded === 0 ? '' :
-                <SearchExpanded 
+                <SearchExpanded
+                    userRequests={userRequests} 
+                    userDetails={props.userDetails}
+                    expanded={expanded} 
                     toggle={() => Toggle()}/>
-            }
         </div>
     )
 }
@@ -72,19 +89,83 @@ function SearchExpanded(props) {
     }
 
     const SendFriendRequest = (friendId) => {
-        console.log(friendId)
         sendFriendReuest(friendId)
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
 
-    useEffect(() => {
 
-    }, [searchResult])
+    const CheckFriendship = (id) => {
 
+        const NoRelationship = (id) => {
+            return (
+                <div className="add-user">
+                    <p>send request</p>
+                    <IconButton 
+                        click={() => SendFriendRequest(id)}
+                        icon={AddFriendIcon}/>
+                </div>
+            )
+        }
+        const SomeRelationship = (id) => {
+            return (
+                <div className="add-user">
+                    <p>Cancel Request</p>
+                    <IconButton 
+                        click={() => console.log('still need to')}
+                        icon={cancelRequestIcon}/>
+                </div>
+            )
+        }
+        const Friends = (id) => {
+            return (
+                <div className="add-user">
+                    <p>Friends</p>
+                </div>
+            )
+        }
+        const userId = props.userDetails.id;
+
+
+      
+
+        let userID = '';
+        
+        if(props.userRequests.some( users => users.user_two === id && users.status === 1 )) {
+            return Friends(id)
+        } else if(props.userRequests.some( users => users.user_two === id && users.status === 0 )) {
+            return SomeRelationship(id)
+        } else return NoRelationship(id)
+
+        
+
+    }
+
+
+    /*const test = () => {
+        return (
+            <div>
+                <div className="add-user">
+                    <p>send request</p>
+                    <IconButton 
+                        click={() => SendFriendRequest(id)}
+                        icon={AddFriendIcon}/>
+                </div>
+                <div className="add-user">
+                    <p>Request sent</p>
+                    <IconButton 
+                        click={() => SendFriendRequest(id)}
+                        icon={profileIcon}/>
+                </div>
+                <div className="add-user">
+                            <p>Friends</p>
+                        </div>
+            </div>
+        )
+    }*/
 
     return (
-        <div className="menu-expanded">
+        <div className={props.expanded === 0?  'menu-colapsed' : 'menu-expanded'}>
             <div className="search-bar">
                 <Input 
                     className={classes.search}
@@ -121,16 +202,7 @@ function SearchExpanded(props) {
                                     type="human"
                                     />
                                 <p>{obj.fname} {obj.lname}</p>
-                                <div className="add-user">
-                                    <p>add user</p>
-
-                                    <div
-                                        onClick={() => SendFriendRequest(obj.id)} 
-                                        className="add-user-icon">
-                                        <img src={AddIcon} />
-                                    </div>
-                                </div>
-
+                                    {CheckFriendship(obj.id)}
                             </div>
                         ))}
                     </div>

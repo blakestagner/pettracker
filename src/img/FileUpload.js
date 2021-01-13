@@ -39,7 +39,6 @@ const FileUpload = forwardRef((props, ref) => {
 
     const [userMessage, setMessage] = useState();
 
-
     const [preview, setPreview] = useState(0)
     const [newImage, setImage] = useState(0);
 
@@ -61,6 +60,8 @@ const FileUpload = forwardRef((props, ref) => {
       }));
 
 
+
+
     const toggle = () => {
         if(show === 0) {
             hide(1)
@@ -79,7 +80,7 @@ const FileUpload = forwardRef((props, ref) => {
     const onClickHandler = () => {
 
         const data = new FormData()
-        data.append('file', newImage)
+        data.append('image', newImage)
         if(recievedType === 'human') {
             uploadUserImage(data)
             .then(res => { // then print response status
@@ -89,7 +90,7 @@ const FileUpload = forwardRef((props, ref) => {
                     setImage(0)
                     setPreview(0)
                     hide(0)}, 2000)
-                console.log(res.data.destination, res.data.filename)
+
                 })
             .catch(err => console.log(err))
         } else {
@@ -112,6 +113,9 @@ const FileUpload = forwardRef((props, ref) => {
         setPreview(0)
         console.log(newImage)
     }
+
+
+
 
     if(loading) {
         return (

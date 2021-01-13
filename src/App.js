@@ -2,6 +2,7 @@ import { useState, useEffect, Fragment } from 'react';
 import { BrowserRouter as  Router, Switch, Route } from 'react-router-dom';
 import { isAuthenticated, getUserInfo, getPetListInfo, getPetInfo, updateUser } from './Autho/Repository';
 import './App.css';
+import './App.scss';
 
 import LoginLogout from './Autho/login_register/LoginRegister';
 import ProtectedRoute from './Autho/ProtectedRoute';

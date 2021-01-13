@@ -1,4 +1,10 @@
-$primary-color: #5465FF;
+$color-primary: #3f51b5;
+$color-secondary: #0277BD;
+
+$color-gradiant-main: linear-gradient(225deg, #784ba0, #3f51b5 50%, #2b86c5);
+
+$shadow-lg: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$shadow-med: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
 .top-nav {
     width: 100%;
@@ -9,8 +15,7 @@ $primary-color: #5465FF;
     top: 0px;
     border-bottom-right-radius: 40px;
     border-bottom-left-radius: 40px;
-    
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: $shadow-med;
     z-index: 100;
     display: flex;
     align-content: space-between;
@@ -104,9 +109,6 @@ $primary-color: #5465FF;
 }
 /*Nav bar right*/
 .mobile-navbar-list {
-
-}
-.mobile-navbar-list {
     list-style-type: none;
     padding: 0;
 
@@ -133,11 +135,11 @@ $primary-color: #5465FF;
 .mobile-topnav-title p {
     margin: 0px;
     font-family: 'Paytone One', sans-serif;
-    color: #3f51b5;
+    color: $color-primary;
     font-size: 30px;
 }
 .mobile-topnav-title span {
-    color: #0277BD;
+    color: $color-secondary;
 }
 
 //search
@@ -159,19 +161,30 @@ $primary-color: #5465FF;
     background-color: #fff;
     height: 100vh;
     margin: 0;
-    border-bottom-right-radius: 40px;
-    border-bottom-left-radius: 40px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     top: 0;
     align-items: center;
+    transition: top ease .25s;
+}
+.menu-colapsed {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    background-color: #fff;
+    height: 100vh;
+    margin: 0;
+    top: 110vh;
+    align-items: center;
+    transition: top ease .25s;
 }
 .search-bar {
-    background-color: #0277BD;
+    background-color: $color-secondary;
     display: flex;  
     align-items: center;
-    
     padding: 10px;
     height: 50px;
+}
+.search-bar h2 {
+    color: #fff;
 }
 .close-search {
     margin-left: auto;
@@ -181,7 +194,7 @@ $primary-color: #5465FF;
     display: flex;
     margin: 10px;
     padding: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: $shadow-med;
     border-radius: 10px;
     align-items: center;
 }
@@ -194,7 +207,7 @@ $primary-color: #5465FF;
     align-items: center;
 }
 .add-user-icon {
-    background-color: #0277BD;
+    background-color: $color-secondary;
     height: 40px;
     width: 40px;
     border-radius: 50%;

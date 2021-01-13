@@ -52,8 +52,10 @@ function TopNav(props) {
                     <p>f<span>u</span>rb<span>u</span>d</p>
                 </div>
             </MobileView>
-            <Search />
-            <Notifications />
+            <div style={{display: 'flex'}}>
+                <Search userDetails={props.userDetails}/>
+                <Notifications userDetails={props.userDetails}/>
+            </div>
             <div className="nav-right">
                 <Avatar 
                     petDetails={props.petDetails}

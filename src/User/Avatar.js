@@ -2,7 +2,6 @@ import React from 'react';
 import profileImg from '../img/icons/profile.svg'
 import './user.scss';
 import addPhotoWhiteIcon from '../img/icons/add_photo_white.svg';
-
 import addIcon from '../img/icons/add.svg';
 
 const Avatar = ({
@@ -13,27 +12,14 @@ const Avatar = ({
                 profileImgUrl,
                 petProfileImgUrl, 
                 handleToggle}) => {
-        //const userImgServer = 'http://localhost:3330/static/users/profile_img/';
-        //const petsImgServer = 'http://localhost:3330/static/pets/profile_img/';
-        //const userImgServer = 'https://pet_api.blakestagenr.com/static/users/profileImg/';
-        //const petsImgServer = 'https://pet_api.blakestagner.com/static/pets/profileImg/';
-
-        //const avatarHumanImg = window.location.origin + `/img/profileImg/${String(profileImgUrl)}.jpg`
-        //const avatarPetImg = window.location.origin + `/img/petImg/${String(petProfileImgUrl)}.jpg`        
         
-        
-        const userImgServer = window.location.origin + `/img/profileImg/`;
-        const petsImgServer = window.location.origin + `/img/petImg/`;
-        
-        const avatarHumanImg = 
-            `${userImgServer}${String(profileImgUrl)}`
-        const avatarPetImg =  
-            `${petsImgServer}${String(petProfileImgUrl)}`
+        const avatarHumanImg = `${String(profileImgUrl)}`
+        const avatarPetImg =  `${String(petProfileImgUrl)}`
         
 
-            const uploadImage = () => {
-                uploadImg()
-            }
+        const uploadImage = () => {
+            uploadImg()
+        }
 
 
 

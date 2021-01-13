@@ -170,16 +170,7 @@ export function getPetPooInfo(data) {
     }
 
 /*img uplaod*/
-export function uploadUserImage(data) {
-    return axios.post(`${BASE_URL}/api/upload-user-img`, data, {
-        params: { 
-            'x-access-token': localStorage.getItem('x-access-token')
-            
-        } 
-    })
-    .then(res => res)
-    .catch(err => err.data)
-}
+
 export function uploadPetImage(data) {
     return axios.post(`${BASE_URL}/api/upload-pet-img`, data, {
         params: { 
@@ -191,16 +182,16 @@ export function uploadPetImage(data) {
 }
 
 
-//friends
-export function getFriends() {
-    return axios.get(`${BASE_URL}/api/get-friends`, { 
+export function uploadUserImage(data) {
+    return axios.post(`${BASE_URL}/api/upload-user-img`, data, {
         params: { 
-            'x-access-token': localStorage.getItem('x-access-token')} 
-       })
-       .then(res => res.data)
-       .catch(err => Promise.reject('Request Not Authenticated!'));
+            'x-access-token': localStorage.getItem('x-access-token')
+            
+        } 
+    })
+    .then(res => res)
+    .catch(err => err.data)
 }
-
 //search    
 export function searchUsers(data) {
     return axios.get(`${BASE_URL}/api/search-users`, {
@@ -227,4 +218,54 @@ export function sendFriendReuest(data) {
     })
     .then(res => res)
     .catch(err => err.data)
+}
+/*get friends list*/
+export function getFriendsList() {
+    return axios.get(`${BASE_URL}/api/get-friends-list`, { 
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+
+//get users pending friend request
+export function getUserPendingRequest() {
+    return axios.get(`${BASE_URL}/api/get-pending-friend-request`, { 
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+
+//get requetss sent to you
+export function getPendingRequest() {
+    return axios.get(`${BASE_URL}/api/get-friend-request`, { 
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+export function getUserRelationship() {
+    return axios.get(`${BASE_URL}/api/get-all-user-request`, { 
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+//get users info after search for notification
+export function getOtherUsers(data) {
+    return axios.get(`${BASE_URL}/api/get-other-users`, { 
+        params: { 
+            'other_users': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
 }

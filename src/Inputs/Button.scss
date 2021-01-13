@@ -1,14 +1,19 @@
-$myColor: #fff;
-$colorMain: #0277BD;
+$color-primary: #3f51b5;
+$color-secondary: #0277BD;
+
+$color-gradiant-main: linear-gradient(225deg, #784ba0, #3f51b5 50%, #2b86c5);
+
+$shadow-lg: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$shadow-md: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
 .button {
-    background: $colorMain;
+    background: $color-secondary;
     border-radius: 25px;
     border: none;
     padding: 5px 15px;
     font-weight: bold;
     margin: 20px auto 20px;
-    color: $myColor;
+    color: #fff;
     display: flex;
     align-items: center;
 }
@@ -23,13 +28,13 @@ $colorMain: #0277BD;
 
 }
 .button-row {
-    background: $colorMain;
+    background: $color-secondary;
     border-radius: 25px;
     border: none;
     padding: 5px 15px;
     font-weight: bold;
     margin: 20px 5px 20px;
-    color: $myColor;
+    color: #fff;
     width: 120px;
     display: inline-flex;
     align-items: center;
@@ -44,3 +49,28 @@ $colorMain: #0277BD;
     outline: none;
     border: 3px green solid;
 }
+
+.add-user-icon {
+    padding: 4px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: $color-primary;
+    border: none;
+    border-radius: 50%;
+    box-shadow: $shadow-md;
+}
+.add-user-icon-img {
+    width: 25px !important;
+    height: 25px !important;
+}
+.add-user-icon:hover {
+    box-shadow: $shadow-lg;
+}
+
+.add-user-icon:active {
+    background-color: $color-secondary;
+    box-shadow: none;
+    transform: translateY(4px);
+  }

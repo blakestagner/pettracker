@@ -20,7 +20,10 @@ const ActivityLog = forwardRef((props, ref) => {
     const [selectedActivity, setActivity] = useState(0);
 
     const handleClick = (evt) => {
+      console.log(evt)
       switch(evt.target.name) {
+        case 'Post':
+          return setActivity('Post')
         case 'Eat':
           return setActivity('Eat');
         case 'Pee':
@@ -105,28 +108,41 @@ const ActivityLog = forwardRef((props, ref) => {
                 )
                   :
                 (
-                <div 
-                  className="activity-log-grid">
-                  <ActivityButton 
-                      img={foodIcon}
-                      name="Eat"
-                      alt="food button"
-                      handleClick={() => setActivity('Eat')}/>
-                  <ActivityButton 
-                      img={peeIcon}
-                      name="Potty"
-                      alt="pee icon"
-                      handleClick={() => setActivity('Pee')}/>
-                  <ActivityButton 
-                      img={poopIcon}
-                      name="Poop"
-                      alt="pee icon"
-                      handleClick={() => setActivity('Poop')}/>
-                  <ActivityButton 
-                      img={walkIcon}
-                      name="Walk"
-                      alt="pee icon"
-                      handleClick={() => setActivity('Walk')}/>
+                  <div>  
+                    <div 
+                      name="Post"
+                      onClick={() => setActivity('Post')}
+                      className="post-to-feed"> 
+                      <img 
+                          src={foodIcon}
+                          name="Post"
+                          alt="post button"
+                          onClick={() => setActivity('Post')}/>
+                          <p>Post to feed</p>
+                    </div>
+                  <div 
+                    className="activity-log-grid">
+                    <ActivityButton 
+                        img={foodIcon}
+                        name="Eat"
+                        alt="food button"
+                        handleClick={() => setActivity('Eat')}/>
+                    <ActivityButton 
+                        img={peeIcon}
+                        name="Potty"
+                        alt="pee icon"
+                        handleClick={() => setActivity('Pee')}/>
+                    <ActivityButton 
+                        img={poopIcon}
+                        name="Poop"
+                        alt="pee icon"
+                        handleClick={() => setActivity('Poop')}/>
+                    <ActivityButton 
+                        img={walkIcon}
+                        name="Walk"
+                        alt="pee icon"
+                        handleClick={() => setActivity('Walk')}/>
+                  </div>
                 </div>
                 )
               }

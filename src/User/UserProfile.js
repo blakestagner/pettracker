@@ -3,11 +3,12 @@ import { useEffect, useState, useRef } from 'react';
 import Loading from '../HelperComponents/Loading';
 import FileUpload from '../img/FileUpload';
 
-import {getFriends } from '../Autho/Repository'
+import {getFriendsList } from '../Autho/Repository'
 
 function UserProfile(props) {
     const [isLoading, doneLoading] = useState(true);
     const [newUpload, setUpload] = useState(0);
+    const [friends, setFriends] = useState([])
     const toggleImageUploadRef = useRef();
 
 
@@ -15,7 +16,7 @@ function UserProfile(props) {
     useEffect(() => {
         doneLoading(false)
         FriendsList()
-    }, [props])
+    }, [])
 
     const uploadNewImg = () => {
         setUpload(1)
@@ -23,8 +24,10 @@ function UserProfile(props) {
     }
 
     const FriendsList = () => {
-        getFriends()
-        .then(res => console.log(res))
+        getFriendsList()
+        .then(res => {
+            setFriends(res)
+        })
         .catch(err => console.log(err))
     }
 
@@ -48,12 +51,15 @@ function UserProfile(props) {
                         />
                 </div>
                 <div style={{margin: '0 auto'}}>
-                   
+                    
                 </div>
             </div>
             <div>
                 <h3>Friends</h3>
-                
+                {friends.length > 0 ? 
+                    "more than zero" :
+                    'less then 0'   
+                }
             </div>
 
                 <FileUpload
