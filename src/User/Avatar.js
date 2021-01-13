@@ -13,8 +13,8 @@ const Avatar = ({
                 petProfileImgUrl, 
                 handleToggle}) => {
         
-        const avatarHumanImg = `${String(profileImgUrl)}`
-        const avatarPetImg =  `${String(petProfileImgUrl)}`
+        const avatarHumanImg = profileImgUrl;
+        const avatarPetImg =  petProfileImgUrl;
         
 
         const uploadImage = () => {
