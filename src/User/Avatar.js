@@ -24,8 +24,6 @@ const Avatar = ({
             uploadImg()
         }
 
-
-
         const displayImage = (props) => {
             if(type === 'pet') {
                 if(userDetails.pet_id === 0) {
@@ -171,9 +169,6 @@ export function DefaultAvatarLarge(props) {
                 className='default-profile-img-large'
                 src={profileImg} 
                 alt='default profile pic hum'/>
-            <ImageUploadIcon 
-                type='human'
-                userDetails={props.userDetails}/>
         </div>
     )
 }
@@ -186,6 +181,7 @@ export function DefaultAvatarProfileLarge(props) {
                 src={profileImg} 
                 alt='default profile pic'/>
             <ImageUploadIcon 
+                uploadImg={props.uploadImg}
                 type='human'
                 userDetails={props.userDetails}/>
         </div>
