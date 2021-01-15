@@ -35,6 +35,10 @@ function UserProfile(props) {
         return <Loading />
     }
 
+    const updateUserImage = () => {
+        props.updateUserImage()
+    }
+
     return (
         <div>
             <p className="header-text">{props.userDetails.fname}'s<span> Profile</span></p>
@@ -63,6 +67,7 @@ function UserProfile(props) {
             </div>
 
                 <FileUpload
+                    updateUserImage={() => updateUserImage()}
                     ref={toggleImageUploadRef}
                     show={newUpload}
                     type="human"/>

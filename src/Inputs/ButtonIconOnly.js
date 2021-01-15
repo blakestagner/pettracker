@@ -5,7 +5,7 @@ function ButtonIconOnly(props) {
     return (
         <button
             onClick={props.onClick}
-            className="button-row"
+            className={props.class === 'true' ? 'button-row active' : 'button-row '}
             id={props.id}
             name={props.name}
             value={props.value}

@@ -3,12 +3,16 @@
     display: flex;
     justify-content: center;
 }
-.default-profile-img {
+.profile-avatar-nav {
+    display: flex;
+    justify-content: center;
+}
+img.default-profile-img {
     height: 50px;
     width: 50px;
     padding: 0 10px 0 10px;
 }
-.default-profile-img-large {
+img.default-profile-img-large {
     height: 120px;
     width: 120px;
     border: solid #fff 5px;

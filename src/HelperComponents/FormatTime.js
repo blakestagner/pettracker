@@ -1,6 +1,7 @@
-function FormatTime(props) {
+import './helper.scss';
+import ClockIcon from '../img/icons/time_color_primary.svg';
 
-    
+function FormatTime(props) {    
     const displayTime = (time) => {
         
         var timeHelper = time.split('T')[1].split(':');
@@ -50,12 +51,47 @@ function FormatTime(props) {
             `${getMonthName(date[1])} ${date[2].split('T')[0]} ${date[0]}`
         )
     }
-    return (
-        <div className="formated-time">
-            <p>{displayDate(props.time)}</p>
-            <p>{displayTime(props.time)}</p>
-        </div>
-    )
+
+    if(props.format === 'time') {
+        return (
+            <div className="format-time-box">
+                <img src={ClockIcon} alt="time" />
+                <div className="formated-time"  id={props.format}>
+                    <p>{displayTime(props.time)}</p>
+                </div>
+            </div>
+        )
+    } else if(props.format === 'date') {
+        return (
+            <div className="format-time-box">
+                <img src={ClockIcon} alt="time" /> 
+                <div className="formated-time"  id={props.format}>
+                    <p>{displayDate(props.time)}</p>
+                </div>
+            </div>
+        )
+    } else if(props.format === 'small') {
+        return (
+            <div className="format-time-box-small">
+                <img src={ClockIcon} alt="time" /> 
+                <div className="formated-time-small"  id={props.format}>
+                    <p>{displayDate(props.time)}</p>
+                    <p>{displayTime(props.time)}</p>
+                </div>
+            </div>
+        )
+    }else {
+        return (
+            <div className="format-time-box">
+                <img src={ClockIcon} alt="time" />
+                <div className="formated-time" id={props.format}>
+                    <p>{displayDate(props.time)}</p>
+                    <p>{displayTime(props.time)}</p>
+                    {props.format}
+                </div>
+            </div>
+        )
+    }
 }
 
 export default FormatTime;

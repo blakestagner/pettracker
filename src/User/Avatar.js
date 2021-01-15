@@ -16,6 +16,9 @@ const Avatar = ({
         const avatarHumanImg = profileImgUrl;
         const avatarPetImg =  petProfileImgUrl;
         
+        
+        //const avatarHumanImg = '';
+        //const //avatarPetImg =  profileImg;
 
         const uploadImage = () => {
             uploadImg()
@@ -28,9 +31,12 @@ const Avatar = ({
                 if(userDetails.pet_id === 0) {
                     return <AddPetAvatar />
                 } else if(petDetails.profile_pic === '0'){
-                    return <DefaultAvatar />
+                    return <DefaultAvatar
+                                name={petDetails.name} />
                 } else {
-                    return <PetAvatar profileImg={avatarPetImg}/>
+                    return <PetAvatar
+                                name={petDetails.name} 
+                                profileImg={avatarPetImg}/>
                 }
 
 
@@ -38,7 +44,8 @@ const Avatar = ({
 
             } else if(type === 'human') {
                 if(userDetails.profile_pic === '0') {
-                    return <DefaultAvatar />
+                    return <DefaultAvatar 
+                                name={userDetails.fname}/>
                 } else {
                     return <HumanAvatar 
                                 userDetails={userDetails}
@@ -133,14 +140,14 @@ export function AddPetAvatar() {
     )
 }
 
-export function DefaultAvatar() {
+export function DefaultAvatar(props) {
 
     return (
-        <div className="profile-avatar">
+        <div className="profile-avatar-nav">
              <img 
                 className='default-profile-img'
                 src={profileImg} 
-                alt='default profile pic'/>
+                alt={props.name}/>
         </div>
     )
 }
@@ -163,7 +170,7 @@ export function DefaultAvatarLarge(props) {
              <img 
                 className='default-profile-img-large'
                 src={profileImg} 
-                alt='default profile pic'/>
+                alt='default profile pic hum'/>
             <ImageUploadIcon 
                 type='human'
                 userDetails={props.userDetails}/>
@@ -207,10 +214,7 @@ export function DefaultAvatarPetLarge(props) {
              <img 
                 className='default-profile-img-large'
                 src={profileImg} 
-                alt='default profile pic'/>
-            <ImageUploadIcon 
-                type='pet'
-                userDetails={props.userDetails}/>
+                alt='default profile pic top'/>
         </div>
     )
 }
@@ -256,7 +260,7 @@ export function PetAvatar(props) {
             <img 
                 className='profile-img'
                 src={props.profileImg} 
-                alt='default profile pic'/>
+                alt={props.name}/>
         </div>
     )
 }
@@ -279,7 +283,7 @@ export function DefaultAvatarPetProfileLarge(props) {
             <img 
                 className='profile-img-large'
                 src={profileImg} 
-                alt='default profile pic'/>
+                alt='default profile pic def'/>
             <ImageUploadIcon 
                 uploadImg={props.uploadImg}
                 type='pet'

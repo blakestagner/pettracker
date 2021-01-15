@@ -77,24 +77,28 @@ function ActivityForm(props) {
                             displayTime={displayTime(currentTime())}/>;
             case 'Eat':
                 return <EatActivity 
+                            close={props.close}
                             petDetails={props.petDetails}
                             userDetails={props.userDetails}
                             time={currentTime()}
                             displayTime={displayTime(currentTime())}/>;
             case 'Pee':
                 return <PeeActivity 
+                            close={props.close}
                             petDetails={props.petDetails}
                             userDetails={props.userDetails}
                             time={currentTime()}
                             displayTime={displayTime(currentTime())}/>;
             case 'Poop':
                 return <PoopActivity 
+                            close={props.close}
                             petDetails={props.petDetails}
                             userDetails={props.userDetails}
                             time={currentTime()}
                             displayTime={displayTime(currentTime())}/>;
             case 'Walk':
                 return <WalkActivity 
+                            close={props.close}
                             petDetails={props.petDetails}
                             userDetails={props.userDetails}
                             time={currentTime()}
@@ -150,7 +154,10 @@ function EatActivity(props) {
             .then(res => {
                 updateMsg.innerHTML = 'Success'
                 setUpdate(0)
-                setTimeout(() => updateMsg.innerHTML = 'Log Now', 1000)
+                setTimeout(() => {
+                    updateMsg.innerHTML = 'Log Now'
+                    props.close()
+                    }, 1000)
             })
             .catch(err => console.log(err))
     }
@@ -232,9 +239,11 @@ function EatActivity(props) {
                 <p>Log Current Time?</p>
                 <p>{props.displayTime}</p>
                 <ButtonRow
+                    class={eatNow === 0 ? 1 : 0}
                     name="Yes"
                     onClick={() => setEatNow(1)}/>
                 <ButtonRow 
+                    class={eatNow === 1 ? 1 : 0}
                     name="No"
                     onClick={() => setEatNow(0)}/>
             </div>
@@ -297,7 +306,10 @@ function PeeActivity(props) {
             .then(res => {
                 updateMsg.innerHTML = 'Success'
                 setUpdate(0)
-                setTimeout(() => updateMsg.innerHTML = 'Log Now', 1000)
+                setTimeout(() => {
+                    updateMsg.innerHTML = 'Log Now'
+                    props.close()
+                    }, 1000)
             })
             .catch(err => console.log(err))
     }
@@ -323,9 +335,11 @@ function PeeActivity(props) {
                 <p>Log Current Time?</p>
                 <p>{props.displayTime}</p>
                 <ButtonRow
+                    class={peeNow === 0 ? 1 : 0}
                     name="Yes"
                     onClick={() => setPeeNow(1)}/>
                 <ButtonRow 
+                    class={peeNow === 1 ? 1 : 0}
                     name="No"
                     onClick={() => setPeeNow(0)}/>
             </div>
@@ -355,6 +369,7 @@ function PeeActivity(props) {
                     id='missed'
                     onClick={ handleChange }
                     icon={petPee.missed === '1' ? checked : unchecked}
+                    class={petPee.missed === '1' ? 'true' : 'false'}
                     value='1'
                     name='Yes' />
                 <ButtonIconOnly 
@@ -362,6 +377,7 @@ function PeeActivity(props) {
                     onClick={ handleChange }
                     value='0'
                     icon={petPee.missed === '0' ? checked : unchecked}
+                    class={petPee.missed === '0' ? 'true' : 'false'}
                     name='Miss' 
                     />
             </div>
@@ -404,7 +420,10 @@ function PoopActivity(props) {
             .then(res => {
                 updateMsg.innerHTML = 'Success'
                 setUpdate(0)
-                setTimeout(() => updateMsg.innerHTML = 'Log Now', 1000)
+                setTimeout(() => {
+                    updateMsg.innerHTML = 'Log Now'
+                    props.close()
+                    }, 1000)
             })
             .catch(err => console.log(err))
     }
@@ -430,9 +449,11 @@ function PoopActivity(props) {
             <p>Log Current Time?</p>
             <p>{props.displayTime}</p>
             <ButtonRow
+                class={pooNow === 0 ? 1 : 0}
                 name="Yes"
                 onClick={() => setPooNow(1)}/>
             <ButtonRow 
+                class={pooNow === 1 ? 1 : 0}
                 name="No"
                 onClick={() => setPooNow(0)}/>
         </div>
@@ -462,6 +483,7 @@ function PoopActivity(props) {
                 id="missed"
                 onClick={ handleChange }
                 icon={petPoo.missed === '1' ? checked : unchecked}
+                class={petPoo.missed === '1' ? 'true' : 'false'}
                 value='1'
                 name='Yes' />
             <ButtonIconOnly 
@@ -469,6 +491,7 @@ function PoopActivity(props) {
                 onClick={ handleChange }
                 value='0'
                 icon={petPoo.missed === '0' ? checked : unchecked}
+                class={petPoo.missed === '0' ? 'true' : 'false'}
                 name='Miss' 
                 />
         </div>
@@ -478,6 +501,7 @@ function PoopActivity(props) {
                 id="consistency"
                 onClick={ handleChange }
                 icon={petPoo.consistency === '1' ? checked : unchecked}
+                class={petPoo.consistency === '1' ? 'true' : 'false'}
                 value='1'
                 name='Normal' />
             <ButtonIconOnly 
@@ -485,6 +509,7 @@ function PoopActivity(props) {
                 onClick={ handleChange }
                 value='0'
                 icon={petPoo.consistency === '0' ? checked : unchecked}
+                class={petPoo.consistency === '0' ? 'true' : 'false'}
                 name='Runny' 
                 />
         </div>

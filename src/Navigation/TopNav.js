@@ -3,7 +3,7 @@ import Avatar from '../User/Avatar';
 import { Link } from 'react-router-dom';
 import SlideOutNavRight from './SlideOutNavRight';
 import SlideOutNavLeft from './SlideOutNavLeft';
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Search from './Search'
 import Notifications from './Notifications'
 import {
@@ -22,6 +22,12 @@ function TopNav(props) {
     const logout = () => {
         props.logout();
     }
+
+    const changePet = (id) => {
+        props.changePet(id)
+    }
+
+
     if(props.isLoggedIn === false) {
         return ''
     }
@@ -60,7 +66,7 @@ function TopNav(props) {
                 <Avatar 
                     petDetails={props.petDetails}
                     userDetails={props.userDetails}
-                    petProfileImgUrl = {props.petDetails.profile_pic}
+                    petProfileImgUrl={props.petDetails.profile_pic}
                     type="pet"
                     handleToggle={() => toggleNavRef.current.toggle()}
                     />
@@ -76,11 +82,13 @@ function TopNav(props) {
                 ref={toggleNavLeftRef} 
                 logout={() => logout()}/>
             <SlideOutNavRight
+                currentPet={props.currentPet}
                 petList={props.petList}
                 petDetails={props.petDetails}
                 userDetails={props.userDetails}
                 petProfileImgUrl = {props.petDetails.profile_pic}
                 type="pet" 
+                changePet={(id) => changePet(id)}
                 ref={toggleNavRef} 
                 logout={() => logout()}/>
         </div>

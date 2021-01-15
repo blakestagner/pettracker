@@ -1,15 +1,22 @@
 import './Button.scss'
+import {useState} from 'react';
+
 
 function ButtonRow(props) {
+    const [clicked, setClicked] = useState(0)
+
+    const handleClick = () => {
+        setClicked(1);
+        props.onClick();
+    }
 
     return (
         <button
-            onClick={props.onClick}
+            onClick={handleClick}
             value={props.value}
             id={props.id}
-            className="button-row">
+            className={props.class  ? 'button-row' : 'button-row active'}>
             <p 
-                onClick={props.onClick}
                 value={props.value}
                 id={props.id}>
                 {props.name}

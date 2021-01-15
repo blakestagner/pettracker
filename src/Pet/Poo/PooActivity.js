@@ -6,27 +6,32 @@ import PooDays from './PooDays'
 function PooActivity( {petDetails} ) {
     const [pooData, setPooData] = useState(null)
 
+    const helperFunction = () => {
+        getPetPooInfo(petDetails.id)
+            .then(res => setPooData(res))
+            .catch(err => console.log(err))
+    }
+
+    const updatePosts = () => {
+        helperFunction()
+    }
+
     useEffect(() => {
-        const helperFunction = () => {
-            getPetPooInfo(petDetails.id)
-                .then(res => setPooData(res))
-                .catch(err => console.log(err))
-        }
         helperFunction()
     }, [petDetails])
-
+    
     const displayPooData = () => {
         return <div>
                     <PooDays 
+                        updatePosts={() => updatePosts()}
+                        petDetails={petDetails}
                         pooData={pooData}/>
                 </div>
     }
 
     return (
         <div>
-            <h2>Poo Data</h2>
             {pooData ? displayPooData() : ''}
-
         </div>
     )
 }

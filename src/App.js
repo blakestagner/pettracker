@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import { BrowserRouter as  Router, Switch, Route } from 'react-router-dom';
-import { isAuthenticated, getUserInfo, getPetListInfo, getPetInfo, updateUser } from './Autho/Repository';
+import { isAuthenticated, getUserInfo, getPetListInfo, getPetInfo, updateUser, changeCurrentPet } from './Autho/Repository';
 import './App.css';
 import './App.scss';
 
@@ -37,10 +37,11 @@ function App() {
   const [petDetails, setPetDetails] = useState([]); 
   const [petList, setPetList] = useState([]);
   const [currentPet, setCurrentPet] = useState(0);
+  const [updateState, setUpdateState] = useState(0)
 
   useEffect(() => {
     checkLoggedinStatus() 
-  }, [currentPet])
+  }, [])
 
 
   const handleLogin = (data) => {
@@ -50,7 +51,7 @@ function App() {
 
   const checkLoggedinStatus = () => {
     if ( isAuthenticated() ){
-    getUserInfo()
+      getUserInfo()
         .then((res) => {
             setLoggedIn(true)
             setUserDetails(res)
@@ -59,12 +60,10 @@ function App() {
             getPetListInfo()
             .then(res => {
                 res.length === 0 ? setPetDetails(0) : setPetList(res);
-                changeCurrentPet(res)
             })
             .catch(err => {
                 console.log(err, "catch")
             })
-
         })
         .catch(err => {
           localStorage.removeItem('x-access-token');
@@ -79,10 +78,9 @@ function App() {
     } else {
       setLoggedIn(false)
     }
-    
   }
 
-  const changeCurrentPet = (data) => {
+  const getCurrentPet = (data) => {
     if(currentPet !== 0) {
       
       for(let i = 0; i < data.length; i++) {
@@ -99,28 +97,44 @@ function App() {
   
   const updateUserData = () => {
     updateUser()
-    .then(res => console.log(res))
+    .then(res =>  setUserDetails(res))
     .catch(err => console.log(err))
-    getUserInfo()
-      .then((res) => {
-          setLoggedIn(true)
-          setUserDetails(res)
-          console.log(res, 'updateUserDta')
-      })
-      .catch(err => {
-        localStorage.removeItem('x-access-token');
-        setLoggedIn(false)
-      })
-      getPetInfo()
-      .then(res => {
-          res.length === 0 ? setPetDetails(0) : setPetDetails(res[0]);
-      })
-      .catch(err => {
-          console.log(err, "catch")
-      })
+    .finally(() => {
+      getUserInfo()
+        .then((res) => {
+            setUserDetails(res)
+        })
+        .catch(err => {
+          localStorage.removeItem('x-access-token');
+          setLoggedIn(false)
+        })
+    })
   }
 
+  const changeUserCurrentPet = (id) => {
+    changeCurrentPet(id)
+      .then(res => {
+        setCurrentPet(id)
+      })
+      .catch(err => console.log(err))
+      const helper = () => {
+        getCurrentPet(petList)
+      }
+      helper()
+    }
+
+  useEffect(()=> {
+    getCurrentPet(petList)
+  }, [userDetails])
+  
+  useEffect(()=> {
+    updateUserData()
+  }, [currentPet])
    
+
+  const test = () => {
+    console.log('updated')
+  }
 
   return (
     <div className="App">
@@ -131,10 +145,12 @@ function App() {
         <ScrollToTop />
           {isLoggedIn ? (
                 <TopNav 
+                  changePet={(id) => changeUserCurrentPet(id)}
                   userDetails={userDetails} 
                   petDetails={petDetails}
                   petList={petList}
                   isLoggedIn={isLoggedIn} 
+                  currentPet={currentPet}
                   logout={() => setLoggedIn(false)}/>
               ) : (
                 ""
@@ -164,6 +180,8 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   userDetails={userDetails}
                   petDetails={petDetails}
+                  currentPet={currentPet}
+                  updatePetImage={() => getCurrentPet(petList)}
                   exact path='/pet-profile' 
                   updateUserData={() => updateUserData()}
                   component={PetProfile} />
@@ -184,6 +202,7 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   userDetails={userDetails}
                   petDetails={petDetails}
+                  updateUserImage={() => updateUserData()}
                   exact path='/user-profile' 
                   component={UserProfile} />
 

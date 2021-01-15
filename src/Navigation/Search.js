@@ -4,11 +4,10 @@ import CloseWhiteIcon from '../img/icons/close_white.svg';
 import Input from '@material-ui/core/Input';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '../img/icons/search_white.svg';
-import { searchUsers, sendFriendReuest, getFriendsList, getUserRelationship } from '../Autho/Repository';
+import { searchUsers, sendFriendReuest, cancelFriendRequest, getUserRelationship } from '../Autho/Repository';
 import Avatar from '../User/Avatar';
 import AddFriendIcon from '../img/icons/add_friend.svg';
 import IconButton from '../Inputs/IconButton';
-import profileIcon from '../img/icons/person.svg';
 import cancelRequestIcon from '../img/icons/remove_friend.svg';
 
 function Search(props) {
@@ -27,7 +26,6 @@ function Search(props) {
                 setUserRequests(res)
             })
             .catch(err => console.log(err))
-            .finally(() => console.log(userRequests))
     }
 
     useEffect(() => {
@@ -42,6 +40,7 @@ function Search(props) {
                     alt='search'
                     src={SearchBlack} />
                 <SearchExpanded
+                    updateUserRelationship={() => GetUserRelationship()}
                     userRequests={userRequests} 
                     userDetails={props.userDetails}
                     expanded={expanded} 
@@ -60,6 +59,7 @@ function SearchExpanded(props) {
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResult, setSearchResult] = useState(0);
     const [searchMessage, setSearchMessage] = useState('Search above...');
+    const [requestSent, setRequestSent] = useState()
 
     const handleChange = (e) => {
         const {value} = e.target;
@@ -82,7 +82,6 @@ function SearchExpanded(props) {
         searchUsers(searchTerm)
         .then(res => {
             setSearchResult(res)
-            console.log(res)
         })
         .catch(err => console.log(err))
        
@@ -90,13 +89,17 @@ function SearchExpanded(props) {
 
     const SendFriendRequest = (friendId) => {
         sendFriendReuest(friendId)
-        .then(res => console.log(res))
+        .then(res => setRequestSent(res))
+        .catch(err => console.log(err))
+    }
+    const CancelFriendRequest = (friendId) => {
+        cancelFriendRequest(friendId)
+        .then(res => setRequestSent(res))
         .catch(err => console.log(err))
     }
 
 
     const CheckFriendship = (id) => {
-
         const NoRelationship = (id) => {
             return (
                 <div className="add-user">
@@ -112,7 +115,7 @@ function SearchExpanded(props) {
                 <div className="add-user">
                     <p>Cancel Request</p>
                     <IconButton 
-                        click={() => console.log('still need to')}
+                        click={() => CancelFriendRequest(id)}
                         icon={cancelRequestIcon}/>
                 </div>
             )
@@ -124,23 +127,41 @@ function SearchExpanded(props) {
                 </div>
             )
         }
-        const userId = props.userDetails.id;
 
-
-      
-
-        let userID = '';
         
         if(props.userRequests.some( users => users.user_two === id && users.status === 1 )) {
             return Friends(id)
         } else if(props.userRequests.some( users => users.user_two === id && users.status === 0 )) {
             return SomeRelationship(id)
         } else return NoRelationship(id)
-
-        
-
     }
 
+
+    const displaySearchResult = () => {
+        return (
+            <div>
+                {searchResult.map(obj => (
+                    <div key={obj.id}
+                        className="search-result-users">
+                        <Avatar
+                            userDetails={obj}
+                            profileImgUrl = {obj.profile_pic}
+                            hasProfileImg={obj.profile_pic}
+                            type="human"
+                            />
+                        <p>{obj.fname} {obj.lname}</p>
+                            {CheckFriendship(obj.id)}
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+
+    useEffect(() => {
+        submitSearch()
+        props.updateUserRelationship()
+    }, [requestSent])
 
     /*const test = () => {
         return (
@@ -191,21 +212,7 @@ function SearchExpanded(props) {
                 {searchMessage}
                 <br />
                 {searchResult === 0  ? 'No results...' : 
-                    <div>
-                        {searchResult.map(obj => (
-                            <div key={obj.id}
-                                className="search-result-users">
-                                <Avatar
-                                    userDetails={obj}
-                                    profileImgUrl = {obj.profile_pic}
-                                    hasProfileImg={obj.profile_pic}
-                                    type="human"
-                                    />
-                                <p>{obj.fname} {obj.lname}</p>
-                                    {CheckFriendship(obj.id)}
-                            </div>
-                        ))}
-                    </div>
+                    displaySearchResult()
                 }
             </div>
 

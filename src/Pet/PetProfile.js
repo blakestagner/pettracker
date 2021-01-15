@@ -18,16 +18,22 @@ function PetProfile(props) {
         history.push('/register-pet');
     }
 
+
+    const updatePetProfileImage = () => {
+        props.updatePetImage()
+    }
+
+
     return (
         <div>
-            {props.userDetails.pet_id ?
+            {props.userDetails.pet_id !== 0?
                 <PetProfileDetails
+                    updatePetImage={() => updatePetProfileImage()}
+                    currentPet={props.currentPet}
                     petDetails={props.petDetails} 
                     userDetails={props.userDetails}
                     /> 
                 : 
-                props.userDetails.pet_id !== 0 ? 
-                'Yes pets' : 
                 <ButtonIcon 
                     name="Register a Pet" 
                     icon={petsIcon} 
@@ -38,7 +44,7 @@ function PetProfile(props) {
 }
 export default PetProfile;
 
-function PetProfileDetails({petDetails, userDetails}) {
+function PetProfileDetails({petDetails, userDetails, currentPet, updatePetImage}) {
     const [isLoading, doneLoading] = useState(true);
     const [newUpload, setUpload] = useState(0);
     const toggleImageUploadRef = useRef();
@@ -61,6 +67,10 @@ function PetProfileDetails({petDetails, userDetails}) {
     const uploadNewImg = () => {
         setUpload(1)
         toggleImageUploadRef.current.toggleImageUpload()
+    }
+
+    const updatePetProfileImage = () => {
+        updatePetImage()
     }
 
 
@@ -135,9 +145,10 @@ function PetProfileDetails({petDetails, userDetails}) {
                     <p>show percentage of normal and wet poops</p>
             </div>
             <FileUpload
-                    ref={toggleImageUploadRef}
-                    show={newUpload}
-                    type="pet"/>
+                updatePetProfileImage={() => updatePetProfileImage()}
+                ref={toggleImageUploadRef}
+                show={newUpload}
+                type="pet"/>
         </div>
     )
 }

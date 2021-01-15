@@ -9,7 +9,7 @@ $shadow-med: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 .top-nav {
     width: 100%;
     height: 50px;
-    padding: 10px 10px;
+    padding: 5px 10px;
     background-color: #fff;
     position: fixed;
     top: 0px;
@@ -144,8 +144,9 @@ $shadow-med: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
 //search
 .menu-icon {
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
+    padding: 10px 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -217,3 +218,40 @@ $shadow-med: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     margin-left: 10px;
 }
 //notifications
+.friend-request-users {
+    margin: 10px 10px 50px;
+
+}
+.friend-request-main {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.friend-request-card {
+    box-shadow: $shadow-med;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 60%;
+}
+.accept-deny-row {
+    margin: 10px 0;
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+}
+.accepted-row {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    color: green;
+}
+.denied-row {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    color: red;
+}

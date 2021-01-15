@@ -40,7 +40,15 @@ export function getUserInfo() {
        .then(res => res.data)
        .catch(err => Promise.reject('Request Not Authenticated!'));
     }
-
+export function changeCurrentPet(data) {
+    return axios.get(`${BASE_URL}/api/change-current-pet`, { 
+        params: { 
+            'id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+        })
+        .then(res => res.data)
+        .catch(err => Promise.reject('Request Not Authenticated!'));
+    }
 export function updateUser () {
     return axios.get(`${BASE_URL}/user/updated-data`, { 
         params: { 'x-access-token': localStorage.getItem('x-access-token')} 
@@ -232,7 +240,7 @@ export function getFriendsList() {
 
 //get users pending friend request
 export function getUserPendingRequest() {
-    return axios.get(`${BASE_URL}/api/get-pending-friend-request`, { 
+    return axios.get(`${BASE_URL}/api/get-user-pending-friend-request`, { 
         params: { 
             'x-access-token': localStorage.getItem('x-access-token')} 
        })
@@ -242,7 +250,7 @@ export function getUserPendingRequest() {
 
 
 //get requetss sent to you
-export function getPendingRequest() {
+export function getFriendRequest() {
     return axios.get(`${BASE_URL}/api/get-friend-request`, { 
         params: { 
             'x-access-token': localStorage.getItem('x-access-token')} 
@@ -250,7 +258,7 @@ export function getPendingRequest() {
        .then(res => res.data)
        .catch(err => Promise.reject('Request Not Authenticated!'));
 }
-
+//all user requests
 export function getUserRelationship() {
     return axios.get(`${BASE_URL}/api/get-all-user-request`, { 
         params: { 
@@ -268,4 +276,71 @@ export function getOtherUsers(data) {
        })
        .then(res => res.data)
        .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+//accept friend request 
+export function acceptFriendRequest(data) {
+    return axios.post(`${BASE_URL}/api/accept-friend-request`, {
+        id: data,
+        'x-access-token': localStorage.getItem('x-access-token')
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        return err.response.data
+    })
+}
+//deny request
+export function denyFriendRequest(data) {
+    return axios.delete(`${BASE_URL}/api/deny-friend-request`, {
+        params: {
+            'id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+//cancel request
+export function cancelFriendRequest(data) {
+    return axios.delete(`${BASE_URL}/api/cancel-friend-request`, {
+        params: {
+            'other_user_id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+//delete posts
+export function deleteFeedActivity(postId, petId) {
+    return axios.delete(`${BASE_URL}/api/delete-feed-activity`, {
+        params: {
+            'post_id': postId,
+            'pet_id': petId,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+export function deletePeeActivity(postId, petId) {
+    return axios.delete(`${BASE_URL}/api/delete-pee-activity`, {
+        params: {
+            'post_id': postId,
+            'pet_id': petId,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject(err));
+}
+
+export function deletePooActivity(postId, petId) {
+    return axios.delete(`${BASE_URL}/api/delete-poop-activity`, {
+        params: {
+            'post_id': postId,
+            'pet_id': petId,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject('Request Not Authenticated!'));
 }

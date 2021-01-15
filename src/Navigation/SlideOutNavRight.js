@@ -5,12 +5,14 @@ import React, { useState, useImperativeHandle, forwardRef, useEffect} from "reac
 import Logout from '../Autho/login_register/Logout';
 import Avatar from '../User/Avatar';
 import { getPetInfo, getAllPetInfo } from '../Autho/Repository';
+import Loading from '../HelperComponents/Loading';
 
 
 const SlideOutNavRight = forwardRef((props, ref) => {
 
     const [sideNav, toggleSideNav] = useState(0);
     const [otherPets, setOtherPets] = useState(0);
+    const [isLoading, doneLoading] = useState(true);
 
     const root = document.querySelector('#root');
 
@@ -65,8 +67,16 @@ const SlideOutNavRight = forwardRef((props, ref) => {
 
     useEffect(() => {
         displayOtherPets()
+    }, [sideNav])
 
-    }, [props.petDetails])
+    useEffect(() => {
+        doneLoading(false)
+    }, [])
+
+
+    if(isLoading === true) {
+        return <Loading />
+    }
     
     return (
         <div id="side-nav-right" className={sideNav ? 'side-nav-open' : 'side-nav-closed'}>
@@ -86,13 +96,13 @@ const SlideOutNavRight = forwardRef((props, ref) => {
                 {otherPets === 0 ? ''
                     : 
                     otherPets.map(obj => (
-                    <div key={obj.id}>
+                    <div 
+                        onClick={() => {props.changePet(obj.id); console.log(obj.id)}}
+                        key={obj.id}>
                         <Avatar 
                             petDetails={obj}
                             userDetails={props.userDetails}
-                            petProfileImgUrl = { 
-                                obj.id+
-                                obj.name}
+                            petProfileImgUrl={obj.profile_pic}
                             type="pet"
                         />
                     </div>

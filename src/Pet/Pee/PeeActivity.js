@@ -6,27 +6,32 @@ import PeeDays from './PeeDays'
 function PeeActivity( {petDetails} ) {
     const [peeData, setPeeData] = useState(null)
 
+    const helperFunction = () => {
+        getPetPeeInfo(petDetails.id)
+            .then(res => setPeeData(res))
+            .catch(err => console.log(err))
+    }
+
+    const updatePosts = () => {
+        helperFunction()
+    }
+    
     useEffect(() => {
-        const helperFunction = () => {
-            getPetPeeInfo(petDetails.id)
-                .then(res => setPeeData(res))
-                .catch(err => console.log(err))
-        }
         helperFunction()
     }, [petDetails])
 
     const displayPeeData = () => {
         return <div>
                     <PeeDays 
+                        updatePosts={() => updatePosts()} 
+                        petDetails={petDetails}
                         peeData={peeData}/>
                 </div>
     }
 
     return (
         <div>
-            <h2>Pee Data</h2>
             {peeData ? displayPeeData() : ''}
-
         </div>
     )
 }

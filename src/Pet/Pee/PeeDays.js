@@ -3,10 +3,17 @@ import FormatTime from '../../HelperComponents/FormatTime';
 import { TodaysDate, TwoDaysAgo,  SevenDaysAgo, ThirtyDaysAgo } from '../../HelperComponents/TodaysDate';
 import '../pet.scss';
 import TimeSelectMenu from '../TimeSelectMenu';
-
+import CloseIcon from '../../img/icons/close_white.svg';
+import CheckedIcon from '../../img/icons/checked_noborder.svg';
+import ArrowDownIcon from '../../img/icons/arrow_down_grey.svg';
+import ArrowUpIcon from '../../img/icons/arrow_up_grey.svg';
+import { deletePeeActivity } from '../../Autho/Repository'
+import EditButton from '../../Inputs/EditButton';
+import DeleteButton from '../../Inputs/DeleteButton';
 
 function PeeDays(props) {
-    const [day, setDay] = useState(0)
+    const [day, setDay] = useState(0);
+    const [expanded, setExpanded] = useState(0);
 
     const filterTime = (data) => {
         let filterDate = () => {
@@ -34,6 +41,50 @@ function PeeDays(props) {
         return filterDate()
     }
 
+    const wordDate = (date) => {
+        const getMonthName = (e) => {
+            switch(e) {
+                case '01':
+                    return 'Jan';
+                case '02':
+                    return 'Feb';
+                case '03':
+                    return 'Mar';
+                case '04':
+                    return 'Apr';
+                case '05':
+                    return 'May';
+                case '06':
+                    return 'Jun';
+                case '07':
+                    return 'Jul';
+                case '08':
+                    return 'Aug';
+                case '09':
+                    return 'Sept';
+                case '10':
+                    return 'Oct';
+                case '11':
+                    return 'Nov';
+                case '12':
+                    return 'Dec';
+                default:  
+                    return 'Null';
+            }
+        }
+        const day = date.split('-')[2]
+        const month = getMonthName(date.split('-')[1])
+        const year = date.split('-')[0]
+
+
+        return (
+            <div className="date-grid-box">
+                <h3>{month}-{day}</h3>
+                <p>{year}</p>
+            </div>
+        )
+    }
+
     const yesterdayMissedAverage = () => {
         let dataCount = filterTime(props.peeData);
         let peeData = 0
@@ -42,28 +93,137 @@ function PeeDays(props) {
 
         }   
         let peeDataAvg = Math.round((peeData / dataCount.length) * 10000) / 100;
-        return ( 
-            <p>Hit the spot {peeDataAvg}% of the time!</p>
+        let dateRange = () => {
+            switch(day) {
+                case 0:
+                    return (
+                        <div
+                            className="header">
+                            {wordDate(TodaysDate())} 
+                        </div>
+                    )
+                case 1:
+                    return (
+                        <div
+                            className="header">
+                            {wordDate(TwoDaysAgo())} 
+                        </div>
+                    )
+                case 2:
+                    return (
+                        <div
+                            className="header">
+                            {wordDate(TodaysDate())} 
+                            <span className="through">-</span> 
+                            {wordDate(SevenDaysAgo())}
+                        </div>
+                    )
+                case 3: 
+                    return (
+                        <div
+                            className="header">
+                            {wordDate(TodaysDate())} 
+                            <span className="through">-</span> 
+                            {wordDate(ThirtyDaysAgo())}
+                        </div>
+                    ) 
+                default:
+            }
+        }
+
+        return (
+            <div className="today-avg"> 
+                {dateRange()}
+                {isNaN(peeDataAvg)  ? 'no data...' : 
+                    <p>Hit the spot {peeDataAvg}% of the time!</p>
+                }
+            </div>
         )
+    }
+
+
+    const deletePost = (postId, petId) => {
+        console.log(postId, petId)
+        const activityPost = document.querySelector(`#pee-${postId}`)
+
+        const deleteSpan = document.createElement("span");
+        deleteSpan.className = 'delete-message'
+        const deleteMessgae = document.createTextNode("Activity Deleted")
+        deleteSpan.appendChild(deleteMessgae);
+
+        const removeAllChildNodes = (parent) => {
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+            parent.appendChild(deleteSpan)
+            setTimeout(() => {
+                props.updatePosts()
+            }, 1000)
+        }
+
+
+
+        deletePeeActivity(postId, petId)
+            .then(res => {
+                removeAllChildNodes(activityPost)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const activityDetailsExpand = (id) => {
+        if(expanded !== id) {
+            setExpanded(id)
+        } else if (expanded === id) {
+            setExpanded(0)
+        }
     }
 
     const handleChange = (e) => {
         setDay(e)
     }
 
+
     return (
         <div>
             <TimeSelectMenu timeline={(day) => handleChange(day)}/>
-            <div className="today-avg"> 
-            {yesterdayMissedAverage()}
-            </div>
-             {filterTime(props.peeData).map(obj => (
-                <div key={obj.id}>
-                    <FormatTime
-                        time={obj.time_select}/>
-                    <p>{obj.missed}</p>
-                </div>
-            ))}
+                {yesterdayMissedAverage()}
+                {filterTime(props.peeData).map(obj => (
+                    <div
+                        id={`pee-${obj.id}`} 
+                        key={obj.id}
+                        className='activity-log-card'>
+                        <div className="activity-log-card-main">
+                            <FormatTime
+                                format={day === 0 || day === 1 ? 'time' : ''}
+                                time={obj.time_select}/>
+                            <div className="details">
+                                {obj.missed === 1 ? 'Hit the spot' : 'Missed'}
+                                <div 
+                                    className={obj.missed === 1 ? 
+                                        'activity-log-icon-box hit-the-spot' :
+                                        'activity-log-icon-box missed-the-spot'}>
+                                    <img 
+                                        alt="icon"
+                                        className="activity-log-icon"
+                                        src={obj.missed === 1 ? CheckedIcon : CloseIcon} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="activity-log-details">
+                            <div 
+                                className={expanded === obj.id ? 
+                                    "activity-log-details-expanded" :
+                                    "activity-log-details-inner "}>
+                                <DeleteButton click={() => deletePost(obj.id, props.petDetails.id)}/>
+                                <EditButton click={() => console.log('edit') } />
+                            </div>
+                            <img 
+                                src={expanded === obj.id ? ArrowUpIcon : ArrowDownIcon } 
+                                alt="expand"
+                                onClick={() => activityDetailsExpand(obj.id)}/>
+                        </div>
+                    </div>
+                ))}
         </div>
     )
 }

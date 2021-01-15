@@ -46,11 +46,8 @@ const FileUpload = forwardRef((props, ref) => {
 
 
     useEffect(() => {
-
-            console.log(newImage)
-            setType(props.type)
-            doneLoading(0)
-
+        setType(props.type)
+        doneLoading(0)
     }, [props.type, newImage])
 
     useImperativeHandle(ref, () => ({
@@ -89,8 +86,9 @@ const FileUpload = forwardRef((props, ref) => {
                     setMessage('')
                     setImage(0)
                     setPreview(0)
+                    hide(0)
+                    props.updateUserImage()
                     hide(0)}, 2000)
-
                 })
             .catch(err => console.log(err))
         } else {
@@ -101,6 +99,8 @@ const FileUpload = forwardRef((props, ref) => {
                     setMessage('')
                     setImage(0)
                     setPreview(0)
+                    hide(0)
+                    props.updatePetProfileImage()
                     hide(0)}, 2000)
                 console.log(res.data.destination, res.data.filename)
                 })
@@ -140,7 +140,6 @@ const FileUpload = forwardRef((props, ref) => {
                 </div>
             </div>
                 <div>
-                    <p>{recievedType}</p>
                     <div className="file-input-row">
                         <input
                             className={classes.input}

@@ -101,6 +101,7 @@ const ActivityLog = forwardRef((props, ref) => {
               {selectedActivity ? 
                 (
                   <ActivityForm 
+                    close={() => closeAll()}
                     petDetails={props.petDetails}
                     userDetails={props.userDetails}
                     activitySelected={selectedActivity}

@@ -6,27 +6,33 @@ import FeedDays from './FeedDays'
 function FeedActivity( {petDetails} ) {
     const [eatData, setEatData] = useState(null)
 
+    const helperFunction = () => {
+        getPetEatInfo(petDetails.id)
+            .then(res => setEatData(res))
+            .catch(err => console.log(err))
+    }
+
+    const updatePosts = () => {
+        helperFunction()
+    }
+    
     useEffect(() => {
-        const helperFunction = () => {
-            getPetEatInfo(petDetails.id)
-                .then(res => setEatData(res))
-                .catch(err => console.log(err))
-        }
+
         helperFunction()
     }, [petDetails])
 
     const displayEatData = () => {
         return <div>
-                    <FeedDays 
+                    <FeedDays
+                        updatePosts={() => updatePosts()} 
+                        petDetails={petDetails}
                         eatData={eatData}/>
                 </div>
     }
 
     return (
         <div>
-            <h2>Eat Data</h2>
             {eatData ? displayEatData() : ''}
-
         </div>
     )
 }
