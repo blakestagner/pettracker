@@ -17,8 +17,8 @@ const Avatar = ({
         const avatarPetImg =  petProfileImgUrl;
         
         
-        //const avatarHumanImg = '';
-        //const //avatarPetImg =  profileImg;
+        //const avatarHumanImg = profileImg;
+        //const avatarPetImg =  profileImg;
 
         const uploadImage = () => {
             uploadImg()
