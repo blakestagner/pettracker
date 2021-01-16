@@ -8,7 +8,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 ReactDOM.render( <App /> , document.getElementById('root')
 );
 reportWebVitals();
-serviceWorkerRegistration.register({
+serviceWorkerRegistration.unregister({
     onUpdate: registration => {
       const waitingServiceWorker = registration.waiting
   
