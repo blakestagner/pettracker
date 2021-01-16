@@ -21,8 +21,6 @@ import ScrollToTop from './HelperComponents/ScrollToTop';
 
 import UserProfile from './User/UserProfile';
 
-
-
 import {
   //BrowserView,
   MobileView
@@ -38,6 +36,7 @@ function App() {
   const [petList, setPetList] = useState([]);
   const [currentPet, setCurrentPet] = useState(0);
   const [updateState, setUpdateState] = useState(0)
+  
 
   useEffect(() => {
     checkLoggedinStatus() 
