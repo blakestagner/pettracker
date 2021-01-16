@@ -51,6 +51,11 @@ function Notifications(props) {
         newFriendRequests()
     }
 
+    const resetNotifications = () => {
+        setFriendRequest(0);
+        setOtherUsers();
+    }
+
     useEffect(() => {
 
         newFriendRequests()
@@ -66,8 +71,6 @@ function Notifications(props) {
         
     }, [friendRequests])
 
-
-
     return (
         <div className="menu-icon">
                 <img
@@ -76,6 +79,7 @@ function Notifications(props) {
                     src={NotificationIcon} />
                 <NotificationsExpanded
                     updateRequests={() => updateAll()}
+                    resetNotifications={() => resetNotifications()}
                     expanded={expanded}
                     friendRequests={friendRequests} 
                     otherUsers={otherUsers}
@@ -171,6 +175,7 @@ function NotificationsExpanded(props) {
         if(accepted.length !== 0 || denied.length !== 0) {
             setAccepted([]);
             setDenied([])
+            props.resetNotifications()
         }
     }, [props.expanded === 0])
 

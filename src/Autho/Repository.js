@@ -247,7 +247,15 @@ export function getUserPendingRequest() {
        .then(res => res.data)
        .catch(err => Promise.reject('Request Not Authenticated!'));
 }
-
+//get user relationships with you
+export function getAllFriends() {
+    return axios.get(`${BASE_URL}/api/get-all-friends-list`, { 
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
 
 //get requetss sent to you
 export function getFriendRequest() {
@@ -310,6 +318,16 @@ export function cancelFriendRequest(data) {
     .then(res => res.data)
     .catch(err => Promise.reject('Request Not Authenticated!'));
 }
+//Remove friend
+export function removeFriend(data) {
+    return axios.delete(`${BASE_URL}/api/remove-friend`, {
+        params: {
+            'other_user_id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject('Request Not Authenticated!'));
+}
 
 //delete posts
 export function deleteFeedActivity(postId, petId) {
@@ -339,6 +357,35 @@ export function deletePooActivity(postId, petId) {
         params: {
             'post_id': postId,
             'pet_id': petId,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+//get al user pets
+export function getMyPetDetails(data) {
+    return axios.get(`${BASE_URL}/api/get-my-pets`, { 
+        params: { 
+            'pets': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+//remove my pet
+export function removePetOwner(data) {
+    return axios.delete(`${BASE_URL}/api/remove-pet-owner`, {
+        params: {
+            'pet_id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+export function removeMyPet(data) {
+    return axios.delete(`${BASE_URL}/api/remove-pet`, {
+        params: {
+            'pet_id': data,
             'x-access-token': localStorage.getItem('x-access-token')} 
     })
     .then(res => res.data)

@@ -12,12 +12,14 @@ import cancelRequestIcon from '../img/icons/remove_friend.svg';
 
 function Search(props) {
     const [expanded, setExpanded] = useState(0);
-    const [userRequests, setUserRequests] = useState()
+    const [userRequests, setUserRequests] = useState(0)
 
     const Toggle = () => {
         if(expanded === 0) {
             setExpanded(1)
-        } else setExpanded(0)
+        } else {
+            setExpanded(0);
+        }
     }
 
     const GetUserRelationship = () => {
@@ -31,7 +33,6 @@ function Search(props) {
     useEffect(() => {
         GetUserRelationship()
     }, [])
-    
 
     return (
         <div className="menu-icon">
@@ -49,7 +50,7 @@ function Search(props) {
     )
 }
 
-
+//Redesign the entire code base for search....
 
 export default Search;
 
@@ -77,6 +78,19 @@ function SearchExpanded(props) {
           },
         }));
     const classes = useStyles();
+
+    useEffect(() => {
+        const resetSearch = () => {
+            setSearchTerm('');
+            setSearchResult(0)
+            setRequestSent()
+            
+            const searchInput = document.querySelector('#search-input')
+            searchInput.value = ''
+        }
+        console.log('reset')
+        resetSearch()
+    }, [props.expanded])
 
     const submitSearch = () => {
         searchUsers(searchTerm)
@@ -189,6 +203,7 @@ function SearchExpanded(props) {
         <div className={props.expanded === 0?  'menu-colapsed' : 'menu-expanded'}>
             <div className="search-bar">
                 <Input 
+                    id="search-input"
                     className={classes.search}
                     style={{color: '#fff', margin: '0 10px'}}
                     onChange={ handleChange }

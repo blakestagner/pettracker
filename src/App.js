@@ -202,6 +202,8 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   userDetails={userDetails}
                   petDetails={petDetails}
+                  currentPet={currentPet}
+                  petList={petList}
                   updateUserImage={() => updateUserData()}
                   exact path='/user-profile' 
                   component={UserProfile} />

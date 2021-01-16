@@ -45,21 +45,27 @@ const SlideOutNavRight = forwardRef((props, ref) => {
     const displayOtherPets = () => {
         let petsArray = [];        
         let pets = props.petList;
-
-        props.petList.filter(obj => obj.pet_id !== props.petDetails.id).map(obj => {
-            petsArray.push(obj.pet_id)
-        })
-        const avatarDetails = () => {
-            getAllPetInfo(petsArray)
-            .then(res => {
-                setOtherPets(res);
+        if(pets.length > 1) {
+            props.petList.filter(obj => obj.pet_id !== props.petDetails.id).map(obj => {
+                petsArray.push(obj.pet_id)
             })
-            .catch((err) => {
-                console.log(err)
-            })
+            const avatarDetails = () => {
+                getAllPetInfo(petsArray)
+                .then(res => {
+                    setOtherPets(res);
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            }
+            if(petsArray.length + 1 === pets.length) {
+                avatarDetails()
+            }
         }
-        if(petsArray.length + 1 === pets.length) {
-            avatarDetails()
+        else if(pets.length === 1){
+            return;
+        } else {
+            return;
         }
     }
 

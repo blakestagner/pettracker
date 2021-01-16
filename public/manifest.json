@@ -1,6 +1,6 @@
 {
-  "short_name": "PetTrack",
-  "name": "Pet Tracker app",
+  "short_name": "furbud",
+  "name": "furbud",
   "icons": [
     {
       "src": "favicon.png",
