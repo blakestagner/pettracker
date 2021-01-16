@@ -35,6 +35,7 @@ function UserProfile(props) {
             <div className="icon-text-row">
                 <div style={{margin: '0 auto'}}>
                     <Avatar
+                        yolo={'hi'}
                         petDetails={props.petDetails}
                         userDetails={props.userDetails}
                         profileImgUrl = {props.userDetails.profile_pic}
