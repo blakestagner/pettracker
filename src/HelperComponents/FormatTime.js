@@ -61,11 +61,29 @@ function FormatTime(props) {
                 </div>
             </div>
         )
+    } else if(props.format === 'time-small') {
+        return (
+            <div className="format-time-box-small">
+                <img src={ClockIcon} alt="time" /> 
+                <div className="formated-time-small"  id={props.format}>
+                <p>{displayTime(props.time)}</p>
+                </div>
+            </div>
+        )
     } else if(props.format === 'date') {
         return (
             <div className="format-time-box">
                 <img src={ClockIcon} alt="time" /> 
                 <div className="formated-time"  id={props.format}>
+                    <p>{displayDate(props.time)}</p>
+                </div>
+            </div>
+        )
+    } else if(props.format === 'date-small') {
+        return (
+            <div className="format-time-box-small">
+                <img src={ClockIcon} alt="time" /> 
+                <div className="formated-time-small"  id={props.format}>
                     <p>{displayDate(props.time)}</p>
                 </div>
             </div>

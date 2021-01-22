@@ -177,7 +177,7 @@ const EditPet = forwardRef((props, ref) => {
         } else if(props.editPet.id === props.userDetails.pet_id) {
             return (
                 <div>
-                    <p>This is your current, if this is your only pet please create a new pet to remove this pet.</p>
+                    <p className="helper-message">This is your current, if this is your only pet please create a new pet to remove this pet.</p>
                 </div>
             )
         }
@@ -361,6 +361,7 @@ const EditPet = forwardRef((props, ref) => {
                             icon={AddFriendIcon}/>
                     </div>
                     <AddPetOwner
+                        petOwners={petOwners}
                         sentRequest={sentRequest}
                         userDetails={props.userDetails}
                         editPet={props.editPet} 
@@ -430,6 +431,15 @@ const AddPetOwner = forwardRef((props, ref) => {
                     <div className="remove-user">
                         <ButtonWhite
                             name='req sent'
+                            />
+                    </div>
+                )
+        } else if(props.petOwners.some(obj => 
+            obj.id === id && obj.pet_id === props.editPet.id )) {
+                return (
+                    <div className="remove-user">
+                        <ButtonWhite
+                            name='Owner'
                             />
                     </div>
                 )

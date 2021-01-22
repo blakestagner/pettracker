@@ -110,6 +110,7 @@ a:-webkit-any-link {
 .full-width {
   width: 100%;
   overflow: hidden;
+  max-width: 800px;
 }
 .main-body {
   margin-top: 25px;

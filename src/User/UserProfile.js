@@ -39,6 +39,7 @@ function UserProfile(props) {
 
 
     const updateUserImage = () => {
+        console.log('updated')
         props.updateUserImage()
     }
     const updateUserData = () => {

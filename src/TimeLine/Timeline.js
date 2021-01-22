@@ -55,7 +55,7 @@ function Timeline(props) {
                         <img
                             alt='Eat'
                             src={FoodIcon} />
-                            <p>Activity</p>
+                            <p>Eat</p>
                     </div>
                     <div
                         onClick={() => setDataSet(1)} 

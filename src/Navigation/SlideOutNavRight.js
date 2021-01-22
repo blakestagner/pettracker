@@ -94,7 +94,7 @@ const SlideOutNavRight = forwardRef((props, ref) => {
                 <Avatar 
                     petDetails={props.petDetails}
                     userDetails={props.userDetails}
-                    petProfileImgUrl = {props.petProfileImgUrl}
+                    petProfileImgUrl={props.petDetails.profile_pic}
                     type="pet-large"
                     />
                 <div id="other-pet-avatar">

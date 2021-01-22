@@ -13,12 +13,12 @@ const Avatar = ({
                 petProfileImgUrl, 
                 handleToggle}) => {
         
-        //const avatarHumanImg = profileImgUrl;
-        //const avatarPetImg =  petProfileImgUrl;
+        const avatarHumanImg = profileImgUrl;
+        const avatarPetImg =  petProfileImgUrl;
         
         
-        const avatarHumanImg = profileImg;
-        const avatarPetImg =  profileImg;
+        //const avatarHumanImg = profileImg;
+        //const avatarPetImg =  profileImg;
 
         const uploadImage = () => {
             uploadImg()

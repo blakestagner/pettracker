@@ -53,7 +53,7 @@ function BottomNav(props) {
                     petDetails={props.petDetails}/>}
             
             <BottomNavigation
-                style={{bottom: '20px'}}
+                style={props.device === 'ios' ? {bottom: '20px'} : {bottom: '0'}}
                 value={value}
                 onChange={(event, newValue) => handleChange(event, newValue)}
                 showLabels

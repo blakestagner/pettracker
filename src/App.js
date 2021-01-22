@@ -20,8 +20,6 @@ import BottomNav from './Navigation/BottomNav';
 import ScrollToTop from './HelperComponents/ScrollToTop';
 
 import UserProfile from './User/UserProfile';
-import Index from './pwa/Index';
-
 import {
   //BrowserView,
   MobileView
@@ -116,10 +114,10 @@ function App() {
     updateUser()
       .then(res =>  console.log('switched'))
       .catch(err => console.log(err))
+      .finally(() => checkLoggedinStatus())
   }
 
   const changeUserCurrentPet = (id) => {
-    console.log(`app: ${id}`)
     changeCurrentPet(id) 
       .then(res => {
         updateUser()
@@ -149,8 +147,18 @@ function App() {
   useEffect(() => {
     if(isLoggedIn === true) {
       checkLoggedinStatus()
+
     } else  {
       doneLoading(false)
+    }
+    const isIos = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test( userAgent );
+    }
+    const isInStandaloneMode = () => 
+      ('standalone' in window.navigator) && (window.navigator.standalone);
+    if (isIos() && !isInStandaloneMode()) {
+      setDevice('ios')
     }
   }, [isLoggedIn])
 
@@ -167,7 +175,6 @@ function App() {
 
   return (
     <div className="App">
-      <Index />
       <div 
           className={isLoggedIn ? 'body-container' : 'body-container-login'}
           style={ isLoggedIn ? {margin: '70px 10px'} : {margin: '0px', backgroundColor: '#b3E5FC'} }>
@@ -211,7 +218,7 @@ function App() {
                   userDetails={userDetails}
                   petDetails={petDetails}
                   currentPet={currentPet}
-                  updatePetImage={() => getCurrentPet(petList)}
+                  updatePetImage={(id) => changeUserCurrentPet(id)}
                   exact path='/pet-profile' 
                   updateUserData={() => updateUserData()}
                   component={PetProfile} />

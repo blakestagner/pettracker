@@ -67,6 +67,7 @@ function TopNav(props) {
                 <Avatar 
                     petDetails={props.petDetails}
                     userDetails={props.userDetails}
+                    petProfileImgUrl={props.petDetails.profile_pic}
                     type="pet"
                     handleToggle={() => toggleNavRef.current.toggle()}
                     />

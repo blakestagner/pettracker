@@ -19,7 +19,9 @@ function PeeActivity( {petDetails} ) {
     
     useEffect(() => {
         getPetPeeInfo(petDetails.id)
-            .then(res => setPeeData(res))
+            .then(res => {
+                setPeeData(res)
+            })
             .catch(err => console.log(err))
             .finally(() => setLoading(false))
     }, [petDetails.id])

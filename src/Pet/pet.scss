@@ -1,5 +1,6 @@
 $color-primary: #3f51b5;
 $color-secondary: #0277BD;
+$color-ascent: #ff844b;
 $color-grey:  dimgrey;
 $color-gradiant-main: linear-gradient(225deg, #784ba0, #3f51b5 50%, #2b86c5);
 
@@ -324,7 +325,7 @@ $border-radius-lg: 25px;
 
 /*Data average card*/
 .today-avg {
-    box-shadow: $shadow-lg;
+    box-shadow: $shadow-md;
     color: #fff;
     padding: 5px 10px 10px;
     border-radius: 25px;
@@ -378,21 +379,31 @@ $border-radius-lg: 25px;
     border-radius: 25px;
     padding: 5px 10px 0;
     color: #000;
-    width: 80%;
+    width: 90%;
+}
+.activity-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.activity-log-header > div:nth-of-type(1) > img {
+    background-color: #3f51b5;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    margin: 0 10px 0 0;
+}
+.activity-log-header > div:nth-of-type(1) {
+    display: flex;
+    align-items: center;
 }
 .activity-log-card-main {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
-.hit-the-spot {
-    background-color: #3aab58;
-}
-.missed-the-spot {
-    background-color: red;
-}
 .details {
-    width: 50%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -429,7 +440,7 @@ $border-radius-lg: 25px;
     height: 50px;
     transition: height 100ms ease-in;
     padding: 25px 0 0;
-    margin: 10px auto 10px;
+    margin: 10px auto 0;
     border-top: #D3D3D3 solid 2px;
     display: flex;
     justify-content: space-evenly;
@@ -475,4 +486,92 @@ $border-radius-lg: 25px;
 .activity-label {
     font-weight: bold;
     margin: 20px 0 0;
+}
+
+//today avg new design
+
+.percentage {
+    margin: 1em 0 0;
+    width: 100%;
+    height: 2em;
+    position:relative;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: darkslategrey;
+}
+.percentage-inner {
+    content:'\A';
+    color: #fff;
+    position:absolute;
+    border-radius: 24px;
+    top:0; bottom:0;
+    left:0; 
+}
+.percentage p {
+    margin: 0;
+    color: #fff;
+    z-index: 10;
+}
+.date-header {
+    display: flex;
+    justify-content: flex-start;
+    margin: 30px 0 40px;
+}
+.date-header-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 10px 0 0;
+}
+.date-header .header {
+    display: flex;
+    align-items: center;
+}
+.date-header .header h2 {
+    margin: 0px;
+}
+.date-header .header h2 span {
+    font-weight: normal;
+    font-size: .5em;
+    color: $color-grey;
+}
+.quarter-card-container {
+    display: flex;
+    justify-content: space-between;
+}
+.quarter-card {
+    box-shadow: $shadow-md;
+    border-radius: 1em;
+    width: 45%;
+    margin: 10px 5px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+}
+.quarter-card p {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0px;
+}
+.quarter-card img {
+    background-color: $color-primary;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+}
+.quarter-card p:nth-of-type(2) {
+    color: $color-grey;
+}
+.top-right {
+    
+}
+.top-left {
+    
+}
+.through-icon {
+    height: 40px;
+    width: 40px;
 }

@@ -19,7 +19,7 @@ function PetProfile(props) {
 
 
     const updatePetProfileImage = () => {
-        props.updatePetImage()
+        props.updatePetImage(props.petDetails.id)
     }
 
     return (
@@ -42,14 +42,14 @@ function PetProfile(props) {
 }
 export default PetProfile;
 
-function PetProfileDetails({petDetails, userDetails, currentPet, updatePetImage}) {
+function PetProfileDetails(props) {
     const [isLoading, doneLoading] = useState(true);
     const [newUpload, setUpload] = useState(0);
     const toggleImageUploadRef = useRef();
 
     useEffect(() => {
         doneLoading(false)
-    }, [petDetails])
+    }, [props.petDetails])
 
     const birthdayConvert = (date) => {
         if(date === undefined ) {
@@ -68,7 +68,7 @@ function PetProfileDetails({petDetails, userDetails, currentPet, updatePetImage}
     }
 
     const updatePetProfileImage = () => {
-        updatePetImage()
+        props.updatePetImage()
     }
 
 
@@ -78,13 +78,13 @@ function PetProfileDetails({petDetails, userDetails, currentPet, updatePetImage}
 
     return (
         <div>
-            <p className="header-text">{petDetails.name}'s<span> Profile</span></p>
+            <p className="header-text">{props.petDetails.name}'s<span> Profile</span></p>
             <div className="icon-text-row">
                 <div style={{margin: '0 auto'}}>
                     <Avatar
-                        petDetails={petDetails}
-                        userDetails={userDetails}
-                        petProfileImgUrl={petDetails.profile_pic}
+                        petDetails={props.petDetails}
+                        userDetails={props.userDetails}
+                        petProfileImgUrl={props.petDetails.profile_pic}
                         type="pet-profile"
                         uploadImg={uploadNewImg}
                         />
@@ -95,26 +95,26 @@ function PetProfileDetails({petDetails, userDetails, currentPet, updatePetImage}
                             className="img-icon" 
                             src={petIcon} 
                             alt="Name"/>
-                        <p>{petDetails.name}</p>
+                        <p>{props.petDetails.name}</p>
                     </div>
                     <div className="row-of-rows">
                         <img
                             className="img-icon" 
                             src={bdayIcon} 
                             alt="Bday"/>
-                        <p>{birthdayConvert(petDetails.birthday)}</p>               
+                        <p>{birthdayConvert(props.petDetails.birthday)}</p>               
                     </div>
                     <div className="row-of-rows">
                         <img
                             className="img-icon" 
                             src={foodIcon} 
                             alt="Bday"/>
-                        <p>Eats {petDetails.feed_perday}x daily</p>               
+                        <p>Eats {props.petDetails.feed_perday}x daily</p>               
                     </div>
                 </div>
             </div>
             <PetProfileMenu 
-                petDetails={petDetails}/>
+                petDetails={props.petDetails}/>
             <FileUpload
                 updatePetProfileImage={() => updatePetProfileImage()}
                 ref={toggleImageUploadRef}
