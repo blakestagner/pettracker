@@ -45,35 +45,37 @@ function Notifications(props) {
         let created = [];
         let petUser = [];
         getPetRequests()
-        .then(res => {
-            created = res;
-            for (let i = 0; i < res.length; i++){
-               userIds[i] = res[i]["creator"]; 
-               petIds[i] = res[i]["pet_id"];
-            }
-            getOtherUsers(userIds)
-                .then(res => {
-                    for (let i = 0; i < res.length; i++){
-                        petUser[i] = res[i] 
-                    }
-                    getAllPetInfo(petIds)
-                        .then(res => {
-                            for (let i = 0; i < res.length; i++){
-                                petUser[i].req_pet_Id = res[i]['id']
-                                petUser[i].pet_profile_pic = res[i]['profile_pic']
-                                petUser[i].name = res[i]['name']
-                            }
-                            petUser.map((item,i)=>{
-                                if(item.id === created[i].creator){
-                                    item.created = created[i]['created'];
-                                    item.req_id = created[i]['id'];
-                                } else;
+            .then(res => {
+                created = res;
+                for (let i = 0; i < res.length; i++){
+                userIds[i] = res[i]["creator"]; 
+                petIds[i] = res[i]["pet_id"];
+                }
+                if(userIds.length > 0 ) {
+                    getOtherUsers(userIds)
+                    .then(res => {
+                        for (let i = 0; i < res.length; i++){
+                            petUser[i] = res[i] 
+                        }
+                        getAllPetInfo(petIds)
+                            .then(res => {
+                                for (let i = 0; i < res.length; i++){
+                                    petUser[i].req_pet_Id = res[i]['id']
+                                    petUser[i].pet_profile_pic = res[i]['profile_pic']
+                                    petUser[i].name = res[i]['name']
+                                }
+                                petUser.map((item,i)=>{
+                                    if(item.id === created[i].creator){
+                                        item.created = created[i]['created'];
+                                        item.req_id = created[i]['id'];
+                                    } else;
+                                })
+                                setPetRequests(petUser)
                             })
-                            setPetRequests(petUser)
-                        })
-                        .catch(err => console.log(err))
-                })
-                .catch(err => console.log(err))
+                            .catch(err => console.log(err))
+                    })
+                    .catch(err => console.log(err))
+                }
             
         })
         .catch(err => console.log(err))

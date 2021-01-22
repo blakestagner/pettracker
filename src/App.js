@@ -156,7 +156,7 @@ function App() {
       return /iphone|ipad|ipod/.test( userAgent );
     }
     const isInStandaloneMode = () => 
-      ('standalone' in window.navigator) && (window.navigator.standalone);
+      ('standalone' in window.navigator) || (window.navigator.standalone);
     if (isIos() && !isInStandaloneMode()) {
       setDevice('ios')
     }
