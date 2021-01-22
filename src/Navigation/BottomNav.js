@@ -36,6 +36,8 @@ function BottomNav(props) {
       }, [pathname])
 
 
+
+      
     const handleChange = (event, newValue) => {
         if(newValue === 3) {
             return toggleActivityLogRef.current.toggle()
@@ -51,6 +53,7 @@ function BottomNav(props) {
                     petDetails={props.petDetails}/>}
             
             <BottomNavigation
+                style={props.device === 'ios' ? {bottom: '20px'} : {bottom: '0'}}
                 value={value}
                 onChange={(event, newValue) => handleChange(event, newValue)}
                 showLabels

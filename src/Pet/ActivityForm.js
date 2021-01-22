@@ -229,10 +229,9 @@ function EatActivity(props) {
           flexWrap: 'wrap',
         },
         textField: {
-          marginLeft: theme.spacing(1) + 8,
-          marginRight: theme.spacing(1),
-          width: 220,
-          display: 'block'
+            width: 'min-content',
+            display: 'block',
+            margin: '0 auto 40px'
         },
       }));
     const classes = useStyles();
@@ -324,10 +323,9 @@ function PeeActivity(props) {
           flexWrap: 'wrap',
         },
         textField: {
-          marginLeft: theme.spacing(1) + 8,
-          marginRight: theme.spacing(1),
-          width: 220,
-          display: 'block'
+          width: 'min-content',
+          display: 'block',
+          margin: '0 auto 40px'
         },
       }));
 
@@ -438,10 +436,9 @@ function PoopActivity(props) {
           flexWrap: 'wrap',
         },
         textField: {
-          marginLeft: theme.spacing(1) + 8,
-          marginRight: theme.spacing(1),
-          width: 220,
-          display: 'block'
+            width: 'min-content',
+            display: 'block',
+            margin: '0 auto 40px'
         },
       }));
 

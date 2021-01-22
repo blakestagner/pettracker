@@ -20,6 +20,7 @@ import BottomNav from './Navigation/BottomNav';
 import ScrollToTop from './HelperComponents/ScrollToTop';
 
 import UserProfile from './User/UserProfile';
+import Index from './pwa/Index';
 
 import {
   //BrowserView,
@@ -36,6 +37,7 @@ function App() {
   const [petList, setPetList] = useState([]);
   const [currentPet, setCurrentPet] = useState(0);
   const [isLoading, doneLoading] = useState(true);
+  const [device, setDevice] = useState('')
   
 
 
@@ -147,6 +149,19 @@ function App() {
   useEffect(() => {
     if(isLoggedIn === true) {
       checkLoggedinStatus()
+      const isIos = () => {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test( userAgent );
+      }
+      // Detects if device is in standalone mode
+      const isInStandaloneMode = () => 
+        ('standalone' in window.navigator) && (window.navigator.standalone);
+      
+      // Checks if should display install popup notification:
+      if (isIos() && !isInStandaloneMode()) {
+        setDevice('ios')
+      }
+
     } else  {
       doneLoading(false)
     }
@@ -156,12 +171,16 @@ function App() {
     checkLoggedinStatus()
   }, [])
 
+
+
+
   if(isLoading === true) {
       return <Loading />
   }  
 
   return (
     <div className="App">
+      <Index />
       <div 
           className={isLoggedIn ? 'body-container' : 'body-container-login'}
           style={ isLoggedIn ? {margin: '70px 10px'} : {margin: '0px', backgroundColor: '#b3E5FC'} }>
@@ -239,7 +258,8 @@ function App() {
           { isLoggedIn ? 
             (
               <MobileView>
-                <BottomNav 
+                <BottomNav
+                  device={device} 
                   userDetails={userDetails}
                   petDetails={petDetails}/>
               </MobileView>
