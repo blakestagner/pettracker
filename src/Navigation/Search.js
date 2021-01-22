@@ -6,9 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '../img/icons/search_white.svg';
 import { searchUsers, sendFriendReuest, cancelFriendRequest, getUserRelationship } from '../Autho/Repository';
 import Avatar from '../User/Avatar';
-import AddFriendIcon from '../img/icons/add_friend.svg';
-import IconButton from '../Inputs/IconButton';
-import cancelRequestIcon from '../img/icons/remove_friend.svg';
+import ButtonIconSmall from '../Inputs/ButtonIconSmall';
 
 function Search(props) {
     const [expanded, setExpanded] = useState(0);
@@ -60,7 +58,6 @@ function SearchExpanded(props) {
     const [searchTerm, setSearchTerm] = useState('')
     const [searchResult, setSearchResult] = useState(0);
     const [searchMessage, setSearchMessage] = useState('Search above...');
-    const [requestSent, setRequestSent] = useState()
 
     const handleChange = (e) => {
         const {value} = e.target;
@@ -83,33 +80,27 @@ function SearchExpanded(props) {
         const resetSearch = () => {
             setSearchTerm('');
             setSearchResult(0)
-            setRequestSent()
-            
+            setSearchMessage('Search above...')
             const searchInput = document.querySelector('#search-input')
             searchInput.value = ''
         }
-        console.log('reset')
         resetSearch()
     }, [props.expanded])
 
-    const submitSearch = () => {
-        searchUsers(searchTerm)
-        .then(res => {
-            setSearchResult(res)
-        })
-        .catch(err => console.log(err))
-       
-    }
+    
 
     const SendFriendRequest = (friendId) => {
         sendFriendReuest(friendId)
-        .then(res => setRequestSent(res))
+        .then(res => console.log(res))
         .catch(err => console.log(err))
+        .finally(() => props.updateUserRelationship())
     }
+
     const CancelFriendRequest = (friendId) => {
         cancelFriendRequest(friendId)
-        .then(res => setRequestSent(res))
+        .then(res => console.log(res))
         .catch(err => console.log(err))
+        .finally(() => props.updateUserRelationship())
     }
 
 
@@ -117,27 +108,26 @@ function SearchExpanded(props) {
         const NoRelationship = (id) => {
             return (
                 <div className="add-user">
-                    <p>send request</p>
-                    <IconButton 
-                        click={() => SendFriendRequest(id)}
-                        icon={AddFriendIcon}/>
+                    <ButtonIconSmall 
+                        name="add friend"
+                        click={() => SendFriendRequest(id)}/>
                 </div>
             )
         }
         const SomeRelationship = (id) => {
             return (
                 <div className="add-user">
-                    <p>Cancel Request</p>
-                    <IconButton 
-                        click={() => CancelFriendRequest(id)}
-                        icon={cancelRequestIcon}/>
+                    <ButtonIconSmall
+                        name="cancel" 
+                        click={() => CancelFriendRequest(id)}/>
                 </div>
             )
         }
         const Friends = (id) => {
             return (
                 <div className="add-user">
-                    <p>Friends</p>
+                    <ButtonIconSmall
+                        name="friends" />
                 </div>
             )
         }
@@ -172,10 +162,14 @@ function SearchExpanded(props) {
     }
 
 
-    useEffect(() => {
-        submitSearch()
-        props.updateUserRelationship()
-    }, [requestSent])
+    const submitSearch = () => {
+        searchUsers(searchTerm)
+        .then(res => {
+            setSearchMessage(`${res.length} results`)
+            setSearchResult(res)
+        })
+        .catch(err => console.log(err))
+    }
 
     /*const test = () => {
         return (
@@ -226,7 +220,7 @@ function SearchExpanded(props) {
                 <h3>results</h3>   
                 {searchMessage}
                 <br />
-                {searchResult === 0  ? 'No results...' : 
+                {searchResult === 0  ? '' : 
                     displaySearchResult()
                 }
             </div>

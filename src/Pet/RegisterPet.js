@@ -22,6 +22,7 @@ function RegisterPet(props) {
         feed_unit: 'cups',
         birthday: ''
     })
+    const [regMessage, setRegMessage] = useState('');
 
     let history = useHistory();
 
@@ -34,21 +35,30 @@ function RegisterPet(props) {
         console.log(petRegister)
     }
     const submitPetRegistration = () => {
-        const regMsg = document.querySelector('#regMsg');
-
-        const registrationSuccess = () => {
-            regMsg.innerHTML = '';
-            props.updateUserData()
+        const registrationSuccess = (id) => {
+            console.log(id)
+            props.changePet(id)
             history.push('/home');
         }
 
-        registerPet(petRegister)
-        .then(res => {
-            regMsg.innerHTML = res
-            props.updateUserData()
-            setTimeout(() => registrationSuccess(), 3000)
-        })
-        .catch(err => console.log(err))
+        if(petRegister.name === '') {
+            setRegMessage('You forogt a name!')
+            setTimeout(() => setRegMessage(''), 3000)
+        } else if(petRegister.type === '') {
+            setRegMessage('You forogt to input a pet type!')
+            setTimeout(() => setRegMessage(''), 3000)
+        } else if(petRegister.birthday === '') {
+            setRegMessage('Whut... no birthday?!')
+            setTimeout(() => setRegMessage(''), 3000)
+        } else {
+            registerPet(petRegister)
+            .then(res => {
+                console.log(res)
+                setRegMessage(`${petRegister.name} is now registered!`)
+                setTimeout(() => registrationSuccess(res), 1000)
+            })
+            .catch(err => console.log(err))
+        }
     }
     const useStyles = makeStyles((theme) => ({
         container: {
@@ -207,7 +217,7 @@ function RegisterPet(props) {
                 <Button
                 onClick={() => submitPetRegistration()} 
                 name='Register Pet'/>
-                <p id="regMsg"></p>
+                <p id="regMsg">{regMessage}</p>
             </div>
         </div>
     )

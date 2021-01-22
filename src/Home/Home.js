@@ -14,7 +14,6 @@ function Home(props) {
             {props.userDetails.pet_id !== 0 ? 
             <div>
                 <h1>Home</h1>
-
             </div> 
             : 
             <ButtonIcon 

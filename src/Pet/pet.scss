@@ -1,6 +1,6 @@
 $color-primary: #3f51b5;
 $color-secondary: #0277BD;
-
+$color-grey:  dimgrey;
 $color-gradiant-main: linear-gradient(225deg, #784ba0, #3f51b5 50%, #2b86c5);
 
 $shadow-lg: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -182,7 +182,7 @@ $border-radius-lg: 25px;
 }
 /*activity log form */
 .activity-log-form-inner {
-    margin: 0 auto;
+    margin: 40px auto 0;
     padding: 10px;
 }
 .form-input-label {
@@ -197,8 +197,13 @@ $border-radius-lg: 25px;
     letter-spacing: 0.00938em;
 }
 /*current time*/
-.current-select p:nth-of-type(1){
+.current-select > p:nth-of-type(1){
     font-weight: bold;
+
+}
+.current-select > p:nth-of-type(2){
+    color: $color-grey;
+    font-size: 15px;
 }
 .current-select p {
     margin: 0px;
@@ -207,29 +212,39 @@ $border-radius-lg: 25px;
 .pee-spot p:first-child {
     font-weight: bold;
     margin: 20px 0 0;
+
 }
 /*Submit Activity*/
+
 .submit-activity-button {
-    border: none;
-    display: inline-flex;
-    background-color: $color-primary;
+    background: $color-primary;
     box-shadow: $shadow-lg;
     border-radius: 25px;
     border: none;
-    padding: 5px 15px;
+    padding: 5px 10px;
     font-weight: bold;
     margin: 20px 5px 20px;
     color: #fff;
+    width: 250px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 .submit-activity-button:active {
-    box-shadow: none;
+    background: $color-primary;
+    box-shadow: $shadow-md;
+}
+.submit-activity-button:hover {
+    box-shadow: $shadow-md;
 }
 .submit-activity-button p {
-    margin: 0;
-    padding: 0 10px;
+    margin: 0px;
     font-size: 20px;
+    text-align: center;
+}
+.submit-activity-button:focus {
+    outline: none;
+    box-shadow: none;
 }
 /*animation*/
 .loader {
@@ -311,7 +326,6 @@ $border-radius-lg: 25px;
 .today-avg {
     box-shadow: $shadow-lg;
     color: #fff;
-    margin: 10px;
     padding: 5px 10px 10px;
     border-radius: 25px;
     background: rgb(63,81,181);
@@ -418,10 +432,47 @@ $border-radius-lg: 25px;
     margin: 10px auto 10px;
     border-top: #D3D3D3 solid 2px;
     display: flex;
+    justify-content: space-evenly;
 }
 .delete-message {
     font-weight: bold;
     padding: 10px 10px 15px;
     display: block;
     color: #404040;
+}
+#regMsg {
+    color: #b22222
+}
+.arrow-icon {
+    height: 50px;
+    width: 50px;
+    margin-left: auto;
+}
+.settings-open {
+    border-bottom: 2px solid $color-secondary;
+    height: auto;
+    max-height: 200px;
+    transition: max-height ease .25s;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    padding: 0 0 20px;
+}
+.settings-closed {
+    border-bottom: 2px solid $color-secondary;
+    max-height: 0px;
+    width: 100%;
+    transition: max-height ease .25s;
+    overflow: hidden;
+    color: #000;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+}
+.right-align {
+    justify-content: center;
+}
+.activity-label {
+    font-weight: bold;
+    margin: 20px 0 0;
 }

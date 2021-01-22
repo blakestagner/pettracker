@@ -21,7 +21,7 @@ function LoginLogout(props) {
         if(props.isLoggedIn) {
             props.history.push("/home")
         }
-    }, [props.isLoggedIn])
+    }, [props.isLoggedIn, props.history])
 
     return (
         <div>
@@ -157,14 +157,14 @@ function Register(props) {
             regMsg.innerHTML = 'You didnt enter a valid email'
         } else {
             register(registerData)
-            .then(res => {
-                regMsg.innerHTML = 'You are now Registered!'
-                setTimeout(() => window.location.reload(), 2000)
-            })
-            .catch(err => { 
-                removeRegisterMessage() 
-                regMsg.innerHTML = err
-            })
+                .then(res => {
+                    regMsg.innerHTML = 'You are now Registered!'
+                    setTimeout(() => window.location.reload(), 2000)
+                })
+                .catch(err => { 
+                    removeRegisterMessage() 
+                    regMsg.innerHTML = 'That Email is already registered'
+                })
           }
     }
 
@@ -174,7 +174,6 @@ function Register(props) {
             ...prevState,
             [id] : value
         }))
-        console.log(registerData)
     }
 
     const registerMessage = () => {

@@ -157,14 +157,18 @@ function EatActivity(props) {
                 setTimeout(() => {
                     updateMsg.innerHTML = 'Log Now'
                     props.close()
-                    }, 1000)
+                    }, 500)
             })
             .catch(err => console.log(err))
     }
     const amountAte = () => {
         return <div>
-                    <p className="form-input-label">Amount Ate *</p>
-                    <RadioGroup row aria-label="Amount Ate" name="amount_ate" defaultValue="top">
+                    <p className="activity-label">Amount Ate</p>
+                    <RadioGroup 
+                        className={classes.root}
+                        row aria-label="Amount Ate" 
+                        name="amount_ate" 
+                        defaultValue="top">
                         <FormControlLabel
                             value="0"
                             control={
@@ -528,9 +532,7 @@ function PoopActivity(props) {
 /*Walk Activity*/
 function WalkActivity(props) {
 
-    const [petWalk, setPetWalk ] = useState()
-
-    const [walkNow, setWalkNow] = useState(1);
+    /*const [petWalk, setPetWalk ] = useState()
 
     const handleChange = (e) => {
         const {id, value} = e.target;
@@ -553,7 +555,7 @@ function WalkActivity(props) {
         },
       }));
 
-    const classes = useStyles();
+    const classes = useStyles();*/
 
     return (
         <div>

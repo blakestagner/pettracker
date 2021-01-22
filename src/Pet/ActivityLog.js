@@ -1,14 +1,9 @@
-import {useState, useImperativeHandle, forwardRef} from "react";
+import {useState, useEffect, useImperativeHandle, forwardRef} from "react";
 import './pet.scss';
 import foodIcon from '../img/icons/food.svg';
-import foodBlackIcon from '../img/icons/food_black.svg';
 import peeIcon from '../img/icons/pee.svg';
-import peeBlackIcon from '../img/icons/pee_black.svg';
 import poopIcon from '../img/icons/poop.svg';
-import poopBlackIcon from '../img/icons/poop_black.svg';
 import walkIcon from '../img/icons/walk.svg';
-import walkBlackIcon from '../img/icons/walk_black.svg';
-import backIcon from '../img/icons/arrow_back_white.svg';
 import arrowDownIcon from '../img/icons/arrow_down.svg';
 import Avatar from '../User/Avatar';
 
@@ -17,7 +12,7 @@ import ActivityForm from './ActivityForm';
 
 const ActivityLog = forwardRef((props, ref) => {
     const [toggleActivity, setActivityToggle] = useState(0);
-    const [selectedActivity, setActivity] = useState(0);
+    const [selectedActivity, setActivity] = useState('Post');
 
     const handleClick = (evt) => {
       console.log(evt)
@@ -38,7 +33,7 @@ const ActivityLog = forwardRef((props, ref) => {
     }
     const closeAll = () => {
       setActivityToggle(0);
-      setActivity(0);
+      setActivity('Post');
     }
 
     useImperativeHandle(ref, () => ({
@@ -46,6 +41,37 @@ const ActivityLog = forwardRef((props, ref) => {
           setActivityToggle(1)
         }
       }));
+
+
+    useEffect(()=> {
+
+      const highlight = document.querySelector('#activity-highlight-selection')
+      const menu = document.querySelector('#activity-select-parent')
+      const firstChild = menu.childNodes[0];
+      const secondChild = menu.childNodes[1];
+      const thirdChild = menu.childNodes[2];
+      const fourthChild = menu.childNodes[3];
+      const fifthChild = menu.childNodes[4];
+      highlight.style.width = `${firstChild.getBoundingClientRect().width}px`
+      switch(selectedActivity) {
+          case 'Post':
+              highlight.style.left = `${firstChild.getBoundingClientRect().left}px`;
+              break;
+          case 'Eat':
+              highlight.style.left = `${secondChild.getBoundingClientRect().left}px`;
+              break;
+          case 'Pee':
+              highlight.style.left = `${thirdChild.getBoundingClientRect().left}px`;
+              break;
+          case 'Poop':
+              highlight.style.left = `${fourthChild.getBoundingClientRect().left}px`;
+              break;
+          case 'Walk':
+              highlight.style.left = `${fifthChild.getBoundingClientRect().left}px`;
+              break;
+          default:
+      }
+    }, [selectedActivity, toggleActivity])
 
     return (
         <div 
@@ -63,19 +89,6 @@ const ActivityLog = forwardRef((props, ref) => {
                     onClick={() => closeAll() }
                     src={arrowDownIcon}/>
                 </div>
-                {/*<div>
-                  {selectedActivity ? 
-                  (
-                    <ActivitySelectedBar
-                      petDetails={props.petDetails}
-                      userDetails={props.userDetails}
-                      activitySelected={selectedActivity}
-                      handleClick={() => handleClick}
-                      />
-                  ) 
-                    :
-                  ''}
-                  </div>*/}
                   <div className='avatar'>
                     <Avatar
                       petDetails={props.petDetails}
@@ -86,19 +99,62 @@ const ActivityLog = forwardRef((props, ref) => {
             </div>
 
             <div>
-              {selectedActivity ? 
-                (
-                <ActivitySelectedBar
-                  petDetails={props.petDetails}
-                  userDetails={props.userDetails}
-                  activitySelected={selectedActivity}
-                  handleClick={() => handleClick}
-                  />
-                ) 
-                  :
-                ''}
+              <div style={{margin: '10px'}}>
+                  <div
+                      id="activity-select-parent">
+                        <div
+                          onClick={() => setActivity('Post')}  
+                          className="profile-information-icon">
+                          <img
+                              alt='Activity'
+                              src={foodIcon} />
+                              <p>Post</p>
+                      </div>
+                      <div
+                          onClick={() => setActivity('Eat')}  
+                          className="profile-information-icon">
+                          <img
+                              alt='Activity'
+                              src={foodIcon} />
+                              <p>Eat</p>
+                      </div>
+                      <div
+                          onClick={() => setActivity('Pee')}  
+                          className="profile-information-icon">
+                          <img
+                              alt='Activity'
+                              src={peeIcon} />
+                              <p>Pee</p>
+                      </div>
+                      <div
+                          onClick={() => setActivity('Poop')} 
+                          className="profile-information-icon">
+                          <img
+                              alt='Owner'
+                              src={poopIcon} />
+                              <p>Poop</p>
+                      </div>
+                      <div
+                          onClick={() => setActivity('Walk')}  
+                          className="profile-information-icon">
+                          <img
+                              alt='Setting'
+                              src={walkIcon} />
+                              <p>Walk</p>
+                      </div>
+                  </div>
+                  <div id="activity-highlight-selection-container">
+                      <div id="activity-highlight-selection"></div>
+                  </div>
+              </div>
             </div>
-              {selectedActivity ? 
+            <ActivityForm 
+              close={() => closeAll()}
+              petDetails={props.petDetails}
+              userDetails={props.userDetails}
+              activitySelected={selectedActivity}
+              />
+              {/*{selectedActivity ? 
                 (
                   <ActivityForm 
                     close={() => closeAll()}
@@ -146,13 +202,13 @@ const ActivityLog = forwardRef((props, ref) => {
                   </div>
                 </div>
                 )
-              }
+              }*/}
         </div>
     )
 })
 export default ActivityLog;
 
-function ActivityButton(props) {
+/*function ActivityButton(props) {
   
   return (
     <div className="activity-icon-container">
@@ -212,4 +268,4 @@ function ActivitySelectedBar(props) {
       </button>
     </div>
   )
-}
+}*/

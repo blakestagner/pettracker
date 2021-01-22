@@ -44,10 +44,12 @@ function BottomNav(props) {
 
     return (
         <div>
-            <ActivityLog 
-                ref={toggleActivityLogRef}
-                userDetails={props.userDetails}
-                petDetails={props.petDetails}/>
+            {props.petDetails === '0' ?
+            '' : <ActivityLog 
+                    ref={toggleActivityLogRef}
+                    userDetails={props.userDetails}
+                    petDetails={props.petDetails}/>}
+            
             <BottomNavigation
                 value={value}
                 onChange={(event, newValue) => handleChange(event, newValue)}

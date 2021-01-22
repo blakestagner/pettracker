@@ -43,7 +43,7 @@ function ProfileMenu(props) {
         highLightSection()
 
     }, [expanded])
-
+    
     return (
             <div>
                 <div
@@ -91,6 +91,7 @@ function ProfileMenu(props) {
                 }
                 {expanded === 'Pets' ? 
                     <UserPets
+                        updateUserData={() => props.updateUserData()}
                         userDetails={props.userDetails}
                         petDetails={props.petDetails}
                         currentPet={props.currentPet}

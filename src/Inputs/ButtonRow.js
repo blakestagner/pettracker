@@ -1,12 +1,8 @@
 import './Button.scss'
-import {useState} from 'react';
-
 
 function ButtonRow(props) {
-    const [clicked, setClicked] = useState(0)
 
     const handleClick = () => {
-        setClicked(1);
         props.onClick();
     }
 

@@ -1,6 +1,8 @@
 $color-primary: #3f51b5;
 $color-secondary: #0277BD;
-
+$color-grey:  dimgrey;
+$color-red: #B22222;
+$color-comp: #c5612b;
 $color-gradiant-main: linear-gradient(225deg, #784ba0, #3f51b5 50%, #2b86c5);
 
 $shadow-lg: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -23,18 +25,32 @@ img.default-profile-img {
     width: 50px;
     padding: 0 10px 0 10px;
 }
+img.default-profile-img-small {
+    height: 30px;
+    width: 30px;
+    padding: 0 10px 0 10px;
+}
 img.default-profile-img-large {
     height: 120px;
     width: 120px;
     border: solid #fff 5px;
     border-radius: 50%;
     position: relative;
+    object-fit: cover;
 }
-.profile-img {
+img.profile-img-small {
+    height: 30px;
+    width: 30px;
+    padding: 0 10px 0 10px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+img.profile-img {
     height: 50px;
     width: 50px;
     padding: 0 10px 0 10px;
     border-radius: 50%;
+    object-fit: cover;
 }
 .profile-img-large {
     height: 120px;
@@ -42,6 +58,7 @@ img.default-profile-img-large {
     border: solid #fff 5px;
     border-radius: 50%;
     position: relative;
+    object-fit: cover;
 }
 .profileName {
     flex: 1 0 auto;
@@ -84,6 +101,7 @@ img.default-profile-img-large {
     align-items: center;
     transition: top ease .25s;
     z-index: 100;
+    overflow-y: scroll;
 }
 .menu-colapsed {
     position: fixed;
@@ -96,7 +114,7 @@ img.default-profile-img-large {
     align-items: center;
     transition: top ease .25s;
 }
-#profile-information {
+#profile-information, #activity-select-parent {
     background: $color-primary;
     background: $color-gradiant-main;
     border-radius: 25px;
@@ -112,10 +130,10 @@ img.default-profile-img-large {
     margin: 0;
     font-size: 15px;
 }
-#highlight-selection-container {
+#highlight-selection-container, #activity-highlight-selection-container {
     padding: 0 10px;
 }
-#highlight-selection {
+#highlight-selection, #activity-highlight-selection {
     background-color: $color-primary;
     height: 5px;
     margin: 5px 0;
@@ -124,8 +142,126 @@ img.default-profile-img-large {
 }
 .friends-list-container {
     margin: 20px 0px;
+    width: 100%;
 }
 .friends-list-details {
     display: flex;
     align-items: center;
+    width: 100%;
+}
+.pet-avatar-side-nav p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: $color-primary;
+    text-decoration: none !important;
+    overflow: hidden
+}
+
+.edit-pet.active {
+    background: #fff;
+    position: fixed;
+    height: 100vh;
+    bottom: 0;
+    transition: bottom ease .25s;
+    box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+.edit-pet.disabled {
+    position: fixed;
+    height: 50vh;
+    width: 100vw;
+    bottom: -100vh;
+    left: 0;
+    right: 0;
+    transition: bottom ease .25s;
+}
+.edit-pet h1 {
+    text-align: left;
+}
+.edit-pet-title {
+    background: $color-primary;
+    background: $color-gradiant-main;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    color: #fff;
+}
+.edit-pet-close {
+    margin: 0 0 10px;
+    padding: 0px 10px;
+    display: flex;
+    color: #000;
+}
+.edit-pet-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000;
+    width: 100%;
+}
+.edit-pet-row > p {
+    color: $color-grey;
+    padding: 0 10px;
+}
+.edit-pet-inner.active {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    height: 80px;
+    transition: height ease .25s;
+}
+.edit-pet-inner.disabled {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid $color-primary;
+    height: 0px;
+    transition: height ease .25s;
+    overflow: hidden;
+    color: #000;
+}
+.edit-pet-inner p, .edit-owner-inner p {
+    margin: 0;
+}
+.edit-owner-inner.active {
+    border-bottom: 2px solid $color-primary;
+    height: auto;
+    max-height: 200px;
+    transition: max-height ease .25s;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    padding: 0 0 20px;
+}
+.edit-owner-inner.disabled {
+    border-bottom: 2px solid $color-primary;
+    max-height: 0px;
+    width: 100%;
+    transition: max-height ease .25s;
+    overflow: hidden;
+    color: #000;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+
+}
+.edit-owner-text {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    color: $color-primary;
+}
+.double-confirm-removed {
+    color: #000;
+    background-color: $color-red;
+    padding: 2px 5px;
+    border-radius: 25px;
+}
+.slide-up-main {
+    color: #fff;
 }

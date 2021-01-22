@@ -6,10 +6,9 @@ import { useEffect, useState, useRef } from 'react';
 import ButtonIcon from '../Inputs/ButtonIcon'
 import petsIcon from '../Inputs/icons/pets.svg';
 import foodIcon from '../img/icons/food.svg';
-import peeIcon from '../img/icons/pee.svg';
-import poopIcon from '../img/icons/poop.svg';
 import { useHistory } from 'react-router-dom';
-import FileUpload from '../img/FileUpload'
+import FileUpload from '../img/FileUpload';
+import PetProfileMenu from './PetProfileMenu'
 
 function PetProfile(props) {
 
@@ -23,9 +22,8 @@ function PetProfile(props) {
         props.updatePetImage()
     }
 
-
     return (
-        <div>
+        <div className="profile-main">
             {props.userDetails.pet_id !== 0?
                 <PetProfileDetails
                     updatePetImage={() => updatePetProfileImage()}
@@ -51,7 +49,7 @@ function PetProfileDetails({petDetails, userDetails, currentPet, updatePetImage}
 
     useEffect(() => {
         doneLoading(false)
-    }, [])
+    }, [petDetails])
 
     const birthdayConvert = (date) => {
         if(date === undefined ) {
@@ -111,39 +109,12 @@ function PetProfileDetails({petDetails, userDetails, currentPet, updatePetImage}
                             className="img-icon" 
                             src={foodIcon} 
                             alt="Bday"/>
-                        <p>I eat {petDetails.feed_perday} times a day</p>               
+                        <p>Eats {petDetails.feed_perday}x daily</p>               
                     </div>
                 </div>
             </div>
-            <div>
-                <div className="row-of-rows">
-                    <img
-                        className="img-icon" 
-                        src={foodIcon} 
-                        alt="Bday"/>
-                    <h3 style={{textAlign: 'left'}}>Feed Schedule</h3>
-                </div>
-                    <p>{petDetails.feed_perday} Mealsper Day</p>
-                    <p>Add section to show when they eat and for users to edit when they eat, add another meal or delete another meal</p>
-                <div className="row-of-rows">   
-                    <img
-                        className="img-icon" 
-                        src={peeIcon} 
-                        alt="pee"/>
-                    <h3 style={{textAlign: 'left'}}>{petDetails.name}'s potty</h3>
-                </div>
-                    <p>Section for avg Pee per day, avg poop per day, just avg everything from past 3 days, past week, past month</p>
-
-                <div className="row-of-rows">
-                    <img
-                        className="img-icon" 
-                        src={poopIcon} 
-                        alt="poop"/>
-                    <h3 style={{textAlign: 'left'}}>{petDetails.name}'s poop</h3>
-                </div>
-                    <p>Section for avg Pee per day, avg poop per day, just avg everything from past 3 days, past week, past month</p>
-                    <p>show percentage of normal and wet poops</p>
-            </div>
+            <PetProfileMenu 
+                petDetails={petDetails}/>
             <FileUpload
                 updatePetProfileImage={() => updatePetProfileImage()}
                 ref={toggleImageUploadRef}

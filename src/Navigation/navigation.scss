@@ -178,7 +178,8 @@ $shadow-med: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     transition: top ease .25s;
 }
 .search-bar {
-    background-color: $color-secondary;
+    background: $color-primary;
+    background: $color-gradiant-main;
     display: flex;  
     align-items: center;
     padding: 10px;
@@ -194,7 +195,7 @@ $shadow-med: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 .search-result-users {
     display: flex;
     margin: 10px;
-    padding: 10px;
+    padding: 0px 5px 0px 0px;
     box-shadow: $shadow-med;
     border-radius: 10px;
     align-items: center;
@@ -254,4 +255,36 @@ $shadow-med: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     width: 60%;
     justify-content: center;
     color: red;
+}
+
+.pet-request-card {
+    box-shadow: $shadow-med;
+    border-radius: 25px;
+
+    width: 60%;
+}
+.pet-request-pet {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.pet-request-pet span {
+    color: $color-primary;
+}
+.pet-request-owner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0 0 8px;
+}
+.pet-request-owner p {
+    font-size: .8rem;
+}
+.pet-request-owner span {
+    color: $color-primary;
+    font-size: .8rem;
+}
+.make-pet-row {
+    width: 60%;
+    color: green;
 }

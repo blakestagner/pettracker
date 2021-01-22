@@ -8,7 +8,7 @@ import RemoveFriendIcon from '../img/icons/remove_friend_secondary.svg';
 
 
 function Friends(props) {
-    const [friends, setFriends] = useState([]);
+    const [friends, setFriends] = useState(['initial']);
     const [friendsDetails, setFriendDetails] = useState(null);
     const [isLoading, doneLoading] = useState(true);
     const [removed, setRemoved] = useState([])
@@ -36,7 +36,6 @@ function Friends(props) {
     }
 
     const removeFriendClick = (id) => {
-
         removeFriend(id)
         .then(res => {
             setRemoved(removed => 
@@ -72,32 +71,36 @@ function Friends(props) {
             })
             .catch(err => console.log(err))
         }
-        friendsList()
-        console.log('1')
-    }, [props.expanded === true])
+        if(props.expanded === true) {
+            friendsList()
+        } else;
+    }, [props.expanded])
 
 
     useEffect(()=> {
         const getFriendDetails = () => {
-            let userIds = [];
-            for (let i = 0; i < friends.length; i++){
-               if(props.userDetails.id === friends[i]["user_two"]) {
-                    userIds[i] = friends[i]["user_one"];
-               } else if(props.userDetails.id === friends[i]["user_one"]) {
-                    userIds[i] = friends[i]["user_two"];
-               }
+            if(friends[0] === 'initial') {
+                return;
+            } else {
+                let userIds = [];
+                for (let i = 0; i < friends.length; i++){
+                    if(props.userDetails.id === friends[i]["user_two"]) {
+                        userIds[i] = friends[i]["user_one"];
+                    } else if(props.userDetails.id === friends[i]["user_one"]) {
+                        userIds[i] = friends[i]["user_two"];
+                    }
+                }
+                getOtherUsers(userIds)
+                    .then(res => {
+                        setFriendDetails(res)
+                        console.log(res)
+                    })
+                    .catch(err => console.log(err))
+                    .finally(() => doneLoading(false))
             }
-            getOtherUsers(userIds)
-                .then(res => {
-                    setFriendDetails(res)
-                    console.log(res)
-                })
-                .catch(err => console.log(err))
-                .finally(() => doneLoading(false))
         }
-
         getFriendDetails()
-    }, [friends])
+    }, [props.userDetails.id, friends])
 
     
 

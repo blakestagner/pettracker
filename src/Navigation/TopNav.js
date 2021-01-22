@@ -3,15 +3,10 @@ import Avatar from '../User/Avatar';
 import { Link } from 'react-router-dom';
 import SlideOutNavRight from './SlideOutNavRight';
 import SlideOutNavLeft from './SlideOutNavLeft';
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Search from './Search'
-import Notifications from './Notifications'
-import {
-    BrowserView,
-    MobileView,
-    //isBrowser
-    //isMobile
-  } from "react-device-detect";
+import Notifications from './Notifications';
+import { BrowserView, MobileView, } from "react-device-detect";
 
 
 function TopNav(props) {
@@ -20,15 +15,18 @@ function TopNav(props) {
     const toggleNavLeftRef = useRef();
 
     const logout = () => {
-        props.logout();
+        props.logout()
     }
 
     const changePet = (id) => {
+        console.log(id)
         props.changePet(id)
     }
 
 
     if(props.isLoggedIn === false) {
+        return ''
+    } else if(props.isLoading === true ) {
         return ''
     }
     return (
@@ -59,14 +57,16 @@ function TopNav(props) {
                 </div>
             </MobileView>
             <div style={{display: 'flex'}}>
-                <Search userDetails={props.userDetails}/>
-                <Notifications userDetails={props.userDetails}/>
+                <Search 
+                    userDetails={props.userDetails}/>
+                <Notifications 
+                    changePet={(id) => changePet(id)}
+                    userDetails={props.userDetails}/>
             </div>
             <div className="nav-right">
                 <Avatar 
                     petDetails={props.petDetails}
                     userDetails={props.userDetails}
-                    petProfileImgUrl={props.petDetails.profile_pic}
                     type="pet"
                     handleToggle={() => toggleNavRef.current.toggle()}
                     />
@@ -86,7 +86,6 @@ function TopNav(props) {
                 petList={props.petList}
                 petDetails={props.petDetails}
                 userDetails={props.userDetails}
-                petProfileImgUrl = {props.petDetails.profile_pic}
                 type="pet" 
                 changePet={(id) => changePet(id)}
                 ref={toggleNavRef} 

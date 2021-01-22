@@ -45,7 +45,7 @@ function TimeSelectMenu(props) {
             }
         }
         setDidMount(true)
-    }, [timeline])
+    }, [timeline, didMount, props, container])
 
     return (
         <div className="nowto-thirty-container">

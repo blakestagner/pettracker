@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getPetPeeInfo  } from '../../Autho/Repository';
-
+import Loading from '../../HelperComponents/Loading';
 import PeeDays from './PeeDays'
 
 function PeeActivity( {petDetails} ) {
-    const [peeData, setPeeData] = useState(null)
+    const [peeData, setPeeData] = useState(null);
+    const [isLoading, setLoading] = useState(true);
 
     const helperFunction = () => {
         getPetPeeInfo(petDetails.id)
@@ -17,16 +18,25 @@ function PeeActivity( {petDetails} ) {
     }
     
     useEffect(() => {
-        helperFunction()
-    }, [petDetails])
+        getPetPeeInfo(petDetails.id)
+            .then(res => setPeeData(res))
+            .catch(err => console.log(err))
+            .finally(() => setLoading(false))
+    }, [petDetails.id])
+
+    if(isLoading === true) {
+        return <Loading />
+    }
 
     const displayPeeData = () => {
-        return <div>
-                    <PeeDays 
-                        updatePosts={() => updatePosts()} 
-                        petDetails={petDetails}
-                        peeData={peeData}/>
-                </div>
+        return (
+            <div>
+                <PeeDays 
+                    updatePosts={() => updatePosts()} 
+                    petDetails={petDetails}
+                    peeData={peeData}/>
+            </div>
+        )
     }
 
     return (

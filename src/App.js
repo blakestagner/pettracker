@@ -12,7 +12,7 @@ import Timeline from './TimeLine/Timeline';
 //import Settings from './Settings/Settings';
 import TopNav from './Navigation/TopNav';
 import PetProfile from './Pet/PetProfile';
-
+import Loading from './HelperComponents/Loading';
 
 import Unauthorized from './Autho/Unauthorized';
 import RegisterPet from './Pet/RegisterPet';
@@ -35,18 +35,23 @@ function App() {
   const [petDetails, setPetDetails] = useState([]); 
   const [petList, setPetList] = useState([]);
   const [currentPet, setCurrentPet] = useState(0);
-  const [updateState, setUpdateState] = useState(0)
+  const [isLoading, doneLoading] = useState(true);
   
-
-  useEffect(() => {
-    checkLoggedinStatus() 
-  }, [])
 
 
   const handleLogin = (data) => {
     setLoggedIn(true) 
-    checkLoggedinStatus();
   }
+
+  const handleLogout = () => {
+    setPetDetails([])
+    setPetList([])
+    setUserDetails([])
+    setCurrentPet(0)
+    doneLoading(false)
+    setLoggedIn(false)
+  }
+
 
   const checkLoggedinStatus = () => {
     if ( isAuthenticated() ){
@@ -55,14 +60,10 @@ function App() {
             setLoggedIn(true)
             setUserDetails(res)
             setCurrentPet(res.pet_id)
-
-            getPetListInfo()
-            .then(res => {
-                res.length === 0 ? setPetDetails(0) : setPetList(res);
-            })
-            .catch(err => {
-                console.log(err, "catch")
-            })
+            if(res.pet_id !== 0){
+              getCurrentPet(res.pet_id)
+            }
+            thePetList(res.pet_id)
         })
         .catch(err => {
           localStorage.removeItem('x-access-token');
@@ -71,69 +72,93 @@ function App() {
     } else if ( localStorage.getItem('x-access-token-expiration') < Date.now()) {
         localStorage.removeItem('x-access-token-expiration');
         localStorage.removeItem('x-access-token');
+        setPetDetails([])
+        setPetList([])
+        setUserDetails([])
+        setCurrentPet(0)
         setLoggedIn(false)
-        console.log('logged out')
+        doneLoading(false)
         
     } else {
+      setPetDetails([])
+      setPetList([])
+      setUserDetails([])
+      setCurrentPet(0)
       setLoggedIn(false)
+      doneLoading(false)
     }
   }
 
-  const getCurrentPet = (data) => {
+  const thePetList = (petId) => {
+    getPetListInfo()
+      .then(res => {
+          res.length === 0 ? setPetDetails(0) : setPetList(res);
+          getCurrentPet(petId)
+      })
+      .catch(err => {
+          console.log(err, "catch")
+      })
+  }
+  const getCurrentPet = (id) => {
     if(currentPet !== 0) {
-      
-      for(let i = 0; i < data.length; i++) {
-        if(data[i].user_id === userDetails.id && userDetails.pet_id === data[i].pet_id) {
-          getPetInfo(userDetails.pet_id)
-          .then(res => {
-            setPetDetails(res[0])
-          })
-          .catch(err => console.log(err))
-        }
-      }
+      getPetInfo(id)
+        .then(res => {
+          setPetDetails(res[0])
+        })
+        .catch(err => console.log(err)) 
     }
+    doneLoading(false)
   }
   
-  const updateUserData = () => {
+  const updateUserData = (id) => {
     updateUser()
-    .then(res =>  setUserDetails(res))
-    .catch(err => console.log(err))
-    .finally(() => {
-      getUserInfo()
-        .then((res) => {
-            setUserDetails(res)
-        })
-        .catch(err => {
-          localStorage.removeItem('x-access-token');
-          setLoggedIn(false)
-        })
-    })
+      .then(res =>  console.log('switched'))
+      .catch(err => console.log(err))
   }
 
   const changeUserCurrentPet = (id) => {
-    changeCurrentPet(id)
+    console.log(`app: ${id}`)
+    changeCurrentPet(id) 
       .then(res => {
-        setCurrentPet(id)
+        updateUser()
+          .then(res =>  res)
+          .catch(err => console.log(err))
+          .finally(() => checkLoggedinStatus())
       })
       .catch(err => console.log(err))
-      const helper = () => {
-        getCurrentPet(petList)
-      }
-      helper()
+      .finally(() => {
+        getCurrentPet(id)
+      })
     }
 
   useEffect(()=> {
-    getCurrentPet(petList)
-  }, [userDetails])
-  
-  useEffect(()=> {
-    updateUserData()
+    if(userDetails.pet_id) {
+      getPetInfo(userDetails.pet_id)
+        .then(res => {
+          setPetDetails(res[0])
+          getCurrentPet(userDetails.pet_id)
+        })
+        .catch(err => console.log(err))
+    } else {
+      return;
+    }
   }, [currentPet])
-   
+  
+  useEffect(() => {
+    if(isLoggedIn === true) {
+      checkLoggedinStatus()
+    } else  {
+      doneLoading(false)
+    }
+  }, [isLoggedIn])
 
-  const test = () => {
-    console.log('updated')
-  }
+  useEffect(()=> {
+    checkLoggedinStatus()
+  }, [])
+
+  if(isLoading === true) {
+      return <Loading />
+  }  
 
   return (
     <div className="App">
@@ -150,7 +175,7 @@ function App() {
                   petList={petList}
                   isLoggedIn={isLoggedIn} 
                   currentPet={currentPet}
-                  logout={() => setLoggedIn(false)}/>
+                  logout={() => handleLogout()}/>
               ) : (
                 ""
               )}
@@ -185,11 +210,11 @@ function App() {
                   updateUserData={() => updateUserData()}
                   component={PetProfile} />
               <ProtectedRoute
+                  changePet={(id) => changeUserCurrentPet(id)}
                   isLoggedIn={isLoggedIn}
                   userDetails={userDetails}
                   petDetails={petDetails}
                   exact path='/register-pet' 
-                  updateUserData={() => updateUserData()}
                   component={RegisterPet} />
               <ProtectedRoute
                   isLoggedIn={isLoggedIn}
@@ -203,6 +228,7 @@ function App() {
                   petDetails={petDetails}
                   currentPet={currentPet}
                   petList={petList}
+                  updateUserData={() => updateUserData()}
                   updateUserImage={() => updateUserData()}
                   exact path='/user-profile' 
                   component={UserProfile} />

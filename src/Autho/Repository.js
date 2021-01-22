@@ -4,9 +4,13 @@ const BASE_URL = 'https://pet-api.blakestagner.com';
 
 
 export function login (data) {
+    let x = new Date();
+    let hoursDiff = x.getHours() - x.getTimezoneOffset() / 60;
+    x.setHours(hoursDiff);
     return axios.post(`${BASE_URL}/api/login`, { 
         email: data.email, 
-        password: data.password 
+        password: data.password,
+        login_time: x
     })
     .then(response => {
         localStorage.setItem('x-access-token', response.data.token);
@@ -14,6 +18,18 @@ export function login (data) {
         return response.data
     })
     .catch((err) => Promise.reject(err.response.data));
+}
+
+export function logOutTime () {
+    let x = new Date();
+    let hoursDiff = x.getHours() - x.getTimezoneOffset() / 60;
+    x.setHours(hoursDiff);
+    return axios.post(`${BASE_URL}/api/logOutTime`, { 
+        'x-access-token': localStorage.getItem('x-access-token'), 
+        logout_time:  x
+    })
+    .then(res => res.data)
+    .catch(err => err);
 }
 
 export function register (data) {
@@ -24,7 +40,7 @@ export function register (data) {
         password: data.password_reg,
     })
     .then(res => console.log(res))
-    .catch(err => console.log(err))
+    .catch(err => Promise.reject('Request Not Authenticated!'));
 }
 
 
@@ -373,10 +389,11 @@ export function getMyPetDetails(data) {
        .catch(err => Promise.reject('Request Not Authenticated!'));
 }
 //remove my pet
-export function removePetOwner(data) {
+export function removePetOwner(pet_id, other_user_id) {
     return axios.delete(`${BASE_URL}/api/remove-pet-owner`, {
         params: {
-            'pet_id': data,
+            'pet_id': pet_id,
+            'other_user_id': other_user_id, 
             'x-access-token': localStorage.getItem('x-access-token')} 
     })
     .then(res => res.data)
@@ -390,4 +407,88 @@ export function removeMyPet(data) {
     })
     .then(res => res.data)
     .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+//get al user pets
+export function getPetOwners(data) {
+    return axios.get(`${BASE_URL}/api/get-pet-owners`, { 
+        params: { 
+            'pet_id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+//get pet Requests
+export function getPetRequests() {
+    return axios.get(`${BASE_URL}/api/get-pet-requests`, { 
+        params: { 
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+//accept pet request
+export function acceptPetRequest(data) {
+    console.log(data)
+    return axios.get(`${BASE_URL}/api/accept-pet-request`, {
+        params: { 
+            'post_id': data,
+            'x-access-token': localStorage.getItem('x-access-token')
+        } 
+    })
+    .then(res => res)
+    .catch(err => err.data)
+}
+export function denyPetRequest(data) {
+    return axios.delete(`${BASE_URL}/api/deny-pet-request`, {
+        params: {
+            'post_id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+export function sendPetRequest(friend_id, pet_id) {
+    return axios.post(`${BASE_URL}/api/send-pet-request`, {
+        friend_id: friend_id,
+        pet_id: pet_id,
+        'x-access-token': localStorage.getItem('x-access-token')
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        return err.response.data
+    })
+}
+export function setFeedTime(pet_id, feed_time) {
+    return axios.post(`${BASE_URL}/api/set-feed-time`, {
+        pet_id: pet_id,
+        feed_time: feed_time,
+        'x-access-token': localStorage.getItem('x-access-token')
+    })
+    .then((res) => {
+        return res.data
+    })
+    .catch((err) => {
+        return err.response.data
+    })
+}
+export function getFeedTime(data) {
+    return axios.get(`${BASE_URL}/api/get-feed-time`, { 
+        params: { 
+            'pet_id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+export function getSentPetRequests(data) {
+    return axios.get(`${BASE_URL}/api/get-pet-request-sent`, { 
+        params: { 
+            'pet_id': data,
+            'x-access-token': localStorage.getItem('x-access-token')} 
+       })
+       .then(res => res.data)
+       .catch(err => Promise.reject('Request Not Authenticated!'));
 }

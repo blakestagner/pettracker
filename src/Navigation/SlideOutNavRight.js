@@ -4,7 +4,7 @@ import arrow from '../img/icons/arrow_back.svg'
 import React, { useState, useImperativeHandle, forwardRef, useEffect} from "react";
 import Logout from '../Autho/login_register/Logout';
 import Avatar from '../User/Avatar';
-import { getPetInfo, getAllPetInfo } from '../Autho/Repository';
+import { getAllPetInfo } from '../Autho/Repository';
 import Loading from '../HelperComponents/Loading';
 
 
@@ -42,38 +42,38 @@ const SlideOutNavRight = forwardRef((props, ref) => {
         }
       }));
 
-    const displayOtherPets = () => {
-        let petsArray = [];        
-        let pets = props.petList;
-        if(pets.length > 1) {
-            props.petList.filter(obj => obj.pet_id !== props.petDetails.id).map(obj => {
-                petsArray.push(obj.pet_id)
-            })
-            const avatarDetails = () => {
-                getAllPetInfo(petsArray)
-                .then(res => {
-                    setOtherPets(res);
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            }
-            if(petsArray.length + 1 === pets.length) {
-                avatarDetails()
-            }
-        }
-        else if(pets.length === 1){
-            return;
-        } else {
-            return;
-        }
-    }
 
 
 
     useEffect(() => {
+        const displayOtherPets = () => {
+            let petsArray = [];        
+            let pets = props.petList;
+            if(pets.length > 1) {
+                props.petList.filter(obj => obj.pet_id !== props.petDetails.id).map(obj =>
+                    petsArray.push(obj.pet_id))
+                const avatarDetails = () => {
+                    getAllPetInfo(petsArray)
+                    .then(res => {
+                        setOtherPets(res);
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+                }
+                if(petsArray.length + 1 === pets.length) {
+                    avatarDetails()
+                }
+            }
+            else if(pets.length === 1){
+                return;
+            } else {
+                return;
+            }
+        }
+
         displayOtherPets()
-    }, [sideNav])
+    }, [sideNav, props.petDetails.id, props.petList])
 
     useEffect(() => {
         doneLoading(false)
@@ -109,7 +109,7 @@ const SlideOutNavRight = forwardRef((props, ref) => {
                             petDetails={obj}
                             userDetails={props.userDetails}
                             petProfileImgUrl={obj.profile_pic}
-                            type="pet"
+                            type="pet-side-nav"
                         />
                     </div>
                     ))
