@@ -254,7 +254,7 @@ function PooDays(props) {
                 {yesterdayMissedAverage()}
                 {filterTime(props.pooData).map(obj => (
                 <div
-                    id={`feed-${obj.id}`} 
+                    id={`poo-${obj.id}`} 
                     key={obj.id}
                     className='activity-log-card'> 
                     <div className="activity-log-header">
