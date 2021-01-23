@@ -36,6 +36,7 @@ function UserPets(props) {
     const displayPets = () => {
         return (
             <div className="friends-list-container">
+                {console.log(petDetails)}
                 {petDetails.map(obj => (
                     <div
                         className="friends-list-details" 
@@ -43,8 +44,7 @@ function UserPets(props) {
                         <Avatar
                             userDetails={obj}
                             petDetails={obj}
-                            profileImgUrl = {obj.profile_pic}
-                            hasProfileImg={obj.profile_pic}
+                            petProfileImgUrl={obj.profile_pic}
                             type="pet"
                             />
                         <p>{obj.name}</p>
